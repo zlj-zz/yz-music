@@ -1,0 +1,37 @@
+.arrow-btn {
+  position: absolute;
+  bottom: 10%;
+  margin-top: -54px;
+  width: 79px;
+  height: 108px;
+  background: rgba(0, 0, 0, 0.05);
+  transition-property: opacity, transform;
+  transition-duration: 0.5s;
+  z-index: 2;
+}
+
+.arrow-btn-left {
+  left: 0;
+}
+
+.arrow-btn-right {
+  right: 0;
+}
+
+.el-icon-arrow-left {
+  left: 29px;
+  background-position: -20px -120px;
+}
+
+.el-icon-arrow-right {
+  right: 29px;
+  background-position: 0 -120px;
+}
+
+.el-icon-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 20px;
+  height: 39px;
+}
