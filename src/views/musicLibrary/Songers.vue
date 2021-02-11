@@ -39,9 +39,10 @@
 
   <ul class="singer_list_txt">
     <li class="singer_list_txt__item" v-for="item in artists" :key="item.id">
-      <a href="javascript:;"
+      <router-link href="javascript:;"
          class="singer_list_txt__link js_singer"
-         title="item.name">{{item.name}}</a>
+         :to="{name: 'songer-detail', query: {id: item.id, accountId: item.accountId}}"
+         title="item.name">{{item.name}}</router-link>
     </li>
   </ul>
 </div>
@@ -161,77 +162,73 @@ export default {
 </script>
 
 <style scoped>
-  .main {
-      z-index: 2;
-  }
-  .main, .section_inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-  }
-  .mod_singer_tag {
-    background-color: #fbfbfd;
-    padding: 34px 0 17px 40px;
-    margin: 30px 0 20px;
-  }
+.main {
+  z-index: 2;
+}
+.main,
+.section_inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+.mod_singer_tag {
+  background-color: #fbfbfd;
+  padding: 34px 0 17px 40px;
+  margin: 30px 0 20px;
+}
 
-  .singer_tag__list {
-    padding-bottom: 3px;
-    height: auto;
-    clear: both;
-    overflow: hidden;
-  }
+.singer_tag__list {
+  padding-bottom: 3px;
+  height: auto;
+  clear: both;
+  overflow: hidden;
+}
 
-  .singer_tag__item--select, .singer_tag__item--select:hover {
-      background-color: #31c27c;
-      color: #fff;
-  }
+.singer_tag__item--select,
+.singer_tag__item--select:hover {
+  background-color: #31c27c;
+  color: #fff;
+}
 
-  .singer_tag__item--all {
-      margin-right: 28px;
-  }
+.singer_tag__item--all {
+  margin-right: 28px;
+}
 
-  .singer_tag__item {
-      height: 26px;
-      line-height: 27px;
-      overflow: hidden;
-  }
+.singer_tag__item {
+  height: 26px;
+  line-height: 27px;
+  overflow: hidden;
+}
 
-  .singer_tag__item {
-      float: left;
-      padding: 0 8px;
-      margin: 0 12px 14px 0;
-      margin-right: 12px;
-  }
+.singer_tag__item {
+  float: left;
+  padding: 0 8px;
+  margin: 0 12px 14px 0;
+  margin-right: 12px;
+}
 
-  a {
-      color: #000;
-      text-decoration: none;
-  }
+.singer_list_txt {
+  margin-right: -20px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
 
-  .singer_list_txt {
-      margin-right: -20px;
-      overflow: hidden;
-      margin-bottom: 60px;
-  }
+.singer_list_txt__item {
+  float: left;
+  width: 20%;
+}
 
-  .singer_list_txt__item {
-      float: left;
-      width: 20%;
-  }
+li {
+  list-style: none;
+}
 
-  li {
-      list-style: none;
-  }
-
-  .singer_list_txt__link {
-      float: left;
-      max-width: 90%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 14px;
-      line-height: 36px;
-  }
-
+.singer_list_txt__link {
+  float: left;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 36px;
+}
 </style>

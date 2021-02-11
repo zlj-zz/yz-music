@@ -8,6 +8,7 @@ const Ranking = () => import("views/musicLibrary/Ranking");
 const Classified = () => import("views/musicLibrary/Classified");
 const Radions = () => import("views/musicLibrary/Radions");
 const MV = () => import("views/musicLibrary/MV");
+const SongerDetail = () => import("views/musicLibrary/SongerDetail");
 
 const My = () => import("views/My");
 
@@ -27,7 +28,8 @@ const routes = [
       { path: "ranking", component: Ranking },
       { path: "classified", component: Classified },
       { path: "radions", component: Radions },
-      { path: "mv", component: MV }
+      { path: "mv", component: MV },
+      { path: "songer-detail", name: "songer-detail", component: SongerDetail }
     ]
   },
   {

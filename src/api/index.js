@@ -13,3 +13,5 @@ export const getSongers = (initial, type, area, page) => {
   };
   return requset.get("/artist/list", { params: params });
 };
+
+export const getUserDetail = id => requset.get(`/user/detail?uid=${id}`);

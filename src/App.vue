@@ -15,6 +15,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/css/coustom.css";
+@import "./assets/css/base.css";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
