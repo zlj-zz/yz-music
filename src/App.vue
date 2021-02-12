@@ -1,14 +1,16 @@
 <template>
+  <BackTop/>
   <NavBar/>
   <router-view/>
 </template>
 
 <script>
 import NavBar from 'components/content/NavBar'
+import BackTop from 'components/common/BackTop';
 
 export default {
   name:'#app',
-  components:{NavBar}
+  components:{NavBar, BackTop}
   
 }
 </script>

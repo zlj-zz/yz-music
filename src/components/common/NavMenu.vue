@@ -13,7 +13,6 @@
     @click="onClik(item.path)">
     {{item.title}}
   </el-menu-item>
-
 </el-menu>
 </template>
 
@@ -33,7 +32,6 @@
         {title: '电台', path: '/MusicLibrary/radions'},
         {title: 'MV', path: '/MusicLibrary/mv'},
         ]
-
       };
     },
     methods: {
