@@ -41,6 +41,13 @@
       </dd>
     </dl>
   </div>
+
+  <ul id="m_tabs" class="m-tabs f-cb">
+    <li class="fst"><a href="/artist?id=5781" class="z-slt"><em>热门作品</em></a></li>
+    <li><a href="/artist/album?id=5781"><em>所有专辑</em></a></li>
+    <li><a href="/artist/mv?id=5781"><em>相关MV</em></a></li>
+    <li><a href="/artist/desc?id=5781"><em>艺人介绍</em></a></li>
+  </ul>
 </div>
 
 </template>

@@ -1,6 +1,6 @@
 <template>
-<div class='main'>
-  <h1>Songers</h1>
+
+<div class='main' v-loading='loading'>
   <div class="mod_singer_tag" id="tag_box">
     <div class="singer_tag__list js_index">
 
@@ -37,7 +37,7 @@
 
   </div>
 
-  <ul class="singer_list_txt">
+  <ul class="singer_list_txt" v-loading='loading'>
     <li class="singer_list_txt__item" v-for="item in artists" :key="item.id">
       <router-link href="javascript:;"
          class="singer_list_txt__link js_singer"
@@ -46,6 +46,7 @@
     </li>
   </ul>
 </div>
+
 <div class='arrow-btn arrow-btn-left' >
   <a href="javascript:;" @click="prevPage()" ><i class='el-icon-arrow-left el-icon-arrow'></i></a>
 </div>
@@ -61,6 +62,7 @@ export default {
   name: 'Songers',
   data() {
     return {
+      loading: true,
       page: 1,
       more: true,
       initial: '-1',
@@ -113,7 +115,7 @@ export default {
       artists: []
     };
   },
-  created() {
+  mounted() {
     this.updateArtists()
   },
   methods: {
@@ -121,10 +123,11 @@ export default {
       getSongers(this.initial, this.type,this.area,this.page)
        .then(res => {
             console.log(res);
-            this.artists = res.data.artists
-            this.more = res.data.more
+            this.artists = res.data.artists;
+            this.more = res.data.more;
+            this.loading = false;
           })
-       .catch(err => console.log(err));
+       .catch(err => console.log('updateArtists Error:', err));
     },
     initialClick(id) {
       if (id != this.initial){
@@ -162,6 +165,10 @@ export default {
 </script>
 
 <style scoped>
+.el-icon-arrow {
+  top: 20%;
+}
+
 .main {
   z-index: 2;
 }
