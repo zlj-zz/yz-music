@@ -1,38 +1,55 @@
 <template>
 
-<div class='main' v-loading='loading'>
+<div class="mod_slide_box" style="position: relative;">
+  <div class='main' v-loading='loading'>
 
-  <TypeSelectBar>
-    <TypeSelectSubBar
-      :selectId="initial"
-      :items="initials"
-      @selectId="initialClick"/>
-    <TypeSelectSubBar
-      :selectId="type"
-      :items="types"
-      @selectId="typeClick"/>
-    <TypeSelectSubBar
-      :selectId="area"
-      :items="areas"
-      @selectId="areaClick"/>
-  </TypeSelectBar>
+    <TypeSelectBar>
+      <TypeSelectSubBar
+        :selectId="initial"
+        :items="initials"
+        @selectId="initialClick"/>
+      <TypeSelectSubBar
+        :selectId="type"
+        :items="types"
+        @selectId="typeClick"/>
+      <TypeSelectSubBar
+        :selectId="area"
+        :items="areas"
+        @selectId="areaClick"/>
+    </TypeSelectBar>
 
-  <ul class="singer_list_txt" v-loading='loading'>
-    <li class="singer_list_txt__item" v-for="item in artists" :key="item.id">
-      <router-link href="javascript:;"
-         class="singer_list_txt__link js_singer"
-         :to="{name: 'songer-detail', query: {id: item.id, accountId: item.accountId}}"
-         title="item.name">{{item.name}}</router-link>
-    </li>
-  </ul>
-
-  <div class='arrow-btn arrow-btn-left' >
-    <a href="javascript:;" @click="prevPage()" ><i class='el-icon-arrow-left el-icon-arrow'></i></a>
-  </div>
-  <div class='arrow-btn arrow-btn-right' >
-    <a href="javascript:;" @click="nextPage()" ><i class='el-icon-arrow-right el-icon-arrow'></i></a>
+    <ul class="singer_list_txt" v-loading='loading'>
+      <li class="singer_list_txt__item" v-for="item in artists" :key="item.id">
+        <router-link href="javascript:;"
+           class="singer_list_txt__link js_singer"
+           :to="{name: 'songer-detail', query: {id: item.id, accountId: item.accountId}}"
+           :title="item.name">{{item.name}}</router-link>
+      </li>
+    </ul>
   </div>
 
+  <div class="mod_slide_action">
+    <div class="slide_action slide_action--left">
+        <a 
+          href="javascript:;" 
+          class="slide_action__btn slide_action__btn--left js_jump" 
+          data-p="prev" 
+          tabindex="-1" 
+          @click="prevPage()">
+            <i class="icon_txt">上一页</i><i class="slide_action__arrow slide_action__arrow--left sprite"></i>
+          </a>
+    </div>
+    <div class="slide_action slide_action--right">
+        <a 
+          href="javascript:;" 
+          class="slide_action__btn slide_action__btn--right js_jump" 
+          data-p="next" 
+          tabindex="-1" 
+          @click="nextPage()">
+          <i class="icon_txt">下一页</i><i class="slide_action__arrow slide_action__arrow--right sprite"></i>
+        </a>
+    </div>
+  </div>
 </div>
 
 </template>
@@ -112,39 +129,14 @@ export default {
 </script>
 
 <style scoped>
-.el-icon-arrow {
-  top: 20%;
-}
-
 .main {
   z-index: 2;
 }
+
 .main,
 .section_inner {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-}
-
-
-.singer_list_txt {
-  margin-right: -20px;
-  overflow: hidden;
-  margin-bottom: 60px;
-}
-
-.singer_list_txt__item {
-  float: left;
-  width: 20%;
-}
-
-.singer_list_txt__link {
-  float: left;
-  max-width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-  line-height: 36px;
 }
 </style>

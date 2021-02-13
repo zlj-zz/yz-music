@@ -12,3 +12,8 @@ a {
 li {
   list-style: none;
 }
+
+img {
+  border: 0 none;
+  image-rendering: optimizeQuality;
+}
