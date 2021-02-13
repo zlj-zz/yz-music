@@ -23,7 +23,7 @@
               <span class=""><a href="" >{{item.name}}</a></span>
             </h4>
             <div class="">
-              播放量：{{item.playCount > 10000 ? (item.playCount / 10000).toFixed(2) + '万':item.playCount}}
+              播放量：{{processCount(item.playCount)}}
             </div>
         </li>
     </ul>
@@ -46,6 +46,7 @@
 
 <script>
 import { getPlayList } from "api";
+import { processCount } from "common/utils";
 
 export default {
   data() {
@@ -77,7 +78,10 @@ export default {
     onclick(key) {
       this.updatePlayList(key);
     },
- }
+    processCount(count){
+      return processCount(count)
+    },
+  }
 }
 </script>
 
@@ -85,6 +89,7 @@ export default {
   /* play list */
   .list{
     letter-spacing:20px;
+    text-align: center;
   }
   .playlist{
     display: inline-block;

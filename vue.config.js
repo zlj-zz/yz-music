@@ -4,10 +4,10 @@ module.exports = {
       alias: {
         assets: "@/assets",
         components: "@/components",
+        common: "@/common",
         views: "@/views",
         api: "@/api"
       }
     }
   }
 };
-
