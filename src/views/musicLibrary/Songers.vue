@@ -3,20 +3,20 @@
 <div class="mod_slide_box" style="position: relative;">
   <div class='main' v-loading='loading'>
 
-    <TypeSelectBar>
-      <TypeSelectSubBar
+    <type-select-bar>
+      <type-select-sub-bar
         :selectId="initial"
         :items="initials"
         @selectId="initialClick"/>
-      <TypeSelectSubBar
+      <type-select-sub-bar
         :selectId="type"
         :items="types"
         @selectId="typeClick"/>
-      <TypeSelectSubBar
+      <type-select-sub-bar
         :selectId="area"
         :items="areas"
         @selectId="areaClick"/>
-    </TypeSelectBar>
+    </type-select-bar>
 
     <ul class="singer_list_txt" v-loading='loading'>
       <li class="singer_list_txt__item" v-for="item in artists" :key="item.id">

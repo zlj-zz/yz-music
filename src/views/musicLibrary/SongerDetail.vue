@@ -1,83 +1,91 @@
 <template>
-
-<div class="g-bd">
-  <div class="g-wrap p-prf">
-    <dl class="m-proifo f-cb" id="head-box">
-      <dt class="f-pr" id="ava">
-        <img :src="userObj.profile.avatarUrl">
-      </dt>
-      <dd>
-        <div class="name f-cb">
-          <div class="f-cb">
-            <h2 id="j-name-wrap" class="wrap f-fl f-cb wrap-3">
-              <span class="tit f-ff2 s-fc0 f-thide">{{userObj.profile.artistName}}</span>
-            </h2>
+  <div class="g-bd">
+    <div class="g-wrap p-prf">
+      <dl class="m-proifo f-cb" id="head-box">
+        <dt class="f-pr" id="ava">
+          <img :src="userObj.profile.avatarUrl" />
+        </dt>
+        <dd>
+          <div class="name f-cb">
+            <div class="f-cb">
+              <h2 id="j-name-wrap" class="wrap f-fl f-cb wrap-3">
+                <span class="tit f-ff2 s-fc0 f-thide">{{
+                  userObj.profile.artistName
+                }}</span>
+              </h2>
+            </div>
+            <p class="djp f-fs1 s-fc3">{{ userObj.identify.imageDesc }}</p>
           </div>
-          <p class="djp f-fs1 s-fc3">{{userObj.identify.imageDesc}}</p>
-        </div>
-        <ul class="data s-fc3 f-cb" id="tab-box">
-          <li class="fst">
-            <a href="/user/event?id=97137413">
-              <strong id="event_count">{{userObj.profile.eventCount}}</strong>
-              <span>动态</span>
-            </a>
-          </li>
-          <li>
-            <a href="/user/follows?id=97137413">
-            <strong id="follow_count">{{userObj.profile.follows}}</strong>
-            <span>关注</span>
-            </a>
-          </li>
-          <li>
-            <a href="/user/fans?id=97137413">
-              <strong id="fan_count">{{userObj.profile.followeds}}</strong>
-              <span>粉丝</span>
-            </a>
-          </li>
-        </ul>
-        <div class="inf s-fc3">
-          <span>签名：{{userObj.profile.signature}} </span>
-        </div>
-      </dd>
-    </dl>
+          <ul class="data s-fc3 f-cb" id="tab-box">
+            <li class="fst">
+              <a href="/user/event?id=97137413">
+                <strong id="event_count">{{
+                  userObj.profile.eventCount
+                }}</strong>
+                <span>动态</span>
+              </a>
+            </li>
+            <li>
+              <a href="/user/follows?id=97137413">
+                <strong id="follow_count">{{ userObj.profile.follows }}</strong>
+                <span>关注</span>
+              </a>
+            </li>
+            <li>
+              <a href="/user/fans?id=97137413">
+                <strong id="fan_count">{{ userObj.profile.followeds }}</strong>
+                <span>粉丝</span>
+              </a>
+            </li>
+          </ul>
+          <div class="inf s-fc3">
+            <span>签名：{{ userObj.profile.signature }} </span>
+          </div>
+        </dd>
+      </dl>
+    </div>
+
+    <ul id="m_tabs" class="m-tabs f-cb">
+      <li class="fst">
+        <a href="/artist?id=5781" class="z-slt"><em>热门作品</em></a>
+      </li>
+      <li>
+        <a href="/artist/album?id=5781"><em>所有专辑</em></a>
+      </li>
+      <li>
+        <a href="/artist/mv?id=5781"><em>相关MV</em></a>
+      </li>
+      <li>
+        <a href="/artist/desc?id=5781"><em>艺人介绍</em></a>
+      </li>
+    </ul>
   </div>
-
-  <ul id="m_tabs" class="m-tabs f-cb">
-    <li class="fst"><a href="/artist?id=5781" class="z-slt"><em>热门作品</em></a></li>
-    <li><a href="/artist/album?id=5781"><em>所有专辑</em></a></li>
-    <li><a href="/artist/mv?id=5781"><em>相关MV</em></a></li>
-    <li><a href="/artist/desc?id=5781"><em>艺人介绍</em></a></li>
-  </ul>
-</div>
-
 </template>
 
 <script>
-import { getUserDetail } from 'api';
+import { getUserDetail } from "api";
 
 export default {
   data() {
     return {
-      activeName: 'first',
+      activeName: "first",
       id: this.$route.query.id,
       accountId: this.$route.query.accountId,
       userObj: null,
     };
   },
   created() {
-    getUserDetail(this.accountId).then(res => {
-          console.log(res)
-          this.userObj = res.data
-        })
-
+    getUserDetail(this.accountId).then((res) => {
+      console.log(res);
+      this.userObj = res.data;
+    });
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
-    }
-  }
-  
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
