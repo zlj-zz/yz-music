@@ -6,3 +6,7 @@ export function processCount(count) {
   }
   return count;
 }
+
+export function isDef(v) {
+  return v !== undefined && v !== null;
+}
