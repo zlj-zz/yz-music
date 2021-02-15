@@ -1,18 +1,19 @@
 <template>
-  <BackTop/>
-  <NavBar/>
-  <router-view/>
+  <back-top />
+  <nav-bar />
+  <router-view />
+  <player />
 </template>
 
 <script>
-import NavBar from 'components/content/NavBar'
-import BackTop from 'components/common/BackTop';
+import NavBar from "components/content/NavBar";
+import BackTop from "components/common/BackTop";
+import Player from "components/common/Player";
 
 export default {
-  name:'#app',
-  components:{NavBar, BackTop}
-  
-}
+  name: "#app",
+  components: { NavBar, BackTop, Player },
+};
 </script>
 
 <style lang="scss">
@@ -23,7 +24,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

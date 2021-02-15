@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <banner />
     <recommended-bar />
     <home-top />
@@ -21,8 +21,10 @@ export default {
 </script>
 
 <style>
-div {
+.main {
   font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
   line-height: 1.5;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 </style>
