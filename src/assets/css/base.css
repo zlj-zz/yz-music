@@ -4,6 +4,11 @@ html {
   margin: 0;
 }
 
+a,
+a * {
+  cursor: pointer;
+}
+
 a {
   color: #000;
   text-decoration: none;
@@ -15,5 +20,5 @@ li {
 
 img {
   border: 0 none;
-  image-rendering: optimizeQuality;
+  /*image-rendering: optimizeQuality;*/
 }
