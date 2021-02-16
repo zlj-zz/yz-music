@@ -1,4 +1,5 @@
 import { isDef } from "common/utils";
+import { playModeMap } from "common/config";
 
 export default {
   currentIndex(state) {
