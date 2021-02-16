@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import { getPlayList, getPlaylistDetial } from "api";
-import { processCount } from "common/utils";
+import { getPlayList, getPlaylistDetial, getSongDetail } from "api";
+import { processCount, createSong } from "common/utils";
 
 export default {
   data() {
@@ -108,10 +108,23 @@ export default {
     },
     playTheList(listId) {
       getPlaylistDetial(listId).then((res) => {
-        console.log(res);
-        let playlist = res.data.playlist.tracks;
-        this.$store.commit("music/setPlaylist", playlist);
-        this.$store.commit("music/setCurrentSong", playlist[0]);
+        let trackIds = res.data.playlist.trackIds.map(({id}) => id);
+        let songDetails = getSongDetail(trackIds.slice(0, 500)).then(res => {
+          let songs = res.data.songs.map(({id, name, al, ar, mv, dt}) => {
+            return createSong({
+              id,
+              name,
+              artists: ar,
+              duration: dt,
+              mvId: mv,
+              albumName: al.name,
+              img: al.picUrl,
+            })
+          })
+          console.log(songs);
+          this.$store.commit("music/setPlaylist", songs);
+          this.$store.commit("music/setCurrentSong", songs[0]);
+        })
       });
     },
   },

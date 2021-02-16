@@ -3,17 +3,11 @@
     <div
       class="m-playbar"
       style="visibility: visible"
-      id="auto-id-tpJNW0OTTZUKHGT6"
       :class="'m-playbar-' + (isLock ? 'lock' : 'unlock')"
     >
       <div class="updn">
         <div class="left f-fl">
-          <a
-            href="javascript:;"
-            class="btn"
-            data-action="lock"
-            @click="switchLock"
-          ></a>
+          <a href="javascript:;" class="btn" @click="switchLock"></a>
         </div>
         <div class="right f-fl"></div>
       </div>
@@ -24,15 +18,14 @@
           <a
             href="javascript:;"
             hidefocus="true"
-            data-action="prev"
             class="prv"
             title="上一首(ctrl+←)"
+            @click="prev"
             >上一首</a
           >
           <a
             href="javascript:;"
             hidefocus="true"
-            data-action="play"
             class="ply j-flag"
             title="播放/暂停(p)"
             :class="playing ? 'pas' : ''"
@@ -42,14 +35,14 @@
           <a
             href="javascript:;"
             hidefocus="true"
-            data-action="next"
             class="nxt"
             title="下一首(ctrl+→)"
+            @click="next"
             >下一首</a
           >
         </div>
         <div class="head j-flag">
-          <img :src="currentSong.al.picUrl" />
+          <img v-if="hasCurrentSong" :src="currentSong.img" />
           <a hidefocus="true" class="mask"></a>
         </div>
         <div class="play">
@@ -62,29 +55,31 @@
             >
             <span class="by f-thide f-fl">
               <span title="Santa_SA/马也_Crabbit">
-                <a class="" href="/artist?id=13288861" hidefocus="true">
-                  {{ currentSong.ar.name }}
+                <a v-if="hasCurrentSong" class="" hidefocus="true">
+                  {{ currentSong.artistsText }}
                 </a>
               </span>
             </span>
           </div>
-          <div class="m-pbar" data-action="noop">
-            <div class="barbg j-flag" id="auto-id-olG5f2Dl4lPPaFuS">
+          <div class="m-pbar" data-action="noop" @click="clickBar">
+            <div class="barbg j-flag">
               <div class="rdy" style="width: 0px"></div>
-              <div class="cur" style="width: 0%">
-                <span class="btn f-tdn f-alpha" id="auto-id-h1TVIntmP6HVDr4a">
+              <div class="cur" :style="'width: ' + barPrecent + '%'">
+                <span class="btn f-tdn f-alpha" @mousedown="onChangeBar">
                   <i></i>
                 </span>
               </div>
             </div>
-            <span class="j-flag time"><em>00:00</em> / 00:00</span>
+            <span class="j-flag time"
+              ><em>{{ formatTime(currentTime) }}</em> /
+              {{ formatTime(currentSong.duration / 1000) }}</span
+            >
           </div>
         </div>
         <div class="oper f-fl">
           <a
             href="javascript:;"
             hidefocus="true"
-            data-action="like"
             class="icn icn-add j-flag"
             title="收藏"
             >收藏</a
@@ -92,18 +87,13 @@
           <a
             href="javascript:;"
             hidefocus="true"
-            data-action="share"
             class="icn icn-share"
             title="分享"
             >分享</a
           >
         </div>
         <div class="ctrl f-fl f-pr j-flag">
-          <div
-            class="m-vol"
-            style="visibility: hidden"
-            id="auto-id-0LRPddCu7aNCIboc"
-          >
+          <div class="m-vol" style="visibility: hidden">
             <div class="barbg"></div>
             <div class="vbg j-t" id="auto-id-L68XOkib47dr55Wt">
               <div class="curr j-t" style="height: 74.4px"></div>
@@ -138,18 +128,25 @@
         </div>
       </div>
     </div>
-    <audio :src="currentSong.songUrl" ref="audio" />
+    <audio
+      :src="currentSong.url"
+      @canplay="ready"
+      @ended="end"
+      @timeupdate="timeupdate"
+      ref="audio"
+    ></audio>
   </div>
 </template>
 
 <script>
-import { isDef, genSongPlayUrl } from "common/utils";
-import { getSong } from "api";
+import { isDef, genSongPlayUrl, formatTime } from "common/utils";
+// import { getSong } from "api";
 
 export default {
   data() {
     return {
       isLock: false,
+      isHoldBtn: false,
       songReady: false,
       volume: 100,
     };
@@ -158,42 +155,85 @@ export default {
     console.log(this.audio);
   },
   methods: {
+    formatTime(duration) {
+      return formatTime(duration);
+    },
     switchLock() {
-      console.log("lock");
       this.isLock = !this.isLock;
     },
     ready() {
+      console.log("ready change");
       this.songReady = true;
     },
     end() {
       this.next();
     },
     togglePlay() {
+      if (!this.currentSong.id) return;
       this.$store.commit("music/setPlayingState", !this.playing);
     },
     async play() {
       console.log("play");
-      if (this.songReady) {
-        try {
-          await this.audio.play();
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        await this.audio.play();
+      } catch (err) {
+        console.log(err);
       }
     },
     pause() {
       console.log("pause");
       this.audio.pause();
     },
-    prve() {
-      if (this.songReady)
-        this.$store.dispatch("music/startSong", this.prevSong);
+    prev() {
+      this.$store.dispatch("music/startSong", this.prevSong);
     },
     next() {
-      if (this.songReady)
-        this.$store.dispatch("music/startSong", this.nextSong);
+      this.$store.dispatch("music/startSong", this.nextSong);
     },
-    timeupdate() {},
+    timeupdate(e) {
+      const time = e.target.currentTime;
+      console.log(time);
+      this.$store.commit("music/setCurrentTime", time);
+    },
+    onChangeBar(e) {
+      this.isHoldBtn = true;
+      console.log(e);
+      let odiv = e.target; //获取目标元素
+      console.log(odiv.offsetLeft);
+      console.log(odiv.style.left);
+      //算出鼠标相对元素的位置
+      let disX = e.clientX - odiv.offsetLeft;
+      console.log(disX);
+      let disY = e.clientY - odiv.offsetTop;
+      let percent;
+      document.onmousemove = (e) => {
+        //鼠标按下并移动的事件
+        if (e.clientX >= 416 && e.clientX <= 909) {
+          percent = (e.clientX - 416) / 493;
+          console.log("on change", percent);
+          odiv.parentElement.style.width = percent * 100 + "%";
+        }
+      };
+      document.onmouseup = (e) => {
+        let targetTime = this.currentSong.durationSecond * percent;
+        // this.$store.commit('music/setCurrenTime', targetTime)
+        this.audio.currentTime = targetTime;
+        this.$store.commit("music/setPlayingState", true);
+        this.isHoldBtn = false;
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
+    },
+    clickBar(e) {
+      if (!this.isHoldBtn) {
+        let percent = (e.clientX - 416) / 493;
+        console.log(percent);
+        let targetTime = this.currentSong.durationSecond * percent;
+        // this.$store.commit('music/setCurrenTime', targetTime)
+        this.audio.currentTime = targetTime;
+        this.$store.commit("music/setPlayingState", true);
+      }
+    },
   },
   computed: {
     audio() {
@@ -209,22 +249,39 @@ export default {
       return this.$store.state.music.currentSong;
     },
     prevSong() {
-      return this.$store.getters.music.prevSong;
+      return this.$store.getters["music/prevSong"];
     },
     nextSong() {
-      return this.$store.getters.music.nextSong;
+      console.log(this.$store.getters);
+      return this.$store.getters["music/nextSong"];
+    },
+    currentTime() {
+      return this.$store.state.music.currentTime;
+    },
+    barPrecent() {
+      if (!this.isHoldBtn)
+        return (this.currentTime / (this.currentSong.duration / 1000)) * 100;
     },
   },
   watch: {
     currentSong(newSong, oldSong) {
       console.log("new", newSong, "old", oldSong);
-      if (newSong.id != oldSong.id) {
-        this.currentSong.songUrl = genSongPlayUrl(newSong.id);
+
+      // 单曲循环
+      if (oldSong && newSong.id === oldSong.id) {
+        this.setCurrentTime(0);
+        this.audio.currentTime = 0;
+        this.play();
+        return;
+      }
+
+      if (this.playing) {
+        this.play();
       }
     },
     playing(newPlaying) {
-      console.log(newPlaying);
-      this.$nextTick(() => (newPlaying ? this.play : this.pause));
+      console.log("new playing", newPlaying);
+      this.$nextTick(() => (newPlaying ? this.play() : this.pause()));
     },
   },
 };
@@ -510,7 +567,9 @@ i {
   height: 24px;
   margin-left: -11px;
   background-position: 0 -250px;
-  _background-position: 0 0;
+}
+.m-pbar .btn:hover {
+  background-position: 0 -280px;
 }
 .m-pbar .btn i {
   visibility: hidden;
