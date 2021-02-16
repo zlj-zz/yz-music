@@ -5,15 +5,14 @@
       style="visibility: visible"
       id="auto-id-tpJNW0OTTZUKHGT6"
       :class="'m-playbar-' + (isLock ? 'lock' : 'unlock')"
-      @click="switchIsLock"
     >
       <div class="updn">
         <div class="left f-fl">
           <a
             href="javascript:;"
             class="btn"
-            hidefocus="true"
             data-action="lock"
+            @click="switchLock"
           ></a>
         </div>
         <div class="right f-fl"></div>
@@ -36,6 +35,8 @@
             data-action="play"
             class="ply j-flag"
             title="播放/暂停(p)"
+            :class="playing ? 'pas' : ''"
+            @click="togglePlay"
             >播放/暂停</a
           >
           <a
@@ -48,27 +49,21 @@
           >
         </div>
         <div class="head j-flag">
-          <img
-            src="https://p1.music.126.net/jnSajZlbE9ed8QGVlbwK0A==/109951165666607256.jpg?param=34y34"
-          />
-          <a href="/song?id=1815105886" hidefocus="true" class="mask"></a>
+          <img :src="currentSong.al.picUrl" />
+          <a hidefocus="true" class="mask"></a>
         </div>
         <div class="play">
           <div class="j-flag words">
             <a
               hidefocus="true"
-              href="/song?id=1815105886"
               class="f-thide name fc1 f-fl"
-              title="狐狸的童话"
-              >狐狸的童话</a
+              :title="currentSong.name"
+              >{{ currentSong.name }}</a
             >
             <span class="by f-thide f-fl">
               <span title="Santa_SA/马也_Crabbit">
-                <a class="" href="/artist?id=34230619" hidefocus="true">
-                  Santa_SA </a
-                >/
                 <a class="" href="/artist?id=13288861" hidefocus="true">
-                  马也_Crabbit
+                  {{ currentSong.ar.name }}
                 </a>
               </span>
             </span>
@@ -143,19 +138,93 @@
         </div>
       </div>
     </div>
+    <audio :src="currentSong.songUrl" ref="audio" />
   </div>
 </template>
 
 <script>
+import { isDef, genSongPlayUrl } from "common/utils";
+import { getSong } from "api";
+
 export default {
   data() {
     return {
       isLock: false,
+      songReady: false,
+      volume: 100,
     };
   },
+  mounted() {
+    console.log(this.audio);
+  },
   methods: {
-    switchIsLock() {
+    switchLock() {
+      console.log("lock");
       this.isLock = !this.isLock;
+    },
+    ready() {
+      this.songReady = true;
+    },
+    end() {
+      this.next();
+    },
+    togglePlay() {
+      this.$store.commit("music/setPlayingState", !this.playing);
+    },
+    async play() {
+      console.log("play");
+      if (this.songReady) {
+        try {
+          await this.audio.play();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+    pause() {
+      console.log("pause");
+      this.audio.pause();
+    },
+    prve() {
+      if (this.songReady)
+        this.$store.dispatch("music/startSong", this.prevSong);
+    },
+    next() {
+      if (this.songReady)
+        this.$store.dispatch("music/startSong", this.nextSong);
+    },
+    timeupdate() {},
+  },
+  computed: {
+    audio() {
+      return this.$refs.audio;
+    },
+    playing() {
+      return this.$store.state.music.playing;
+    },
+    hasCurrentSong() {
+      return isDef(this.currentSong.id);
+    },
+    currentSong() {
+      return this.$store.state.music.currentSong;
+    },
+    prevSong() {
+      return this.$store.getters.music.prevSong;
+    },
+    nextSong() {
+      return this.$store.getters.music.nextSong;
+    },
+  },
+  watch: {
+    currentSong(newSong, oldSong) {
+      console.log("new", newSong, "old", oldSong);
+      if (newSong.id != oldSong.id) {
+        this.currentSong.songUrl = genSongPlayUrl(newSong.id);
+      }
+    },
+    playing(newPlaying) {
+      console.log(newPlaying);
+      this.$nextTick(() => (newPlaying ? this.play : this.pause));
     },
   },
 };

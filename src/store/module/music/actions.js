@@ -1,14 +1,13 @@
 export default {
   async startSong({ commit, state }, rawSong) {
     const song = Object.assign({}, rawSong);
-    if (!song.img) {
-      if (song.albumId) {
-        song.img = await getSongImg(song.id, song.albumId);
-      }
-    }
+    //if (!song.img) {
+    //if (song.albumId) {
+    //song.img = await getSongImg(song.id, song.albumId);
+    //}
+    //}
     commit("setCurrentSong", song);
     commit("setPlayingState", true);
-    commit("setPlayHistory", playHistoryCopy);
   },
   clearCurrentSong({ commit }) {
     commit("setCurrentSong", {});
