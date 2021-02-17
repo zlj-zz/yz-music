@@ -34,6 +34,7 @@ export function createSong(song) {
     url: genSongPlayUrl(song.id),
     artistsText: genArtistisText(artists),
     durationSecond: duration / 1000,
+    durationText: formatTime(duration / 1000),
     albumId,
     mvId,
     ...rest
@@ -63,4 +64,3 @@ export function formatTime(interval) {
   const second = pad(interval % 60);
   return `${minute}:${second}`;
 }
-

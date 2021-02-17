@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import { isDef, genSongPlayUrl, formatTime } from "common/utils";
+import { isDef, formatTime } from "common/utils";
 import { playModeMap } from "common/config";
 // import { getSong } from "api";
 
