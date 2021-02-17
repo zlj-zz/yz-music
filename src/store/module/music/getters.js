@@ -1,21 +1,22 @@
 import { isDef } from "common/utils";
 import { playModeMap } from "common/config";
 
+function getRandomIndex(playlist, currentIndex) {
+  // 防止无限循环
+  if (playlist.length === 1) {
+    return currentIndex;
+  }
+  let index = Math.round(Math.random() * (playlist.length - 1));
+  if (index === currentIndex) {
+    index = getRandomIndex(playlist, currentIndex);
+  }
+  return index;
+}
+
 export default {
   currentIndex(state) {
     const { currentSong, playlist } = state;
     return playlist.findIndex(({ id }) => id === currentSong.id);
-  },
-  getRandomIndex(playlist, currentIndex) {
-    // 防止无限循环
-    if (playlist.length === 1) {
-      return currentIndex;
-    }
-    let index = Math.round(Math.random() * (playlist.length - 1));
-    if (index === currentIndex) {
-      index = getRandomIndex(playlist, currentIndex);
-    }
-    return index;
   },
   nextSong(state, getters) {
     const { playlist, playMode } = state;

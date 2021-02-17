@@ -1,17 +1,17 @@
 export const playModeMap = {
   sequence: {
     code: "sequence",
-    icon: "sequence",
-    name: "顺序播放"
+    icon: "icn-loop",
+    name: "循环播放"
   },
   loop: {
     code: "loop",
-    icon: "loop",
-    name: "循环播放"
+    icon: "icn-one",
+    name: "单曲循环"
   },
   random: {
     code: "random",
-    icon: "random",
+    icon: "icn-shuffle",
     name: "随机播放"
   }
 };

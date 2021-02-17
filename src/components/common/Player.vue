@@ -61,8 +61,8 @@
               </span>
             </span>
           </div>
-          <div class="m-pbar" data-action="noop" @click="clickBar">
-            <div class="barbg j-flag">
+          <div class="m-pbar" data-action="noop">
+            <div class="barbg j-flag" @click="clickBar">
               <div class="rdy" style="width: 0px"></div>
               <div class="cur" :style="'width: ' + barPrecent + '%'">
                 <span class="btn f-tdn f-alpha" @mousedown="onChangeBar">
@@ -93,11 +93,21 @@
           >
         </div>
         <div class="ctrl f-fl f-pr j-flag">
-          <div class="m-vol" style="visibility: hidden">
+          <div
+            class="m-vol"
+            :style="{ visibility: isShowVol ? 'visible' : 'hidden' }"
+          >
             <div class="barbg"></div>
-            <div class="vbg j-t" id="auto-id-L68XOkib47dr55Wt">
-              <div class="curr j-t" style="height: 74.4px"></div>
-              <span class="btn f-alpha j-t" style="top: 16.2px"></span>
+            <div class="vbg j-t" @click="clickVolBar">
+              <div
+                class="curr j-t"
+                :style="{ height: volumePrecent * 93 + 'px' }"
+              ></div>
+              <span
+                class="btn f-alpha j-t"
+                :style="{ top: (1 - volumePrecent) * 81 + 'px' }"
+                @mousedown="onChangeVolBar"
+              ></span>
             </div>
           </div>
           <a
@@ -105,13 +115,16 @@
             hidefocus="true"
             data-action="volume"
             class="icn icn-vol"
+            @click="clickVolBtn"
           ></a>
           <a
             href="javascript:;"
             hidefocus="true"
             data-action="mode"
-            class="icn icn-loop"
-            title="循环"
+            class="icn"
+            :class="currentMode.icon"
+            :title="currentMode.name"
+            @click="onChangeMode"
           ></a>
           <span class="add f-pr">
             <span class="tip" style="display: none">已添加到播放列表</span>
@@ -121,10 +134,15 @@
               hidefocus="true"
               data-action="panel"
               class="icn icn-list s-fc3"
-              >1
+              >{{ playlist.length }}
             </a>
           </span>
-          <div class="tip tip-1" style="display: none">循环</div>
+          <div
+            class="tip tip-1"
+            :style="{ display: isShowModeTip ? '' : 'none' }"
+          >
+            {{ currentMode.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -140,19 +158,24 @@
 
 <script>
 import { isDef, genSongPlayUrl, formatTime } from "common/utils";
+import { playModeMap } from "common/config";
 // import { getSong } from "api";
 
 export default {
   data() {
     return {
       isLock: false,
+      isShowVol: false,
       isHoldBtn: false,
+      isShowModeTip: false,
       songReady: false,
+      volumePrecent: 1,
       volume: 100,
     };
   },
   mounted() {
     console.log(this.audio);
+    this.audio.volume = this.volumePrecent;
   },
   methods: {
     formatTime(duration) {
@@ -192,15 +215,53 @@ export default {
     },
     timeupdate(e) {
       const time = e.target.currentTime;
-      console.log(time);
+      //console.log(time);
       this.$store.commit("music/setCurrentTime", time);
+    },
+    onChangeMode() {
+      const modeKeys = Object.keys(playModeMap);
+      const currentModeIndex = modeKeys.findIndex(
+        (key) => playModeMap[key].code === this.playMode
+      );
+      const nextIndex = (currentModeIndex + 1) % modeKeys.length;
+      const nextModeKey = modeKeys[nextIndex];
+      const nextMode = playModeMap[nextModeKey];
+      this.$store.commit("music/setPlayMode", nextMode.code);
+      this.showModeChangeTip();
+    },
+    showModeChangeTip() {
+      this.isShowModeTip = true;
+      if (this.ModeTipTimer) clearTimeout(this.ModeTipTimer);
+      this.ModeTipTimer = setTimeout(() => {
+        this.isShowModeTip = false;
+      }, 1000);
+    },
+    clickVolBtn() {
+      this.isShowVol = !this.isShowVol;
+    },
+    onChangeVolBar(e) {
+      let odiv = e.target;
+      let screenH = document.documentElement.clientHeight;
+      let percent;
+      document.onmousemove = (e) => {
+        percent = (screenH - e.clientY - 44) / 101;
+        if (percent >= 0 && percent <= 1) this.volumePrecent = percent;
+      };
+      document.onmouseup = (e) => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
+    },
+    clickVolBar(e) {
+      let screenH = document.documentElement.clientHeight;
+      let precent = (screenH - e.clientY - 44) / 101;
+      this.volumePrecent = precent;
     },
     onChangeBar(e) {
       this.isHoldBtn = true;
       console.log(e);
       let odiv = e.target; //获取目标元素
       console.log(odiv.offsetLeft);
-      console.log(odiv.style.left);
       //算出鼠标相对元素的位置
       let disX = e.clientX - odiv.offsetLeft;
       console.log(disX);
@@ -226,8 +287,7 @@ export default {
     },
     clickBar(e) {
       if (!this.isHoldBtn) {
-        let percent = (e.clientX - 416) / 493;
-        console.log(percent);
+        let percent = e.offsetX / 493;
         let targetTime = this.currentSong.durationSecond * percent;
         // this.$store.commit('music/setCurrenTime', targetTime)
         this.audio.currentTime = targetTime;
@@ -242,6 +302,9 @@ export default {
     playing() {
       return this.$store.state.music.playing;
     },
+    playlist() {
+      return this.$store.state.music.playlist;
+    },
     hasCurrentSong() {
       return isDef(this.currentSong.id);
     },
@@ -255,6 +318,12 @@ export default {
       console.log(this.$store.getters);
       return this.$store.getters["music/nextSong"];
     },
+    playMode() {
+      return this.$store.state.music.playMode;
+    },
+    currentMode() {
+      return playModeMap[this.playMode];
+    },
     currentTime() {
       return this.$store.state.music.currentTime;
     },
@@ -266,22 +335,35 @@ export default {
   watch: {
     currentSong(newSong, oldSong) {
       console.log("new", newSong, "old", oldSong);
+      // 清空歌曲
+      if (!newSong.id) {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        return;
+      }
 
       // 单曲循环
       if (oldSong && newSong.id === oldSong.id) {
-        this.setCurrentTime(0);
+        this.$store.commit("music/setCurrentTime", 0);
         this.audio.currentTime = 0;
         this.play();
         return;
       }
 
-      if (this.playing) {
-        this.play();
+      this.songReady = false;
+      if (this.timer) {
+        clearTimeout(this.timer);
       }
+      this.timer = setTimeout(() => {
+        if (this.playing) this.play();
+      }, 1000);
     },
     playing(newPlaying) {
       console.log("new playing", newPlaying);
       this.$nextTick(() => (newPlaying ? this.play() : this.pause()));
+    },
+    volumePrecent(newVol) {
+      this.audio.volume = newVol;
     },
   },
 };
@@ -600,8 +682,14 @@ i {
   margin: 11px 2px 0 0;
   text-indent: -9999px;
 }
+.m-playbar .icn-add:hover {
+  background-position: -88px -189px;
+}
 .m-playbar .icn-add {
   background-position: -88px -163px;
+}
+.m-playbar .icn-share:hover {
+  background-position: -114px -189px;
 }
 .m-playbar .icn-share {
   background-position: -114px -163px;
@@ -662,6 +750,9 @@ i {
 .m-playbar .icn-vol {
   background-position: -2px -248px;
 }
+.m-playbar .icn-vol:hover {
+  background-position: -31px -248px;
+}
 .m-playbar .icn {
   float: left;
   width: 25px;
@@ -669,8 +760,23 @@ i {
   margin: 11px 2px 0 0;
   text-indent: -9999px;
 }
+.m-playbar .icn-loop:hover {
+  background-position: -33px -344px;
+}
 .m-playbar .icn-loop {
   background-position: -3px -344px;
+}
+.m-playbar .icn-one:hover {
+  background-position: -93px -344px;
+}
+.m-playbar .icn-one {
+  background-position: -66px -344px;
+}
+.m-playbar .icn-shuffle:hover {
+  background-position: -93px -248px;
+}
+.m-playbar .icn-shuffle {
+  background-position: -66px -248px;
 }
 .m-playbar .add {
   float: left;
