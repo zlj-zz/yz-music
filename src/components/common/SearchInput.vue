@@ -49,7 +49,7 @@ export default {
           item.value = item.first;
           return item;
         });
-        console.log(this.defaultSuggest);
+        //console.log(this.defaultSuggest);
       });
     },
     handleSelect(item) {

@@ -348,9 +348,6 @@ h5,
 h6 {
   font-size: 100%;
 }
-a:hover {
-  color: #31c27c;
-}
 
 .mod_data {
   position: relative;

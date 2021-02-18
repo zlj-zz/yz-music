@@ -13,6 +13,9 @@ a {
   color: #000;
   text-decoration: none;
 }
+a:hover {
+  color: #31c27c;
+}
 
 li {
   list-style: none;

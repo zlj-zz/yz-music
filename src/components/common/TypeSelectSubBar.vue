@@ -1,11 +1,19 @@
 <template>
   <div class="singer_tag__list js_index">
-    <a href="javascript:;"
-       class="singer_tag__item"
-       v-for="(item, key) in items" :key="key"
-       :data-id="item.dataId"
-       :class="item.dataId == selectId ? 'singer_tag__item--all singer_tag__item--select':''"
-       @click="selectClick(item.dataId)">{{item.name}}</a>
+    <a
+      href="javascript:;"
+      class="singer_tag__item"
+      v-for="(item, key) in items"
+      :key="key"
+      :data-id="item.dataId"
+      :class="
+        item.dataId == selectId
+          ? 'singer_tag__item--all singer_tag__item--select'
+          : ''
+      "
+      @click="selectClick(item.dataId)"
+      >{{ item.name }}</a
+    >
   </div>
 </template>
 
@@ -15,17 +23,16 @@ export default {
     selectId: {},
     items: {
       type: Object,
-      default: []
-    }
+    },
   },
   methods: {
-    selectClick(id){
-      if (id != this.selectId){
-        this.$emit('selectId', id)
+    selectClick(id) {
+      if (id != this.selectId) {
+        this.$emit("selectId", id);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
