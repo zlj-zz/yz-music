@@ -34,3 +34,5 @@ export const getAllMV = (limit, page, order, area, type) => {
   };
   return requset.get("/mv/all", { params: params });
 };
+
+export const getMvDetail = id => requset.get(`/mv/detail?mvid=${id}`);
