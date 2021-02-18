@@ -41,6 +41,19 @@ export function createSong(song) {
   };
 }
 
+export function createAlbum(album) {
+  const { id, name, img, artists, publishTime, ...rest } = album;
+
+  return {
+    id,
+    name,
+    img,
+    artists,
+    publishTime: formatDate(publishTime, "yyyy-MM-dd"),
+    ...rest
+  };
+}
+
 export function genSongPlayUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
