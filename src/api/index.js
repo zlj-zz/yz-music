@@ -6,6 +6,7 @@ export * from "./playlist";
 export * from "./song";
 export * from "./songer";
 export * from "./mv";
+export * from "./search";
 
 export const getBanner = () => requset.get("/banner?type=0");
 

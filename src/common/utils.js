@@ -64,3 +64,38 @@ export function formatTime(interval) {
   const second = pad(interval % 60);
   return `${minute}:${second}`;
 }
+
+export function prcessSuggest(rest) {
+  let results = [];
+  if (rest.songs) {
+    for (let song of rest.songs) {
+      results.push({
+        value: song.name + "-" + genArtistisText(song.artists),
+        id: song.id,
+        type: "歌曲",
+        typeId: 0
+      });
+    }
+  }
+  if (rest.artists) {
+    for (let artist of rest.artists) {
+      results.push({
+        value: artist.name,
+        id: artist.id,
+        type: "歌手",
+        typeId: 1
+      });
+    }
+  }
+  if (rest.albums) {
+    for (let album of rest.albums) {
+      results.push({
+        value: album.name + "-" + album.artist.name,
+        id: album.id,
+        type: "专辑",
+        typeId: 2
+      });
+    }
+  }
+  return results;
+}
