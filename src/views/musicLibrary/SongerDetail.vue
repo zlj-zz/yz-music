@@ -1,6 +1,6 @@
 <template>
   <div class="g-bd">
-    <div class="g-wrap p-prf">
+    <div class="g-wrap p-prf" v-if="userObj">
       <dl class="m-proifo f-cb" id="head-box">
         <dt class="f-pr" id="ava">
           <img :src="userObj.profile.avatarUrl" />
@@ -69,12 +69,12 @@ export default {
   data() {
     return {
       activeName: "first",
-      id: this.$route.query.id,
-      accountId: this.$route.query.accountId,
       userObj: null,
     };
   },
   created() {
+    this.id = this.$route.query.id;
+    this.accountId = this.$route.query.accountId;
     getUserDetail(this.accountId).then((res) => {
       console.log(res);
       this.userObj = res.data;
