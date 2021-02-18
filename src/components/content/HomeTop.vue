@@ -1,7 +1,7 @@
 <template>
   <div class="toplist_main">
     <h1 class="list">排行榜</h1>
-    <div class="mod_toplist">
+    <div class="home_toplist">
       <ul class="toplist__list js_list">
         <li
           class="toplist__item mod_cover"
@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .toplist_main {
   margin: 0 auto;
   text-align: center;
@@ -158,9 +158,6 @@ li {
   color: #fff;
   font-weight: 400;
 }
-a {
-  text-decoration: none;
-}
 .toplist__hd::before {
   content: "";
   display: block;
@@ -186,10 +183,6 @@ a {
   padding-left: 15px;
   margin-bottom: 27px;
 }
-/*.toplist__songname{*/
-/*overflow: hidden;*/
-/*text-overflow: ellipsis;*/
-/*}*/
 .toplist__number {
   position: absolute;
   top: 0;

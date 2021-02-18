@@ -1,5 +1,5 @@
 <template>
-  <div class="main" style="">
+  <div class="disc-main" style="">
     <!-- 标签筛选 -->
     <div class="mod_tag" id="tag_list">
       <div class="tag__list">
@@ -147,7 +147,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 blockquote,
 body,
 button,
@@ -187,13 +187,13 @@ h6 {
 }
 
 /*总体*/
-.main,
+.disc-main,
 .section_inner {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
 }
-.main {
+.disc-main {
   z-index: 2;
 }
 
@@ -211,96 +211,9 @@ h6 {
   line-height: 26px;
   padding-left: 65px;
 }
+</style>
 
-/*下*/
-.mod_part,
-.mod_part_detail {
-  position: relative;
-  margin-bottom: 30px;
-}
-.mod_playlist {
-  overflow: hidden;
-  font-size: 0;
-}
-.mod_playlist .playlist__list {
-  margin-right: -20px;
-}
-
-.mod_playlist .playlist__item {
-  display: inline-block;
-  width: 20%;
-  padding-bottom: 44px;
-  overflow: hidden;
-  font-size: 14px;
-  vertical-align: top;
-}
-.mod_playlist .playlist__item_box {
-  position: relative;
-  margin-right: 20px;
-  text-align: left;
-}
-.mod_playlist .playlist__cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding-top: 100%;
-  margin-bottom: 15px;
-}
-.mod_playlist .playlist__pic {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-.mod_playlist .playlist__pic {
-  transform: scale(1) translateZ(0);
-  transition: transform 0.75s;
-}
-.mod_playlist .playlist__cover:hover .playlist__pic {
-  transform: scale(1.07) translateZ(0);
-  transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
-}
-.mod_cover__icon_play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -35px;
-  width: 70px;
-  height: 70px;
-  opacity: 0;
-  transform: scale(0.7) translateZ(0);
-  transition-property: opacity, transform;
-  transition-duration: 0.5s;
-  zoom: 1;
-}
-.mod_cover:hover .mod_cover__icon_play,
-.mod_cover__icon_play {
-  background-image: url(https://y.gtimg.cn/mediastyle/yqq/img/cover_play.png?max_age=2592000&v=88abebcbc1242dbbbbc836cc3e04a006);
-}
-.mod_cover:hover .mod_cover__icon_play {
-  opacity: 1;
-  filter: none;
-}
-img .playlist__pic {
-  display: block;
-  visibility: visible;
-  width: 250px;
-}
-
-.mod_playlist .playlist__title {
-  overflow: hidden;
-}
-.mod_playlist .playlist__author,
-.mod_playlist .playlist__author a,
-.mod_playlist .playlist__other {
-  color: #999;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 22px;
-}
-
+<style>
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #31c27c;
   color: #fff;

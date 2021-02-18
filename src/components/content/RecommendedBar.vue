@@ -1,6 +1,6 @@
 <template>
   <div class="recommended_main">
-    <h1 class="list">歌单推荐</h1>
+    <h1 class="recommended_list">歌单推荐</h1>
     <div class="target-bar">
       <a
         class="playlist"
@@ -131,9 +131,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* play list */
-.list {
+.recommended_list {
   letter-spacing: 20px;
   text-align: center;
 }

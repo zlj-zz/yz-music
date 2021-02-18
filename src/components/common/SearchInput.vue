@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .my-autocomplete li {
   line-height: normal;
   padding: 7px;

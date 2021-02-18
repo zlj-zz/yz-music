@@ -344,7 +344,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 /*总体css*/
 #mian {
   padding-top: 60px;
