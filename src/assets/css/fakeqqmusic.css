@@ -603,3 +603,46 @@
   height: 36px;
   background-image: url(../img/icon_list_menu.png);
 }
+.mod_btn__icon_add,
+.mod_btn__icon_batch,
+.mod_btn__icon_comment,
+.mod_btn__icon_copy,
+.mod_btn__icon_delete,
+.mod_btn__icon_down,
+.mod_btn__icon_edit,
+.mod_btn__icon_input,
+.mod_btn__icon_less,
+.mod_btn__icon_like,
+.mod_btn__icon_manage,
+.mod_btn__icon_menu,
+.mod_btn__icon_more,
+.mod_btn__icon_new,
+.mod_btn__icon_no,
+.mod_btn__icon_play,
+.mod_btn__icon_qr,
+.mod_btn__icon_recovery,
+.mod_btn__icon_upload,
+.mod_btn__icon_yes,
+.mod_btn_green__icon_add,
+.mod_btn_green__icon_clear,
+.mod_btn_green__icon_delete,
+.mod_btn_green__icon_down,
+.mod_btn_green__icon_like,
+.mod_btn_green__icon_more,
+.mod_btn_green__icon_play,
+.mod_btn_green__icon_radio {
+  display: inline-block;
+  margin-right: 6px;
+  background-image: url(../img/icon_sprite.png);
+  background-repeat: no-repeat;
+}
+.popup__icon_close,
+.popup__icon_close.sprite,
+.popup__icon_tips,
+.popup__icon_tips.sprite,
+.popup_download__icon,
+.popup_download__icon.sprite,
+.popup_tips__icon,
+.popup_tips__icon.sprite {
+  background-image: url(../img/icon_popup.png);
+}

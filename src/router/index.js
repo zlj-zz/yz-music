@@ -9,6 +9,7 @@ const Classified = () => import("views/musicLibrary/Classified");
 const Radions = () => import("views/musicLibrary/Radions");
 const MV = () => import("views/musicLibrary/MV");
 const SongerDetail = () => import("views/musicLibrary/SongerDetail");
+const SongDetail = () => import("views/musicLibrary/SongDetail");
 
 const My = () => import("views/My");
 
@@ -29,7 +30,8 @@ const routes = [
       { path: "classified", component: Classified },
       { path: "radions", component: Radions },
       { path: "mv", component: MV },
-      { path: "songer-detail", name: "songer-detail", component: SongerDetail }
+      { path: "songerDetail", name: "songerDetail", component: SongerDetail },
+      { path: "songDetail", component: SongDetail }
     ]
   },
   {
@@ -41,7 +43,15 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
 });
 
 export default router;

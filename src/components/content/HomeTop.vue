@@ -23,7 +23,12 @@
               <li class="toplist__song" v-for="songIdx in 4" :key="songIdx">
                 <div class="toplist__number">{{ songIdx }}</div>
                 <div class="toplist__songname">
-                  <a href="javascript:;" class="js_song">
+                  <a
+                    href="javascript:;"
+                    class="js_song"
+                    :data-id="toplist.tracks[songIdx - 1].id"
+                    @click="gotoSongDetail(toplist.tracks[songIdx - 1].id)"
+                  >
                     {{ parseSongName(toplist.tracks[songIdx - 1].name) }}
                   </a>
                 </div>
@@ -72,6 +77,12 @@ export default {
       }
       let name = l.join("/");
       return name;
+    },
+    gotoSongDetail(id) {
+      this.$router.push({
+        path: "/musicLibrary/songDetail",
+        query: { id: id },
+      });
     },
   },
 };
