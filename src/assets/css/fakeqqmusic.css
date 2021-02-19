@@ -519,10 +519,6 @@
 }
 .songlist__header_name,
 .songlist__songname {
-  width: 72%;
-}
-.songlist__header_name,
-.songlist__songname {
   float: left;
   width: 47.685185%;
   position: relative;
@@ -576,16 +572,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 14px;
-}
-.songlist__rank {
-  position: absolute;
-  top: 0;
-  left: 48px;
-  width: 72px;
-  font-size: 12px;
-  line-height: 20px;
-  text-align: center;
-  color: #999;
 }
 .icon_rank_popular {
   width: 15px;

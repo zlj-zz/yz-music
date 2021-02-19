@@ -185,7 +185,7 @@
                 <mod-list-menu :song="song" />
               </div>
 
-              <div class="songlist__artist" title="陆海涛">
+              <div class="songlist__artist" :title="song.name">
                 <a title="song.artistsText" class="singer_name">{{
                   song.artistsText
                 }}</a>
@@ -379,5 +379,33 @@ th {
 }
 .songlist__number--top {
   color: #ff4222;
+}
+.songlist__header,
+.songlist__item {
+  padding-left: 122px;
+  padding-right: 95px;
+}
+.songlist__header_name,
+.songlist__songname {
+  width: 72%;
+}
+.songlist__album,
+.songlist__artist,
+.songlist__header_album,
+.songlist__header_author {
+  float: left;
+  padding-left: 15px;
+  width: 25.5%;
+  box-sizing: border-box;
+}
+.songlist__rank {
+  position: absolute;
+  top: 0;
+  left: 48px;
+  width: 72px;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: #999;
 }
 </style>
