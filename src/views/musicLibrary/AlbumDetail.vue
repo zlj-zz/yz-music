@@ -102,48 +102,9 @@
                   <span class="songlist__songname_txt">
                     <a :title="song.name">{{ song.name }}</a>
                   </span>
-                  <div class="mod_list_menu">
-                    <a
-                      class="list_menu__item list_menu__play js_play"
-                      title="播放"
-                      @click="playOne(idx)"
-                    >
-                      <i class="list_menu__icon_play"></i>
-                      <span class="icon_txt">播放</span>
-                    </a>
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__add js_fav"
-                      title="添加到歌单"
-                      aria-haspopup="true"
-                      data-target="menu_add"
-                    >
-                      <i class="list_menu__icon_add"></i>
-                      <span class="icon_txt">添加到歌单</span>
-                    </a>
 
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__down js_down"
-                      title="下载"
-                      aria-haspopup="true"
-                      data-target="menu_down"
-                    >
-                      <i class="list_menu__icon_down"></i>
-                      <span class="icon_txt">下载</span>
-                    </a>
-
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__share js_share"
-                      title="分享"
-                      aria-haspopup="true"
-                      data-aria="menu_share"
-                    >
-                      <i class="list_menu__icon_share"></i>
-                      <span class="icon_txt">分享</span>
-                    </a>
-                  </div>
+                  <!-- mod list menu -->
+                  <mod-list-menu :song="song" />
                 </div>
                 <div class="songlist__artist">
                   <a :title="song.artistsText" class="singer_name">{{
@@ -308,8 +269,9 @@
 </template>
 
 <script>
+import ModListMenu from "components/common/ModListMenu";
 import { getAlbum } from "api";
-import { createSong, playSonglist, playTheSong } from "common/utils";
+import { createSong, playSonglist } from "common/utils";
 
 export default {
   data() {
@@ -359,9 +321,9 @@ export default {
     playAll() {
       playSonglist(this.songs);
     },
-    playOne(id) {
-      playTheSong(this.songs[id]);
-    },
+  },
+  components: {
+    ModListMenu,
   },
 };
 </script>

@@ -121,44 +121,9 @@
                       <span class="songlist__song_txt"></span>
                     </a>
                   </span>
-                  <div class="mod_list_menu">
-                    <a
-                      class="list_menu__item list_menu__play js_play"
-                      title="播放"
-                    >
-                      <i class="list_menu__icon_play"></i>
-                      <span class="icon_txt">播放</span>
-                    </a>
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__add js_fav"
-                      title="添加到歌单"
-                      aria-haspopup="true"
-                    >
-                      <i class="list_menu__icon_add"></i>
-                      <span class="icon_txt">添加到歌单</span>
-                    </a>
 
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__down js_down"
-                      title="VIP下载"
-                      aria-haspopup="true"
-                    >
-                      <i class="list_menu__icon_down_vip"></i>
-                      <span class="icon_txt">VIP下载</span>
-                    </a>
-
-                    <a
-                      href="javascript:;"
-                      class="list_menu__item list_menu__share js_share"
-                      title="分享"
-                      aria-haspopup="true"
-                    >
-                      <i class="list_menu__icon_share"></i>
-                      <span class="icon_txt">分享</span>
-                    </a>
-                  </div>
+                  <!-- mod list menu -->
+                  <mod-list-menu :song="song" />
                 </div>
                 <div class="songlist__album">
                   <a :title="song.albumName">{{ song.albumName }}</a>
@@ -291,6 +256,7 @@
 </template>
 
 <script>
+import ModListMenu from "components/common/ModListMenu";
 import {
   getUserDetail,
   getSongerDetail,
@@ -389,6 +355,9 @@ export default {
     playHotSongs() {
       playSonglist(this.hotSongs);
     },
+  },
+  components: {
+    ModListMenu,
   },
 };
 </script>
