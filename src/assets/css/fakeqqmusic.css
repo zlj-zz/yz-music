@@ -852,7 +852,7 @@ img .playlist__pic {
 .data_info__item {
   float: left;
   line-height: 27px;
-  width: 166px;
+  width: 200px;
   margin-right: 10px;
   white-space: nowrap;
   overflow: hidden;

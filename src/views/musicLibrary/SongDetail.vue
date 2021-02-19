@@ -1,84 +1,6 @@
 <template>
   <div class="main">
-    <div
-      class="mod_data"
-      itemscope=""
-      itemtype="http://schema.org/MusicRecording"
-      style="display: "
-      v-if="song"
-    >
-      <span class="data__cover">
-        <img
-          :src="song.img"
-          :alt="song.name"
-          onerror="this.src='//y.gtimg.cn/mediastyle/music_v11/extra/default_300x300.jpg?max_age=31536000';this.onerror=null;"
-          class="data__photo"
-        />
-      </span>
-      <div class="data__cont">
-        <div class="data__name">
-          <h1 class="data__name_txt" :title="song.name">{{ song.name }}</h1>
-        </div>
-        <div class="data__singer" :title="song.artistsText">
-          <i class="icon_singer sprite"></i>
-          <a
-            href="//y.qq.com/n/yqq/singer/001JDzPT3JdvqK.html"
-            :title="song.artistsText"
-            class="data__singer_txt js_singer"
-            data-stat="y_new.song.header.singername"
-            itemprop="byArtist"
-          >
-            {{ song.artistsText }}
-          </a>
-        </div>
-        <ul class="data__info">
-          <li class="data_info__item data_info__item--even">
-            专辑：<a
-              href="//y.qq.com/n/yqq/album/002Zwh5p4HgecI.html"
-              itemprop="inAlbum"
-              class="js_album"
-              :title="song.albumName"
-              >{{ song.albumName }}</a
-            >
-          </li>
-          <li class="data_info__item js_lan" style="">语种：未知</li>
-          <li class="data_info__item js_genre data_info__item--even" style="">
-            时长：{{ song.durationText }}
-          </li>
-          <li class="data_info__item js_company" style="">
-            唱片公司：<span>未知</span>
-          </li>
-          <li
-            class="data_info__item js_public_time data_info__item--even"
-            style=""
-          >
-            发行时间：{{ song.publishTime }}
-          </li>
-        </ul>
-
-        <div class="data__actions" role="toolbar">
-          <a class="mod_btn_green js_all_play"
-            ><i class="mod_btn_green__icon_play"></i>播放</a
-          >
-          <a href="javascript:;" class="mod_btn js_all_like"
-            ><i class="mod_btn__icon_like"></i>收藏</a
-          >
-          <a
-            class="mod_btn js_into_comment"
-            data-stat="y_new.song.gotocomment"
-            href="#comment_box"
-            ><i class="mod_btn__icon_comment"></i>评论(5182)</a
-          >
-          <a
-            href="javascript:;"
-            class="mod_btn js_more"
-            data-id="102193483"
-            data-songtype="0"
-            ><i class="mod_btn__icon_menu"></i>更多</a
-          >
-        </div>
-      </div>
-    </div>
+    <detail-info-card :obj="song" @btnClick="cardClick" />
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -195,8 +117,9 @@
 </template>
 
 <script>
+import DetailInfoCard from "components/common/DetailInfoCard";
 import { getSongDetail, getSongLiyric, getSimiSong, getMvDetail } from "api";
-import { createSong, formatDate } from "common/utils";
+import { createSong, formatDate, playTheSong } from "common/utils";
 
 export default {
   data() {
@@ -297,6 +220,15 @@ export default {
         query: { id: id },
       });
     },
+    play() {
+      playTheSong(this.song);
+    },
+    cardClick(v) {
+      if (v == "all") this.play();
+    },
+  },
+  components: {
+    DetailInfoCard,
   },
 };
 </script>

@@ -51,10 +51,11 @@
               hidefocus="true"
               class="f-thide name fc1 f-fl"
               :title="currentSong.name"
+              @click="gotoSongDetail(currentSong.id)"
               >{{ currentSong.name }}</a
             >
             <span class="by f-thide f-fl">
-              <span title="Santa_SA/马也_Crabbit">
+              <span :title="currentSong.artistsText">
                 <a v-if="hasCurrentSong" class="" hidefocus="true">
                   {{ currentSong.artistsText }}
                 </a>
@@ -110,17 +111,9 @@
               ></span>
             </div>
           </div>
+          <a hidefocus="true" class="icn icn-vol" @click="clickVolBtn"></a>
           <a
-            href="javascript:;"
             hidefocus="true"
-            data-action="volume"
-            class="icn icn-vol"
-            @click="clickVolBtn"
-          ></a>
-          <a
-            href="javascript:;"
-            hidefocus="true"
-            data-action="mode"
             class="icn"
             :class="currentMode.icon"
             :title="currentMode.name"
@@ -128,12 +121,7 @@
           ></a>
           <span class="add f-pr">
             <span class="tip" style="display: none">已添加到播放列表</span>
-            <a
-              href="javascript:;"
-              title="播放列表"
-              hidefocus="true"
-              data-action="panel"
-              class="icn icn-list s-fc3"
+            <a title="播放列表" hidefocus="true" class="icn icn-list s-fc3"
               >{{ playlist.length }}
             </a>
           </span>
@@ -294,6 +282,14 @@ export default {
         this.$store.commit("music/setPlayingState", true);
       }
     },
+    gotoSongDetail(id) {
+      console.log(id);
+      this.$router.push({
+        path: "/musicLibrary/songDetail",
+        query: { id: id },
+      });
+    },
+    gotoSongerDetail(id) {},
   },
   computed: {
     audio() {

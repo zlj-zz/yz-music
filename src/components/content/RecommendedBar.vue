@@ -25,9 +25,9 @@
             />
           </a>
           <h4 class="">
-            <span class=""
-              ><a href="">{{ item.name }}</a></span
-            >
+            <span class="">
+              <a @click="gotoPlaylistDetail(item.id)">{{ item.name }}</a>
+            </span>
           </h4>
           <div class="">播放量：{{ processCount(item.playCount) }}</div>
         </li>
@@ -126,6 +126,12 @@ export default {
         });
       });
     },
+    gotoPlaylistDetail(id) {
+      this.$router.push({
+        path: "/musicLibrary/playlistDetail",
+        query: { id: id },
+      });
+    },
   },
 };
 </script>
@@ -200,5 +206,8 @@ export default {
 .slide_switch__item:hover .slide_switch__bg {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#4C000000', endColorstr='#4C000000');
   background-color: rgba(0, 0, 0, 0.3);
+}
+a:hover {
+  color: #31c27c;
 }
 </style>

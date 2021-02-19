@@ -1,76 +1,7 @@
 <template>
   <div class="main">
-    <div
-      class="mod_data"
-      itemscope=""
-      itemtype="http://schema.org/MusicRecording"
-    >
-      <span class="data__cover">
-        <img
-          id="albumImg"
-          onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-          :src="album.img"
-          :alt="album.name"
-          class="data__photo"
-        />
-        <i class="data__cover_mask"></i>
-      </span>
-      <div class="data__cont">
-        <div class="data__name">
-          <h1 class="data__name_txt" :title="album.name">{{ album.name }}</h1>
-        </div>
+    <detail-info-card :obj="album" :cardType="'album'" @btnClick="cardClick" />
 
-        <div class="data__singer">
-          <i class="icon_singer sprite"></i
-          ><a
-            class="js_singer data__singer_txt"
-            itemprop="byArtist"
-            :title="album.artists"
-            >{{ album.artists }}</a
-          >
-        </div>
-
-        <ul class="data__info">
-          <li class="data_info__item">类型：{{ album.type }}</li>
-
-          <li class="data_info__item data_info__item--even">语种：国语</li>
-
-          <li class="data_info__item">发行时间：2021-02-13</li>
-
-          <li class="data_info__item data_info__item--even">
-            唱片公司：<span>{{ album.company }}</span>
-          </li>
-        </ul>
-
-        <div class="data__actions" role="toolbar">
-          <a class="mod_btn_green js_all_play" @click="playAll">
-            <i class="mod_btn_green__icon_play"></i>播放全部
-          </a>
-
-          <a
-            href="javascript:;"
-            class="mod_btn js_fav_album"
-            data-stat="y_new.album.header.love"
-            data-status="0"
-            ><i class="mod_btn__icon_like"></i>收藏</a
-          >
-          <a
-            class="mod_btn js_into_comment"
-            data-stat="y_new.album.gotocomment"
-            href="#comment_box"
-            ><i class="mod_btn__icon_comment"></i>评论(15)</a
-          >
-          <a
-            href="javascript:;"
-            class="mod_btn js_more"
-            data-mid="000QQkw74FD8iE"
-            data-id="17519496"
-            data-stat="y_new.album.header.more"
-            ><i class="mod_btn__icon_menu"></i>更多</a
-          >
-        </div>
-      </div>
-    </div>
     <div class="detail_layout">
       <div class="detail_layout__main">
         <div class="mod_songlist">
@@ -269,9 +200,10 @@
 </template>
 
 <script>
+import DetailInfoCard from "components/common/DetailInfoCard";
 import ModListMenu from "components/common/ModListMenu";
 import { getAlbum } from "api";
-import { createSong, playSonglist } from "common/utils";
+import { createSong, playSonglist, formatDate } from "common/utils";
 
 export default {
   data() {
@@ -294,11 +226,11 @@ export default {
           name: ds.album.name,
           img: ds.album.picUrl,
           desc: ds.album.description,
-          artists: ds.album.artist.name,
+          artistsText: ds.album.artist.name,
           type: ds.album.type,
           version: ds.album.subType,
           company: ds.album.company,
-          publishTime: ds.album.publishTime,
+          publishTime: formatDate(ds.album.publishTime, "yy-MM-dd"),
         };
         this.album = album;
         console.log(album);
@@ -321,8 +253,14 @@ export default {
     playAll() {
       playSonglist(this.songs);
     },
+    cardClick(v) {
+      if (v == "all") {
+        this.playAll();
+      }
+    },
   },
   components: {
+    DetailInfoCard,
     ModListMenu,
   },
 };

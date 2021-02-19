@@ -1,79 +1,11 @@
 <template>
   <div class="songer-main">
-    <div class="mod_data">
-      <span class="data__cover">
-        <a
-          class="js_goto_tab js_none_index"
-          data-stat="y_new.singer.thistab.singer_pic"
-          data-tab="index"
-          style=""
-          ><img
-            class="data__photo"
-            :src="songer.img"
-            onerror="this.src='//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000';this.onerror=null;"
-            :alt="songer.name"
-        /></a>
-      </span>
-      <div class="data__cont">
-        <div class="data__name">
-          <h1 class="data__name_txt js_none_index" style="">
-            <a class="js_goto_tab" :title="songer.name">{{ songer.name }}</a>
-          </h1>
-          <h1
-            class="data__name_txt js_index"
-            style="display: none"
-            :title="songer.name"
-          >
-            {{ songer.name }}
-          </h1>
-        </div>
-
-        <div class="data__desc" id="singer_desc">
-          <div class="data__desc_txt" id="short_desc">
-            {{ songer.desc }}
-          </div>
-
-          <a href="javascript:;" class="js_desc" @click="toggleShowMoreInfo"
-            >[更多]</a
-          >
-        </div>
-
-        <ul class="mod_data_statistic">
-          <li class="data_statistic__item">
-            <a class="js_goto_tab">
-              <span class="data_statistic__tit">单曲</span>
-              <strong class="data_statistic__number">{{
-                songer.musicSize
-              }}</strong>
-            </a>
-          </li>
-
-          <li class="data_statistic__item">
-            <a class="js_goto_tab">
-              <span class="data_statistic__tit">专辑</span>
-              <strong class="data_statistic__number">{{
-                songer.albumSize
-              }}</strong>
-            </a>
-          </li>
-
-          <li class="data_statistic__item data_statistic__item--last">
-            <a class="js_goto_tab">
-              <span class="data_statistic__tit">MV</span>
-              <strong class="data_statistic__number">{{
-                songer.mvSize
-              }}</strong>
-            </a>
-          </li>
-        </ul>
-
-        <div class="data__actions" role="toolbar">
-          <a class="mod_btn_green js_singer_radio" @click="playHotSongs">
-            <i class="mod_btn_green__icon_play"></i>播放歌手热门歌曲
-          </a>
-        </div>
-      </div>
-    </div>
+    <detail-info-card
+      :obj="songer"
+      :cardType="'songer'"
+      @btnClick="playHotSongs"
+      @moreClick="toggleShowMoreInfo"
+    />
 
     <div id="index_tab" class="js_tab">
       <div class="mod_part">
@@ -284,6 +216,7 @@
 </template>
 
 <script>
+import DetailInfoCard from "components/common/DetailInfoCard";
 import ModListMenu from "components/common/ModListMenu";
 import {
   getUserDetail,
@@ -414,6 +347,7 @@ export default {
     },
   },
   components: {
+    DetailInfoCard,
     ModListMenu,
   },
 };
@@ -460,10 +394,6 @@ ul {
   position: relative;
 }
 
-/* add extra */
-.data__photo {
-  border-radius: 999px;
-}
 /*overwrite*/
 .data__cont {
   padding-top: 31px;
