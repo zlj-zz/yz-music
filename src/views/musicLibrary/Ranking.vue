@@ -117,7 +117,7 @@
         >
       </div>
 
-      <div class="mod_songlist">
+      <div class="mod_songlist" v-loading="loading">
         <ul class="songlist__header">
           <li class="songlist__edit sprite">
             <input type="checkbox" class="songlist__checkbox js_check_all" />
@@ -216,6 +216,7 @@ import { isDef, createSong, playSonglist } from "common/utils";
 export default {
   data() {
     return {
+      loading: true,
       topRankingtype: [
         { name: "飙升榜", dataId: "19723756" },
         { name: "新歌榜", dataId: "3779629" },
@@ -261,7 +262,7 @@ export default {
     },
     updatedTopList() {
       getPlaylistDetial(this.seletedType).then((res) => {
-        console.log(res);
+        //console.log(res);
         let trackIds = res.data.playlist.trackIds;
         let ids = trackIds.map(({ id }) => id);
         getSongDetail(ids).then((res) => {
@@ -284,8 +285,9 @@ export default {
             }
             songs.push(song);
           }
-          console.log(songs);
+          //console.log(songs);
           this.listDatas = songs;
+          this.loading = false;
         });
       });
     },

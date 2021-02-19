@@ -2,6 +2,7 @@
   <back-top />
   <nav-bar />
   <router-view />
+  <bottom-footer />
   <player />
 </template>
 
@@ -9,10 +10,11 @@
 import NavBar from "components/content/NavBar";
 import BackTop from "components/common/BackTop";
 import Player from "components/common/Player";
+import BottomFooter from "components/common/BottomFooter";
 
 export default {
   name: "#app",
-  components: { NavBar, BackTop, Player },
+  components: { NavBar, BackTop, BottomFooter, Player },
 };
 </script>
 

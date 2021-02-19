@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="mod_part_detail">
+    <div class="mod_part_detail" v-loading="loading">
       <div class="mod_playlist mod_playlist--all">
         <ul class="playlist__list" id="album_list">
           <li
@@ -85,6 +85,7 @@ import { createAlbum } from "common/utils";
 export default {
   data() {
     return {
+      loading: true,
       limit: 20,
       page: 0,
       selectArea: albumAreas.ALL.dataId,
@@ -117,6 +118,7 @@ export default {
         this.allAlbums = albums;
         this.allAlbumsLength = albums.length;
         this.page = 1;
+        this.loading = false;
       });
     },
     areaSelect(id) {
