@@ -148,7 +148,13 @@
 
               <div class="songlist__rank">
                 <i :class="processRanking(song.rankingChange)"></i
-                >{{ song.rankingChange == -9999 ? "" : song.rankingChange }}
+                >{{
+                  song.rankingChange > 0
+                    ? song.rankingChange
+                    : song.rankingChange == -9999
+                    ? ""
+                    : song.rankingChange * -1
+                }}
               </div>
 
               <div class="songlist__songname">
@@ -224,7 +230,7 @@ export default {
       specialRankingtype: [
         { name: "古典榜", dataId: "71384707" },
         { name: "说唱榜", dataId: "99131959" },
-        { name: "电子榜", dataId: "187894795" },
+        { name: "电子榜", dataId: "1978921795" },
         { name: "ACG榜", dataId: "71385702" },
         { name: "乡村榜", dataId: "3112516681" },
         { name: "摇滚榜", dataId: "5059633707" },

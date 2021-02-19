@@ -33,7 +33,9 @@
             {{ songer.desc }}
           </div>
 
-          <a href="javascript:;" class="js_desc">[更多]</a>
+          <a href="javascript:;" class="js_desc" @click="toggleShowMoreInfo"
+            >[更多]</a
+          >
         </div>
 
         <ul class="mod_data_statistic">
@@ -68,9 +70,6 @@
         <div class="data__actions" role="toolbar">
           <a class="mod_btn_green js_singer_radio" @click="playHotSongs">
             <i class="mod_btn_green__icon_play"></i>播放歌手热门歌曲
-          </a>
-          <a href="javascript:;" class="mod_btn js_follow">
-            <i class="mod_btn__icon_more"> </i>关注 1.7万
           </a>
         </div>
       </div>
@@ -136,7 +135,7 @@
         </div>
       </div>
 
-      <div class="mod_part" v-if="albums">
+      <div class="mod_part" v-if="albums.length > 0">
         <div class="part__hd">
           <h2 class="part__tit">专辑</h2>
         </div>
@@ -158,15 +157,21 @@
                       :src="album.img"
                       :alt="album.name"
                     />
-                    <i class="mod_cover__icon_play js_play"></i>
+                    <i
+                      class="mod_cover__icon_play js_play"
+                      @click="playAlbum(album.id)"
+                    ></i>
                   </a>
                 </div>
                 <h4 class="playlist__title">
-                  <span class="playlist__title_txt"
-                    ><a :title="album.name" class="js_album">{{
-                      album.name
-                    }}</a></span
-                  >
+                  <span class="playlist__title_txt">
+                    <a
+                      class="js_album"
+                      :title="album.name"
+                      @click="gotoAlbumDetail(album.id)"
+                      >{{ album.name }}</a
+                    >
+                  </span>
                 </h4>
                 <div class="playlist__other">{{ album.publishTime }}</div>
                 <a
@@ -180,7 +185,7 @@
         </div>
       </div>
 
-      <div class="mod_part" v-if="mvs">
+      <div class="mod_part" v-if="mvs.length > 0">
         <div class="part__hd">
           <h2 class="part__tit">MV</h2>
 
@@ -217,7 +222,7 @@
         </div>
       </div>
 
-      <div class="mod_part" id="similar" style="" v-if="simiSongers">
+      <div class="mod_part" id="similar" style="" v-if="simiSongers.length > 0">
         <div class="part__hd">
           <h2 class="part__tit">相似歌手</h2>
         </div>
@@ -231,8 +236,9 @@
               <div class="singer_list__item_box">
                 <a
                   class="singer_list__cover js_singer"
-                  :title="songer.name"
                   hidefocus="true"
+                  :title="songer.name"
+                  @click="gotoSongerDetail({ id: songer.id })"
                 >
                   <img
                     class="singer_list__pic"
@@ -242,15 +248,37 @@
                   />
                 </a>
                 <h3 class="singer_list__title">
-                  <a class="js_singer" :title="songer.name">{{
-                    songer.name
-                  }}</a>
+                  <a
+                    class="js_singer"
+                    :title="songer.name"
+                    @click="gotoSongerDetail({ id: songer.id })"
+                    >{{ songer.name }}</a
+                  >
                 </h3>
               </div>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+
+    <div
+      class="popup_data_detail"
+      id="popup_data_detail"
+      data-aria="popup"
+      style="z-index: 2147483647"
+      :style="{ display: moreInfo ? '' : 'none' }"
+      v-if="songer.desc"
+    >
+      <div class="popup_data_detail__cont">
+        <h3 class="popup_data_detail__tit">歌手简介</h3>
+
+        <p v-for="(line, idx) in songer.desc.split('\n')" :key="idx">
+          {{ line }}
+        </p>
+        <p></p>
+      </div>
+      <i class="popup_data_detail__arrow"></i>
     </div>
   </div>
 </template>
@@ -264,6 +292,7 @@ import {
   getSimiSongers,
   getSongerAlbums,
   getSongerMvs,
+  getAlbum,
 } from "api";
 import {
   createSonger,
@@ -278,19 +307,18 @@ import {
 export default {
   data() {
     return {
-      activeName: "first",
+      moreInfo: false,
       id: null,
       songer: {},
-      simiSongers: null,
+      simiSongers: [],
       hotSongs: [],
       songs: [],
-      albums: null,
-      mvs: null,
+      albums: [],
+      mvs: [],
     };
   },
   created() {
     this.id = this.$route.query.id;
-    this.accountId = this.$route.query.accountId;
     this.init();
   },
   methods: {
@@ -322,6 +350,7 @@ export default {
 
       // Get songer album
       const res4 = await getSongerAlbums({ id: this.id, limit: 5, offset: 0 });
+      console.log(res4);
       this.albums = res4.data.hotAlbums.map(
         ({ id, name, publishTime, artists, picUrl }) => {
           return createAlbum({
@@ -333,7 +362,6 @@ export default {
           });
         }
       );
-      console.log(this.albums);
 
       // Get songer mv
       const res5 = await getSongerMvs(this.id);
@@ -350,10 +378,39 @@ export default {
         }
       );
       this.mvs = mvs.length > 5 ? mvs.slice(0, 5) : mvs;
-      console.log(this.mvs);
     },
     playHotSongs() {
       playSonglist(this.hotSongs);
+    },
+    toggleShowMoreInfo() {
+      this.moreInfo = !this.moreInfo;
+    },
+    playAlbum(id) {
+      getAlbum(id).then((res) => {
+        let songs = res.data.songs.map(
+          ({ id, name, ar, dt, al, mv, publishTime }) => {
+            return createSong({
+              id,
+              name,
+              artists: ar,
+              duration: dt,
+              albumName: al.name,
+              mvId: mv,
+              img: al.picUrl,
+            });
+          }
+        );
+        playSonglist(songs);
+      });
+    },
+    gotoAlbumDetail(id) {
+      this.$router.push({
+        path: "/musicLibrary/albumDetail",
+        query: { id: id },
+      });
+    },
+    gotoSongerDetail(query) {
+      this.$router.push({ path: "/musicLibrary/songerDetail", query: query });
     },
   },
   components: {
@@ -525,5 +582,10 @@ ul {
 
 .mod_mv {
   height: 183px;
+}
+
+.popup_data_detail {
+  top: 128px;
+  right: 85px;
 }
 </style>

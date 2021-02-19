@@ -29,9 +29,7 @@
             href="javascript:;"
             class="singer_list_txt__link js_singer"
             :title="item.name"
-            @click="
-              gotoSongerDetail({ id: item.id, accountId: item.accountId })
-            "
+            @click="gotoSongerDetail({ id: item.id })"
             >{{ item.name }}</a
           >
         </li>

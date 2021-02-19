@@ -7,6 +7,11 @@
   background-color: #31c27c;
   color: #fff;
 }
+.mod_btn_green:hover {
+  background-color: #2caf6f;
+  border-color: #2caf6f;
+  color: #fff;
+}
 .mod_btn,
 .mod_btn_green {
   border-radius: 2px;
@@ -1094,4 +1099,42 @@ img .playlist__pic {
   zoom: 1;
   *width: 100%;
   margin: 20px 30px 4px;
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * pop detail */
+.popup_data_detail {
+  position: absolute;
+  top: 364px;
+  right: 303px;
+  width: 580px;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  z-index: 99;
+}
+.popup_data_detail__cont {
+  max-height: 400px;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 30px 5px 30px 10px;
+  overflow-y: auto;
+}
+.popup_data_detail__cont p,
+.popup_data_detail__tit {
+  margin: 0 24px 0 19px;
+}
+.popup_data_detail__tit {
+  line-height: 22px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 0 0 20px;
 }
