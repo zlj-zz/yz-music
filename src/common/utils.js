@@ -1,3 +1,5 @@
+export * from "./storeHelper";
+
 export function processCount(count) {
   if (count > 10000000) {
     return (count / 10000000).toFixed(2) + "亿";

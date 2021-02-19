@@ -81,7 +81,7 @@
             ><i class="toplist_switch__arrow_prev sprite"></i
             ><i class="icon_txt">上一期</i></a
           >
-          <span class="toplist_switch__data js_chosed_week">2021-02-13</span>
+          <!-- <span class="toplist_switch__data js_chosed_week">2021-02-13</span> -->
           <a
             href="javascript:;"
             class="toplist_switch__btn js_next_week"
@@ -161,6 +161,7 @@
                   class="songlist__icon songlist__icon_mv sprite"
                   rel="noopener"
                   title="MV"
+                  :style="{ display: song.mvId == 0 ? 'none' : '' }"
                   ><span class="icon_txt">MV</span></a
                 >
 
@@ -168,11 +169,7 @@
                   class="songlist__songname_txt"
                   style="visibility: visible"
                 >
-                  <a
-                    class="songlist__cover album_name"
-                    data-albummid="002pDbf73FEsT9"
-                    data-albumid="1080467"
-                  >
+                  <a class="songlist__cover album_name">
                     <img
                       class="songlist__pic"
                       style="display: block; visibility: visible"
@@ -189,6 +186,7 @@
                     href="javascript:;"
                     class="list_menu__item list_menu__play js_play"
                     title="播放"
+                    @click="playOne(idx)"
                   >
                     <i class="list_menu__icon_play"></i>
                     <span class="icon_txt">播放</span>
@@ -247,7 +245,7 @@
 
 <script>
 import { getPlaylistDetial, getSongDetail } from "api";
-import { isDef, createSong } from "common/utils";
+import { isDef, createSong, playSonglist, playTheSong } from "common/utils";
 
 export default {
   data() {
@@ -332,9 +330,10 @@ export default {
       else return "icon_rank_down";
     },
     playAll() {
-      this.$store.commit("music/setPlaylist", this.listDatas);
-      this.$store.dispatch("music/startSong", this.listDatas[0]);
-      //this.$store.commit("music/setCurrentSong", songs[0]);
+      playSonglist(this.listDatas);
+    },
+    playOne(id) {
+      playTheSong(this.listDatas[id]);
     },
   },
   watch: {

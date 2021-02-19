@@ -43,9 +43,9 @@
         </ul>
 
         <div class="data__actions" role="toolbar">
-          <a class="mod_btn_green js_all_play"
-            ><i class="mod_btn_green__icon_play"></i>播放全部</a
-          >
+          <a class="mod_btn_green js_all_play" @click="playAll">
+            <i class="mod_btn_green__icon_play"></i>播放全部
+          </a>
 
           <a
             href="javascript:;"
@@ -106,6 +106,7 @@
                     <a
                       class="list_menu__item list_menu__play js_play"
                       title="播放"
+                      @click="playOne(idx)"
                     >
                       <i class="list_menu__icon_play"></i>
                       <span class="icon_txt">播放</span>
@@ -308,7 +309,7 @@
 
 <script>
 import { getAlbum } from "api";
-import { createSong } from "common/utils";
+import { createSong, playSonglist, playTheSong } from "common/utils";
 
 export default {
   data() {
@@ -354,6 +355,12 @@ export default {
         );
         console.log(this.songs);
       });
+    },
+    playAll() {
+      playSonglist(this.songs);
+    },
+    playOne(id) {
+      playTheSong(this.songs[id]);
     },
   },
 };

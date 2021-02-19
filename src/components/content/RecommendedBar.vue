@@ -65,7 +65,7 @@
 
 <script>
 import { getPlayList, getPlaylistDetial, getSongDetail } from "api";
-import { processCount, createSong } from "common/utils";
+import { processCount, createSong, playSonglist } from "common/utils";
 
 export default {
   data() {
@@ -122,8 +122,7 @@ export default {
             });
           });
           console.log(songs);
-          this.$store.commit("music/setPlaylist", songs);
-          this.$store.dispatch("music/startSong", songs[0]);
+          playSonglist(songs);
         });
       });
     },
