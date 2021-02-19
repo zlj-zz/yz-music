@@ -421,6 +421,22 @@ ul {
   padding-left: 46px;
   padding-right: 95px;
 }
+.songlist__songname {
+  line-height: 50px;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.songlist__album,
+.songlist__artist,
+.songlist__header_album,
+.songlist__header_author {
+  float: left;
+  padding-left: 15px;
+  width: 25.5%;
+  box-sizing: border-box;
+}
 
 .songlist__album,
 .songlist__artist,

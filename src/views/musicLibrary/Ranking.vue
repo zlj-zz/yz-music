@@ -380,4 +380,44 @@ th {
   font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
   font-family: Tahoma, Arial, 微软雅黑, sans-serif/9;
 }
+
+/*overwrite*/
+.mod_btn,
+.mod_btn_green {
+  border-radius: 2px;
+  font-size: 14px;
+  margin-right: 6px;
+  padding: 0 23px;
+  height: 38px;
+  line-height: 38px;
+  display: inline-block;
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: left;
+}
+.songlist__item {
+  height: 80px;
+}
+.songlist__album,
+.songlist__artist,
+.songlist__number,
+.songlist__other,
+.songlist__rank,
+.songlist__songname,
+.songlist__time {
+  line-height: 80px;
+  height: 80px;
+}
+.songlist__number {
+  width: 50px;
+  top: 2px;
+  left: 0;
+  text-align: left;
+  font-size: 24px;
+  color: #333;
+}
+.songlist__number--top {
+  color: #ff4222;
+}
 </style>

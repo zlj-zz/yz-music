@@ -1,312 +1,560 @@
 <template>
-  <div class="g-bd">
-    <div class="g-wrap p-prf" v-if="userObj">
-      <dl class="m-proifo f-cb" id="head-box">
-        <dt class="f-pr" id="ava">
-          <img :src="userObj.profile.avatarUrl" />
-        </dt>
-        <dd>
-          <div class="name f-cb">
-            <div class="f-cb">
-              <h2 id="j-name-wrap" class="wrap f-fl f-cb wrap-3">
-                <span class="tit f-ff2 s-fc0 f-thide">{{
-                  userObj.profile.artistName
-                }}</span>
-              </h2>
-            </div>
-            <p class="djp f-fs1 s-fc3">{{ userObj.identify.imageDesc }}</p>
+  <div class="songer-main">
+    <div class="mod_data">
+      <span class="data__cover">
+        <a
+          class="js_goto_tab js_none_index"
+          data-stat="y_new.singer.thistab.singer_pic"
+          data-tab="index"
+          style=""
+          ><img
+            class="data__photo"
+            :src="songer.img"
+            onerror="this.src='//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000';this.onerror=null;"
+            :alt="songer.name"
+        /></a>
+      </span>
+      <div class="data__cont">
+        <div class="data__name">
+          <h1 class="data__name_txt js_none_index" style="">
+            <a class="js_goto_tab" :title="songer.name">{{ songer.name }}</a>
+          </h1>
+          <h1
+            class="data__name_txt js_index"
+            style="display: none"
+            :title="songer.name"
+          >
+            {{ songer.name }}
+          </h1>
+        </div>
+
+        <div class="data__desc" id="singer_desc">
+          <div class="data__desc_txt" id="short_desc">
+            {{ songer.desc }}
           </div>
-          <ul class="data s-fc3 f-cb" id="tab-box">
-            <li class="fst">
-              <a href="/user/event?id=97137413">
-                <strong id="event_count">{{
-                  userObj.profile.eventCount
-                }}</strong>
-                <span>动态</span>
-              </a>
-            </li>
-            <li>
-              <a href="/user/follows?id=97137413">
-                <strong id="follow_count">{{ userObj.profile.follows }}</strong>
-                <span>关注</span>
-              </a>
-            </li>
-            <li>
-              <a href="/user/fans?id=97137413">
-                <strong id="fan_count">{{ userObj.profile.followeds }}</strong>
-                <span>粉丝</span>
-              </a>
-            </li>
-          </ul>
-          <div class="inf s-fc3">
-            <span>签名：{{ userObj.profile.signature }} </span>
-          </div>
-        </dd>
-      </dl>
+
+          <a href="javascript:;" class="js_desc">[更多]</a>
+        </div>
+
+        <ul class="mod_data_statistic">
+          <li class="data_statistic__item">
+            <a class="js_goto_tab">
+              <span class="data_statistic__tit">单曲</span>
+              <strong class="data_statistic__number">{{
+                songer.musicSize
+              }}</strong>
+            </a>
+          </li>
+
+          <li class="data_statistic__item">
+            <a class="js_goto_tab">
+              <span class="data_statistic__tit">专辑</span>
+              <strong class="data_statistic__number">{{
+                songer.albumSize
+              }}</strong>
+            </a>
+          </li>
+
+          <li class="data_statistic__item data_statistic__item--last">
+            <a class="js_goto_tab">
+              <span class="data_statistic__tit">MV</span>
+              <strong class="data_statistic__number">{{
+                songer.mvSize
+              }}</strong>
+            </a>
+          </li>
+        </ul>
+
+        <div class="data__actions" role="toolbar">
+          <a class="mod_btn_green js_singer_radio" @click="playHotSongs">
+            <i class="mod_btn_green__icon_play"></i>播放歌手热门歌曲
+          </a>
+          <a href="javascript:;" class="mod_btn js_follow">
+            <i class="mod_btn__icon_more"> </i>关注 1.7万
+          </a>
+        </div>
+      </div>
     </div>
 
-    <ul id="m_tabs" class="m-tabs f-cb">
-      <li class="fst">
-        <a href="/artist?id=5781" class="z-slt"><em>热门作品</em></a>
-      </li>
-      <li>
-        <a href="/artist/album?id=5781"><em>所有专辑</em></a>
-      </li>
-      <li>
-        <a href="/artist/mv?id=5781"><em>相关MV</em></a>
-      </li>
-      <li>
-        <a href="/artist/desc?id=5781"><em>艺人介绍</em></a>
-      </li>
-    </ul>
+    <div id="index_tab" class="js_tab">
+      <div class="mod_part">
+        <div class="part__hd">
+          <h2 class="part__tit">热门歌曲</h2>
+
+          <a
+            href="//y.qq.com/n/yqq/singer/001xvjTU1ICL8Z.html#tab=song&amp;"
+            class="part__more js_goto_tab"
+          >
+            全部<i class="icon_part_arrow sprite"></i>
+          </a>
+        </div>
+
+        <div class="mod_songlist">
+          <ul class="songlist__header">
+            <li class="songlist__edit songlist__edit--check sprite">
+              <input type="checkbox" class="songlist__checkbox" />
+            </li>
+            <li class="songlist__header_name">歌曲</li>
+            <li class="songlist__header_album">专辑</li>
+            <li class="songlist__header_time">时长</li>
+          </ul>
+
+          <ul class="songlist__list">
+            <li v-for="(song, idx) in hotSongs" :key="song.id">
+              <div
+                class="songlist__item"
+                :class="(idx + 1) % 2 == 0 ? 'songlist__item--even' : ''"
+              >
+                <div class="songlist__edit songlist__edit--check sprite">
+                  <input type="checkbox" class="songlist__checkbox" />
+                </div>
+                <div class="songlist__number">{{ idx + 1 }}</div>
+                <div class="songlist__songname">
+                  <!-- <i
+                    class="songlist__icon songlist__icon_exclusive sprite"
+                    title="独家"
+                  ></i> -->
+
+                  <span class="songlist__songname_txt">
+                    <a class="js_song" :title="song.name">
+                      {{ song.name }}
+                      <span class="songlist__song_txt"></span>
+                    </a>
+                  </span>
+                  <div class="mod_list_menu">
+                    <a
+                      class="list_menu__item list_menu__play js_play"
+                      title="播放"
+                    >
+                      <i class="list_menu__icon_play"></i>
+                      <span class="icon_txt">播放</span>
+                    </a>
+                    <a
+                      href="javascript:;"
+                      class="list_menu__item list_menu__add js_fav"
+                      title="添加到歌单"
+                      aria-haspopup="true"
+                    >
+                      <i class="list_menu__icon_add"></i>
+                      <span class="icon_txt">添加到歌单</span>
+                    </a>
+
+                    <a
+                      href="javascript:;"
+                      class="list_menu__item list_menu__down js_down"
+                      title="VIP下载"
+                      aria-haspopup="true"
+                    >
+                      <i class="list_menu__icon_down_vip"></i>
+                      <span class="icon_txt">VIP下载</span>
+                    </a>
+
+                    <a
+                      href="javascript:;"
+                      class="list_menu__item list_menu__share js_share"
+                      title="分享"
+                      aria-haspopup="true"
+                    >
+                      <i class="list_menu__icon_share"></i>
+                      <span class="icon_txt">分享</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="songlist__album">
+                  <a :title="song.albumName">{{ song.albumName }}</a>
+                </div>
+                <div class="songlist__time">{{ song.durationText }}</div>
+                <div class="songlist__other"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod_part" v-if="albums">
+        <div class="part__hd">
+          <h2 class="part__tit">专辑</h2>
+        </div>
+        <div class="mod_playlist">
+          <ul class="playlist__list" id="albumlist">
+            <li
+              class="playlist__item"
+              onmouseover="this.className=(this.className+' playlist__item--hover')"
+              onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
+              v-for="album in albums"
+              :key="album.id"
+            >
+              <div class="playlist__item_box">
+                <div class="playlist__cover mod_cover">
+                  <a class="js_album">
+                    <img
+                      class="playlist__pic"
+                      onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
+                      :src="album.img"
+                      :alt="album.name"
+                    />
+                    <i class="mod_cover__icon_play js_play"></i>
+                  </a>
+                </div>
+                <h4 class="playlist__title">
+                  <span class="playlist__title_txt"
+                    ><a :title="album.name" class="js_album">{{
+                      album.name
+                    }}</a></span
+                  >
+                </h4>
+                <div class="playlist__other">{{ album.publishTime }}</div>
+                <a
+                  href="javascript:;"
+                  class="btn_operate_menu js_albumlist_more"
+                  ><span class="icon_txt">更多</span></a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod_part" v-if="mvs">
+        <div class="part__hd">
+          <h2 class="part__tit">MV</h2>
+
+          <a class="part__more js_goto_tab"
+            >全部<i class="icon_part_arrow sprite"></i
+          ></a>
+        </div>
+        <div class="mod_mv">
+          <ul class="mv_list__list" id="mvlist">
+            <li class="mv_list__item" v-for="mv in mvs" :key="mv.id">
+              <div class="mv_list__item_box">
+                <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
+                  <img
+                    class="mv_list__pic"
+                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
+                    :src="mv.img"
+                    :alt="mv.name"
+                  />
+                  <i class="mod_cover__icon_play"></i>
+                </a>
+                <h3 class="mv_list__title">
+                  <a class="js_mv" :title="mv.name">{{ mv.name }}</a>
+                </h3>
+
+                <div class="mv_list__info">
+                  <span class="mv_list__listen"
+                    ><i class="mv_list__listen_icon sprite"></i
+                    >{{ mv.playCount }}</span
+                  >
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod_part" id="similar" style="" v-if="simiSongers">
+        <div class="part__hd">
+          <h2 class="part__tit">相似歌手</h2>
+        </div>
+        <div class="mod_singer_list">
+          <ul class="singer_list__list">
+            <li
+              class="singer_list__item"
+              v-for="songer in simiSongers"
+              :key="songer.id"
+            >
+              <div class="singer_list__item_box">
+                <a
+                  class="singer_list__cover js_singer"
+                  :title="songer.name"
+                  hidefocus="true"
+                >
+                  <img
+                    class="singer_list__pic"
+                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000';this.onerror=null;"
+                    :src="songer.img"
+                    :alt="songer.name"
+                  />
+                </a>
+                <h3 class="singer_list__title">
+                  <a class="js_singer" :title="songer.name">{{
+                    songer.name
+                  }}</a>
+                </h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { getUserDetail } from "api";
+import {
+  getUserDetail,
+  getSongerDetail,
+  getSongerTop50,
+  getSimiSongers,
+  getSongerAlbums,
+  getSongerMvs,
+} from "api";
+import {
+  createSonger,
+  createSimiSonger,
+  createUser,
+  createSong,
+  createAlbum,
+  createMv,
+  playSonglist,
+} from "common/utils";
 
 export default {
   data() {
     return {
       activeName: "first",
-      userObj: null,
+      id: null,
+      songer: {},
+      simiSongers: null,
+      hotSongs: [],
+      songs: [],
+      albums: null,
+      mvs: null,
     };
   },
   created() {
     this.id = this.$route.query.id;
     this.accountId = this.$route.query.accountId;
-    getUserDetail(this.accountId).then((res) => {
-      console.log(res);
-      this.userObj = res.data;
-    });
+    this.init();
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    async init() {
+      // Get songer detail
+      const res1 = await getSongerDetail(this.id);
+      this.songer = createSonger(res1.data.data);
+
+      // Get songer top 50
+      const res2 = await getSongerTop50(this.id);
+      this.hotSongs = res2.data.songs.map((song) => {
+        return createSong({
+          id: song.id,
+          name: song.name,
+          artists: song.ar,
+          duration: song.dt,
+          albumName: song.al.name,
+          img: song.al.picUrl,
+        });
+      });
+
+      // Get simi songer
+      const res3 = await getSimiSongers(this.id);
+      let simiSongers = res3.data.artists.map((songer) => {
+        return createSimiSonger(songer);
+      });
+      this.simiSongers =
+        simiSongers.length > 5 ? simiSongers.slice(0, 5) : simiSongers;
+
+      // Get songer album
+      const res4 = await getSongerAlbums({ id: this.id, limit: 5, offset: 0 });
+      this.albums = res4.data.hotAlbums.map(
+        ({ id, name, publishTime, artists, picUrl }) => {
+          return createAlbum({
+            id,
+            name,
+            img: picUrl,
+            artists,
+            publishTime,
+          });
+        }
+      );
+      console.log(this.albums);
+
+      // Get songer mv
+      const res5 = await getSongerMvs(this.id);
+      let mvs = res5.data.mvs.map(
+        ({ id, name, imgurl, duration, playCount, publishTime }) => {
+          return createMv({
+            id,
+            name,
+            img: imgurl,
+            duration,
+            playCount,
+            publishTime,
+          });
+        }
+      );
+      this.mvs = mvs.length > 5 ? mvs.slice(0, 5) : mvs;
+      console.log(this.mvs);
+    },
+    playHotSongs() {
+      playSonglist(this.hotSongs);
     },
   },
 };
 </script>
 
 <style scoped>
+blockquote,
+body,
+button,
+dd,
+dl,
+dt,
+fieldset,
+form,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-header,
-menu,
-section,
-p,
+hr,
+html,
 input,
+lengend,
+li,
+ol,
+p,
+pre,
 td,
+textarea,
 th,
-ins {
-  padding: 0;
+ul {
   margin: 0;
+  margin-right: 0px;
+  padding: 0;
 }
-
-.g-bd,
-.g-bd1,
-.g-bd2,
-.g-bd3,
-.g-bd4,
-.g-bd5,
-.g-bd6,
-.g-bd7 {
-  width: 980px;
-  min-height: 700px;
-  _height: 700px;
+.songer-main {
+  z-index: 2;
+}
+.songer-main,
+.section_inner {
+  max-width: 1200px;
   margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid #d3d3d3;
-  border-width: 0 1px;
-}
-
-.g-wrap {
-  padding: 40px;
-}
-
-.m-proifo {
-  margin-bottom: 43px;
-}
-
-.m-proifo dt {
-  float: left;
-  width: 188px;
-  margin-right: 40px;
-}
-
-.f-pr {
   position: relative;
-  zoom: 1;
 }
 
-.m-proifo dt img {
-  display: block;
-  width: 180px;
-  height: 180px;
-  padding: 3px;
-  background: #fff;
-  border: 1px solid #d5d5d5;
+/* add extra */
+.data__photo {
+  border-radius: 999px;
 }
-
-.m-proifo dd {
+/*overwrite*/
+.data__cont {
+  padding-top: 31px;
+}
+/*overwrite*/
+.data__name_txt {
   float: left;
-  width: 670px;
+  font-size: 38px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  margin-right: 10px;
 }
-
-.m-proifo .name {
-  padding-bottom: 12px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+/*overwrite*/
+.data__actions {
+  bottom: 30px;
 }
-
-.m-proifo .name .wrap {
-  padding-bottom: 3px;
+.songlist__header {
+  background-color: #fbfbfd;
 }
-
-.f-fl {
-  float: left;
+.songlist__header,
+.songlist__item {
+  position: relative;
+  padding-left: 46px;
+  padding-right: 95px;
 }
-
-.m-proifo .name .wrap-3 .tit {
-  max-width: 260px;
-}
-
-.m-proifo .name .tit {
-  float: left;
-  margin-top: 3px;
-  font-size: 22px;
-  font-weight: normal;
-  line-height: 30px;
-}
-
-.s-fc0,
-a.s-fc0:hover {
-  color: #000;
-}
-
-.f-thide {
+/*overwrite*/
+.songlist__songname {
+  line-height: 50px;
+  height: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  word-wrap: normal;
 }
-
-.f-ff2 {
-  font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
-}
-
-.m-proifo .name .btn {
+/*overwrite*/
+.songlist__album,
+.songlist__artist,
+.songlist__header_album,
+.songlist__header_author {
   float: left;
-  margin: 4px 0 0 15px;
+  padding-left: 15px;
+  width: 25.5%;
+  box-sizing: border-box;
 }
-
-.u-btn-6,
-.u-btn-ygz {
-  width: 70px;
-  height: 31px;
-  background-position: 0 -919px;
-}
-
-.u-btn {
-  display: inline-block;
-}
-
-.u-btn-5 {
-  width: 81px;
-  height: 31px;
-  background-position: 0 -955px;
-}
-
-.u-btn-8 {
-  width: 40px;
-  height: 31px;
-  padding-left: 30px;
-  background-position: 0 -720px;
-  color: #fff;
-  line-height: 30px;
-}
-
-.m-proifo .name .djp:first-of-type {
-  margin-top: 8px;
-}
-
-.m-proifo .name .djp {
-  margin-top: 6px;
-  line-height: 20px;
-  float: left;
-}
-
-.f-fs1 {
+/*overwrite*/
+.songlist__album,
+.songlist__artist,
+.songlist__number,
+.songlist__other,
+.songlist__time {
+  line-height: 50px;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 14px;
 }
-
-.m-proifo .data {
-  height: 41px;
-  margin-bottom: 15px;
-}
-
-.m-proifo .data a {
+.data_statistic__item {
   display: inline-block;
-  *display: inline;
-  position: relative;
+  border-right: solid 1px #c9c9c9;
+  text-align: center;
+  padding-right: 20px;
+  margin-right: 20px;
+  font-size: 18px;
+}
+.data_statistic__item--last {
+  border-right: 0 none;
+}
+
+.mod_part .mv_list__item,
+.mod_part .singer_list__item {
+  width: 20%;
+}
+.mod_part .mv_list__item,
+.mod_part .playlist__item {
+  padding-bottom: 0;
+}
+.mv_list__list {
+  margin-right: -20px;
   zoom: 1;
-  color: #666;
 }
-
-.m-proifo .data a:hover {
-  color: #31c27c;
-}
-
-.m-proifo .data strong {
-  display: block;
-  margin-top: -4px;
-  font-size: 24px;
-  font-weight: normal;
-  cursor: pointer;
-}
-
-.m-proifo .data .fst {
-  padding-left: 0;
-  border-left: none;
-}
-
-.m-proifo .data li {
+.mv_list__item {
   float: left;
-  padding: 0 40px 0 20px;
-  border-left: 1px solid #ddd;
+  width: 25%;
+  padding-bottom: 44px;
+  overflow: hidden;
 }
 
-.f-cb::after {
-  clear: both;
-  content: ".";
-  display: block;
-  height: 0;
-  visibility: hidden;
+.mod_singer_list {
+  overflow: hidden;
+  text-align: center;
+}
+.singer_list__list {
+  margin-right: -20px;
+  overflow: hidden;
+  zoom: 1;
+  margin-bottom: -24px;
 }
 
-.m-proifo .inf {
-  margin-bottom: 5px;
-  line-height: 21px;
+.singer_list__item {
   float: left;
-  font-size: 12px;
+  width: 20%;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.singer_list__item_box {
+  position: relative;
+  margin-right: 20px;
+  background-color: #fbfbfd;
+  min-height: 195px;
+  padding: 25px 0;
+  overflow: hidden;
 }
 
-li,
-s {
-  list-style: none;
-}
-
-a {
-  color: #333;
+.mod_mv {
+  height: 183px;
 }
 </style>
