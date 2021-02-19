@@ -1121,13 +1121,6 @@ img .playlist__pic {
   border: 1px solid #ddd;
   z-index: 99;
 }
-.popup_data_detail__cont {
-  max-height: 400px;
-  font-size: 14px;
-  line-height: 22px;
-  margin: 30px 5px 30px 10px;
-  overflow-y: auto;
-}
 .popup_data_detail__cont p,
 .popup_data_detail__tit {
   margin: 0 24px 0 19px;

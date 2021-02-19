@@ -4,50 +4,7 @@
 
     <div class="detail_layout">
       <div class="detail_layout__main">
-        <div class="mod_songlist">
-          <ul class="songlist__header">
-            <li class="songlist__edit songlist__edit--check sprite">
-              <input type="checkbox" class="songlist__checkbox js_check_all" />
-            </li>
-            <li class="songlist__header_name">歌曲</li>
-            <li class="songlist__header_author">歌手</li>
-            <li class="songlist__header_time">时长</li>
-          </ul>
-
-          <ul class="songlist__list" id="song_box">
-            <li v-for="(song, idx) in songs" :key="song.id">
-              <div
-                class="songlist__item"
-                :claa="(idx + 1) % 2 == 0 ? 'songlist__item--even' : ''"
-              >
-                <div class="songlist__edit songlist__edit--check sprite">
-                  <input type="checkbox" class="songlist__checkbox" />
-                </div>
-                <div class="songlist__number">{{ idx + 1 }}</div>
-                <div class="songlist__songname">
-                  <!-- <i
-                    class="songlist__icon songlist__icon_exclusive sprite"
-                    title="独家"
-                  ></i> -->
-
-                  <span class="songlist__songname_txt">
-                    <a :title="song.name">{{ song.name }}</a>
-                  </span>
-
-                  <!-- mod list menu -->
-                  <mod-list-menu :song="song" />
-                </div>
-                <div class="songlist__artist">
-                  <a :title="song.artistsText" class="singer_name">{{
-                    song.artistsText
-                  }}</a>
-                </div>
-                <div class="songlist__time">{{ song.durationText }}</div>
-                <div class="songlist__other"></div>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <detail-songlist :songs="songs" :listType="'album'" />
       </div>
 
       <div class="detail_layout__other">
@@ -56,16 +13,7 @@
           <div class="about__cont">
             <p>{{ album.desc }}</p>
           </div>
-          <!-- <a
-            href="javascript:;"
-            data-stat="y_new.album.moreinfo"
-            class="about__more"
-            data-left="0"
-            data-top="-187"
-            data-target="popup_data_detail"
-            style="display: "
-            >[更多]</a
-          > -->
+          <a class="about__more" @click="toggleShowMoreInfo">[更多]</a>
         </div>
 
         <div class="other_part">
@@ -196,11 +144,30 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="popup_data_detail"
+      id="popup_data_detail"
+      data-aria="popup"
+      style="z-index: 2147483647"
+      :style="{ display: moreInfo ? '' : 'none' }"
+      v-if="album.desc"
+    >
+      <div class="popup_data_detail__cont">
+        <h3 class="popup_data_detail__tit">歌手简介</h3>
+        <p v-for="(line, idx) in album.desc.split('\n')" :key="idx">
+          {{ line }}
+        </p>
+        <p></p>
+      </div>
+      <i class="popup_data_detail__arrow"></i>
+    </div>
   </div>
 </template>
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import DetailSonglist from "components/common/DetailSonglist";
 import ModListMenu from "components/common/ModListMenu";
 import { getAlbum } from "api";
 import { createSong, playSonglist, formatDate } from "common/utils";
@@ -208,9 +175,10 @@ import { createSong, playSonglist, formatDate } from "common/utils";
 export default {
   data() {
     return {
+      moreInfo: false,
       id: this.$route.query.id,
       album: {},
-      songs: {},
+      songs: [],
     };
   },
   mounted() {
@@ -219,7 +187,7 @@ export default {
   methods: {
     init() {
       getAlbum(this.id).then((res) => {
-        console.log(res);
+        //console.log(res);
         let ds = res.data;
         let album = {
           id: ds.album.id,
@@ -233,7 +201,7 @@ export default {
           publishTime: formatDate(ds.album.publishTime, "yy-MM-dd"),
         };
         this.album = album;
-        console.log(album);
+        //console.log(album);
         this.songs = ds.songs.map(
           ({ id, name, ar, dt, al, mv, publishTime }) => {
             return createSong({
@@ -250,6 +218,9 @@ export default {
         console.log(this.songs);
       });
     },
+    toggleShowMoreInfo() {
+      this.moreInfo = !this.moreInfo;
+    },
     playAll() {
       playSonglist(this.songs);
     },
@@ -261,6 +232,7 @@ export default {
   },
   components: {
     DetailInfoCard,
+    DetailSonglist,
     ModListMenu,
   },
 };
@@ -305,54 +277,22 @@ ul {
   margin-right: 0px;
   padding: 0;
 }
-
-.songlist__header {
-  background-color: #fbfbfd;
+.about__tit {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 46px;
 }
-.songlist__header {
-  height: 50px;
-  line-height: 50px;
-  background-color: rgba(0, 0, 0, 0.01);
-  color: #999;
-}
-.songlist__header,
-.songlist__item {
-  position: relative;
-  padding-left: 46px;
-  padding-right: 95px;
-}
-.songlist__songname {
-  line-height: 50px;
-  height: 50px;
+.about__cont {
+  max-height: 88px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.songlist__album,
-.songlist__artist,
-.songlist__header_album,
-.songlist__header_author {
-  float: left;
-  padding-left: 15px;
-  width: 25.5%;
-  box-sizing: border-box;
+  font-size: 14.3px;
 }
 
-.songlist__album,
-.songlist__artist,
-.songlist__number,
-.songlist__other,
-.songlist__time {
-  line-height: 50px;
-  height: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.popup_data_detail__cont {
+  max-height: 400px;
   font-size: 14px;
-}
-
-.songlist__song_txt,
-.songlist__time {
-  color: #999;
+  line-height: 22px;
+  margin: 30px 5px 30px 10px;
+  overflow-y: auto;
 }
 </style>

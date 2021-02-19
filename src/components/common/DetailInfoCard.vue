@@ -7,7 +7,7 @@
         onerror="this.src='//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000';this.onerror=null;"
         :src="obj.img"
         :alt="obj.name"
-        :class="isSonger ? 'songer__photo' : ''"
+        :class="cardType == 'songer' ? 'songer__photo' : ''"
       />
       <i class="data__cover_mask" v-if="cardType == 'album'"></i>
     </span>

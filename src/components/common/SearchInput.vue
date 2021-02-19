@@ -53,7 +53,32 @@ export default {
       });
     },
     handleSelect(item) {
-      console.log("handleSelect", item);
+      if (item.id && item.id != 0) {
+        switch (item.type) {
+          case "歌曲":
+            this.$router.push({
+              path: "/musicLibrary/songDetail",
+              query: { id: item.id },
+            });
+            break;
+          case "歌手":
+            this.$router.push({
+              path: "/musicLibrary/songerDetail",
+              query: { id: item.id },
+            });
+            break;
+          case "专辑":
+            this.$router.push({
+              path: "/musicLibrary/albumDetail",
+              query: { id: item.id },
+            });
+            break;
+          default:
+            console.log(item.type);
+        }
+      } else {
+        console.log("handleSelect", item);
+      }
     },
     querySearchAsync(queryString, cb) {
       console.log(queryString);
