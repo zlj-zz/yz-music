@@ -10,6 +10,7 @@ const Radions = () => import("views/musicLibrary/Radions");
 const MV = () => import("views/musicLibrary/MV");
 const SongerDetail = () => import("views/musicLibrary/SongerDetail");
 const SongDetail = () => import("views/musicLibrary/SongDetail");
+const AlbumDetail = () => import("views/musicLibrary/AlbumDetail");
 
 const My = () => import("views/My");
 
@@ -31,7 +32,8 @@ const routes = [
       { path: "radions", component: Radions },
       { path: "mv", component: MV },
       { path: "songerDetail", name: "songerDetail", component: SongerDetail },
-      { path: "songDetail", component: SongDetail }
+      { path: "songDetail", component: SongDetail },
+      { path: "albumDetail", component: AlbumDetail }
     ]
   },
   {
