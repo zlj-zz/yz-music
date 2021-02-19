@@ -43,7 +43,12 @@
               </div>
               <h4 class="playlist__title">
                 <span class="playlist__title_txt">
-                  <a class="js_album" :title="album.name">{{ album.name }}</a>
+                  <a
+                    class="js_album"
+                    :title="album.name"
+                    @click="gotoAlbumDetail(album.id)"
+                    >{{ album.name }}</a
+                  >
                 </span>
               </h4>
 
@@ -121,6 +126,12 @@ export default {
     currentChange(v) {
       console.log(v);
       this.page = v;
+    },
+    gotoAlbumDetail(id) {
+      this.$router.push({
+        path: "/musicLibrary/albumDetail",
+        query: { id: id },
+      });
     },
   },
   watch: {

@@ -131,6 +131,7 @@
           <li v-for="(song, idx) in listDatas" :key="song.id" :id="song.id">
             <div
               class="songlist__item"
+              :class="idx % 2 == 0 ? 'songlist__item--even' : ''"
               onmouseover="this.className=(this.className+' songlist__item--hover')"
               onmouseout="this.className=this.className.replace(/ songlist__item--hover/, '')"
             >

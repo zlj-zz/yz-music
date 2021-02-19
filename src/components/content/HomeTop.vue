@@ -89,6 +89,9 @@ export default {
 </script>
 
 <style scoped>
+.list {
+  font-size: 31px;
+}
 .toplist_main {
   margin: 0 auto;
   text-align: center;

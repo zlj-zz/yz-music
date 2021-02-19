@@ -136,6 +136,7 @@ export default {
 .recommended_list {
   letter-spacing: 20px;
   text-align: center;
+  font-size: 31px;
 }
 .playlist {
   display: inline-block;
