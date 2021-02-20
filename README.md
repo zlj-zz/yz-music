@@ -1,24 +1,27 @@
 # yz-music
 
+**This is a music website made with `Vue`.**
+
+Some components use [element plus](https://github.com/element-plus/element-plus), imitating the style of QQ music
+
+API using [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
+![home](./demo/demo.gif)
+
 ## Project setup
+
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
-yarn serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
-```
-yarn build
-```
 
-### Run your unit tests
 ```
-yarn test:unit
+npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
