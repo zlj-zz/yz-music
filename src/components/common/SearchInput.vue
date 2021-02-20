@@ -1,16 +1,18 @@
 <template>
   <el-autocomplete
+    id="my-search-input"
     placeholder="请输入内容"
     v-model="state"
     clearable="clearable"
     popper-class="my-autocomplete"
     :fetch-suggestions="querySearchAsync"
     @select="handleSelect"
+    @keyup.enter="normalSearch"
   >
     <template #suffix>
       <i
         class="el-icon-search el-input__icon my-search-btn"
-        @click="handleSelect"
+        @click="normalSearch"
       >
       </i>
     </template>
@@ -52,6 +54,15 @@ export default {
         //console.log(this.defaultSuggest);
       });
     },
+    normalSearch() {
+      let key = document.getElementById("my-search-input").value;
+      console.log(key);
+      if (key)
+        this.$router.push({
+          path: "/musicLibrary/searchResultDetail",
+          query: { keyword: key },
+        });
+    },
     handleSelect(item) {
       if (item.id && item.id != 0) {
         switch (item.type) {
@@ -81,7 +92,6 @@ export default {
       }
     },
     querySearchAsync(queryString, cb) {
-      console.log(queryString);
       if (!queryString) {
         let results = this.defaultSuggest;
         cb(results);
@@ -90,7 +100,6 @@ export default {
         getSearchSuggst(queryString).then((res) => {
           let rest = res.data.result;
           let results = prcessSuggest(rest);
-          console.log(results);
           cb(results);
           return;
         });

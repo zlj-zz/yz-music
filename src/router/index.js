@@ -12,6 +12,8 @@ const SongerDetail = () => import("views/musicLibrary/SongerDetail");
 const SongDetail = () => import("views/musicLibrary/SongDetail");
 const AlbumDetail = () => import("views/musicLibrary/AlbumDetail");
 const PlaylistDetail = () => import("views/musicLibrary/PlaylistDetail");
+const SearchResultDetail = () =>
+  import("views/musicLibrary/SearchResultDetail");
 
 const My = () => import("views/My");
 
@@ -32,10 +34,11 @@ const routes = [
       { path: "classified", component: Classified },
       { path: "radions", component: Radions },
       { path: "mv", component: MV },
-      { path: "songerDetail", name: "songerDetail", component: SongerDetail },
+      { path: "songerDetail", component: SongerDetail },
       { path: "songDetail", component: SongDetail },
       { path: "albumDetail", component: AlbumDetail },
-      { path: "playlistDetail", component: PlaylistDetail }
+      { path: "playlistDetail", component: PlaylistDetail },
+      { path: "searchResultDetail", component: SearchResultDetail }
     ]
   },
   {

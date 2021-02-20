@@ -1,3 +1,15 @@
+export function createSonger(songer) {
+  return {
+    id: songer.artist.id,
+    name: songer.artist.name,
+    img: songer.artist.cover,
+    desc: songer.artist.briefDesc,
+    musicSize: songer.artist.musicSize,
+    albumSize: songer.artist.albumSize,
+    mvSize: songer.artist.mvSize
+  };
+}
+
 export function createSong(song) {
   const {
     id,
@@ -29,7 +41,7 @@ export function createSong(song) {
 }
 
 export function createOneSong(song) {
-  const { id, name, al, dt, ar, mv, publishTime, ...rest } = song;
+  const { id, name, al, dt, ar, mv, publishTime, lyrics } = song;
   return {
     id,
     name,
@@ -42,7 +54,8 @@ export function createOneSong(song) {
     publishTime: formatDate(publishTime, "yyyy-MM-dd"),
     albumId: al.id,
     albumName: al.name,
-    mvId: mv
+    mvId: mv,
+    lyrics
   };
 }
 export function createSongs(songs) {
@@ -110,16 +123,70 @@ export function createMvs(mvs) {
   return mvs.map(mv => createMv(mv));
 }
 
-export function createSonger(songer) {
+export function createPlaylist(list) {
+  const {
+    id,
+    name,
+    coverImgUrl,
+    creator,
+    description,
+    playCount,
+    bookCount,
+    trackCount
+  } = list;
+
   return {
-    id: songer.artist.id,
-    name: songer.artist.name,
-    img: songer.artist.cover,
-    desc: songer.artist.briefDesc,
-    musicSize: songer.artist.musicSize,
-    albumSize: songer.artist.albumSize,
-    mvSize: songer.artist.mvSize
+    id,
+    name,
+    img: coverImgUrl,
+    creator,
+    creatorId: creator.userId,
+    creatorName: creator.nickname,
+    desc: description,
+    playCount: processCount(playCount),
+    bookCount: processCount(bookCount),
+    trackCount: processCount(trackCount)
   };
+}
+export function createPlaylists(lists) {
+  return lists.map(list => createPlaylist(list));
+}
+
+export function createUser(user) {
+  const {
+    userId,
+    nickname,
+    avatarUrl,
+    followeds,
+    follows,
+    gender,
+    birthday,
+    playlistCount,
+    playlistBeSubscribedCount,
+    detailDescription,
+    signature,
+    city,
+    vipType
+  } = user;
+
+  return {
+    id: userId,
+    name: nickname,
+    img: avatarUrl,
+    followeds: processCount(followeds),
+    follows: processCount(follows),
+    gender,
+    birthday: formatDate(birthday, "yyyy-MM-dd"),
+    playlistCount,
+    playlistBeSubscribedCount,
+    desc: detailDescription,
+    signature,
+    city,
+    vipType
+  };
+}
+export function createUsers(users) {
+  return users.map(user => createUser(user));
 }
 
 export function createSimiSonger(songer) {
@@ -129,8 +196,6 @@ export function createSimiSonger(songer) {
     img: songer.picUrl
   };
 }
-
-export function createUser(user) {}
 
 export function prcessSuggest(rest) {
   let results = [];
