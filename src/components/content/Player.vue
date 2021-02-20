@@ -64,7 +64,7 @@
           </div>
           <div class="m-pbar" data-action="noop">
             <div class="barbg j-flag" @click="clickBar">
-              <div class="rdy" style="width: 0px"></div>
+              <div class="rdy" :style="'width:' + bufferPrecent + 'px'"></div>
               <div class="cur" :style="'width: ' + barPrecent + '%'">
                 <span class="btn f-tdn f-alpha" @mousedown="onChangeBar">
                   <i></i>
@@ -159,6 +159,7 @@ export default {
       songReady: false,
       volumePrecent: 1,
       volume: 100,
+      bufferTime: 0,
     };
   },
   mounted() {
@@ -177,6 +178,7 @@ export default {
       this.songReady = true;
     },
     end() {
+      this.bufferTime = 0;
       this.next();
     },
     togglePlay() {
@@ -196,14 +198,19 @@ export default {
       this.audio.pause();
     },
     prev() {
+      this.bufferTime = 0;
       this.$store.dispatch("music/startSong", this.prevSong);
     },
     next() {
+      this.bufferTime = 0;
       this.$store.dispatch("music/startSong", this.nextSong);
     },
     timeupdate(e) {
       const time = e.target.currentTime;
-      //console.log(time);
+      let timeRang = e.target.buffered;
+      let buffer = timeRang.end(timeRang.length - 1);
+      this.bufferTime = buffer;
+      console.log(buffer);
       this.$store.commit("music/setCurrentTime", time);
     },
     onChangeMode() {
@@ -326,6 +333,9 @@ export default {
     barPrecent() {
       if (!this.isHoldBtn)
         return (this.currentTime / (this.currentSong.duration / 1000)) * 100;
+    },
+    bufferPrecent() {
+      return (this.bufferTime / (this.currentSong.duration / 1000)) * 493;
     },
   },
   watch: {

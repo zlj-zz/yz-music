@@ -3,10 +3,10 @@
     <div class="mod_header">
       <div class="section_inner">
         <h1 class="qqmusic_title">
-          <a>
-            <!-- <img src="" alt="YZ-music" class="logo" /> -->
-            <h1 class="logo">YZ-music</h1>
-          </a>
+          <!-- <a>
+            <img src="" alt="YZ-music" class="logo" />
+          </a> -->
+          <h1 class="logo">YZ-music</h1>
         </h1>
         <!-- 导航 S -->
         <ul class="mod_top_nav" role="nav">
@@ -189,32 +189,11 @@ export default {
 </script>
 
 <style scoped>
-blockquote,
-body,
-button,
-dd,
-dl,
-dt,
-fieldset,
-form,
 h1,
 h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-html,
-input,
-lengend,
+ul,
 li,
-ol,
-p,
-pre,
-td,
-textarea,
-th,
-ul {
+p {
   margin: 0;
   padding: 0;
 }
@@ -399,6 +378,9 @@ ul {
   visibility: visible;
   max-height: 800px;
   transition: max-height 0.6s ease-out;
+}
+a:hover {
+  color: #31c27c;
 }
 
 .logo {

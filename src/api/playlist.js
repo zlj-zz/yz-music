@@ -1,7 +1,7 @@
 import { requset } from "./base";
 
-export const getPlayList = (limit, page, cat) => {
-  let order = "hot";
+// ( 网友精选碟 )
+export const getPlayList = (limit, page, cat, order) => {
   let offset = (parseInt(page) - 1) * limit;
   let params = {
     limit: limit,
@@ -12,7 +12,12 @@ export const getPlayList = (limit, page, cat) => {
   return requset.get("/top/playlist", { params: params });
 };
 
+// 获取歌单详情
 export const getPlaylistDetial = id => requset.get(`playlist/detail?id=${id}`);
 
+// 调用后可获取歌单详情动态部分,如评论数,是否收藏,播放数
 export const getPlaylistDynamicDetial = id =>
   requset.get(`/playlist/detail/dynamic?id=${id}`);
+
+// 获取歌单种类
+export const getCatList = () => requset.get("/playlist/catlist");

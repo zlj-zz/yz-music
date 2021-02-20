@@ -46,6 +46,7 @@ export function createOneSong(song) {
     id,
     name,
     img: al.picUrl,
+    url: genSongPlayUrl(song.id),
     artists: ar,
     artistsText: genArtistisText(ar),
     duration: dt,

@@ -158,10 +158,10 @@
               </div>
 
               <div class="songlist__songname">
-                <i
+                <!-- <i
                   class="songlist__icon songlist__icon_exclusive sprite"
                   title="独家"
-                ></i>
+                ></i> -->
 
                 <a
                   class="songlist__icon songlist__icon_mv sprite"

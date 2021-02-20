@@ -1,7 +1,7 @@
 <template>
   <el-autocomplete
     id="my-search-input"
-    placeholder="请输入内容"
+    placeholder="单曲/专辑/MV/歌手/用户/歌词"
     v-model="state"
     clearable="clearable"
     popper-class="my-autocomplete"
@@ -56,7 +56,6 @@ export default {
     },
     normalSearch() {
       let key = document.getElementById("my-search-input").value;
-      console.log(key);
       if (key)
         this.$router.push({
           path: "/musicLibrary/searchResultDetail",
@@ -88,7 +87,11 @@ export default {
             console.log(item.type);
         }
       } else {
-        console.log("handleSelect", item);
+        if (item.value)
+          this.$router.push({
+            path: "/musicLibrary/searchResultDetail",
+            query: { keyword: item.value },
+          });
       }
     },
     querySearchAsync(queryString, cb) {
