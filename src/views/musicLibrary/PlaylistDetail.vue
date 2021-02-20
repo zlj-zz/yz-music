@@ -44,7 +44,6 @@
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import DetailSonglist from "components/common/DetailSonglist";
-import ModListMenu from "components/common/ModListMenu";
 import { getPlayList, getPlaylistDetial, getSongDetail } from "api";
 import { processCount, createSong, playSonglist } from "common/utils";
 
@@ -107,7 +106,6 @@ export default {
   components: {
     DetailInfoCard,
     DetailSonglist,
-    ModListMenu,
   },
 };
 </script>

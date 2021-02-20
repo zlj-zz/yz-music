@@ -198,7 +198,7 @@ export default {
           type: ds.album.type,
           version: ds.album.subType,
           company: ds.album.company,
-          publishTime: formatDate(ds.album.publishTime, "yy-MM-dd"),
+          publishTime: formatDate(ds.album.publishTime, "yyyy-MM-dd"),
         };
         this.album = album;
         //console.log(album);

@@ -28,33 +28,86 @@ export function createSong(song) {
   };
 }
 
+export function createOneSong(song) {
+  const { id, name, al, dt, ar, mv, publishTime, ...rest } = song;
+  return {
+    id,
+    name,
+    img: al.picUrl,
+    artists: ar,
+    artistsText: genArtistisText(ar),
+    duration: dt,
+    durationSecond: dt / 1000,
+    durationText: formatTime(dt / 1000),
+    publishTime: formatDate(publishTime, "yyyy-MM-dd"),
+    albumId: al.id,
+    albumName: al.name,
+    mvId: mv
+  };
+}
+export function createSongs(songs) {
+  return songs.map(song => createOneSong(song));
+}
+
 export function createAlbum(album) {
-  const { id, name, img, artists, publishTime, ...rest } = album;
+  const {
+    id,
+    name,
+    picUrl,
+    artists,
+    description,
+    company,
+    publishTime,
+    size,
+    type,
+    tags
+  } = album;
 
   return {
     id,
     name,
-    img,
+    img: picUrl,
     artists,
+    artistsText: genArtistisText(artists),
+    desc: description,
+    company,
     publishTime: formatDate(publishTime, "yyyy-MM-dd"),
-    ...rest
+    size,
+    type,
+    tags
   };
+}
+export function createAlbums(albums) {
+  return albums.map(album => createAlbum(album));
 }
 
 export function createMv(mv) {
-  const { id, name, img, duration, publishTime, playCount, ...rest } = mv;
+  const {
+    id,
+    name,
+    cover,
+    artists,
+    duration,
+    publishTime,
+    playCount,
+    imgurl
+  } = mv;
 
   return {
     id,
     name,
-    img,
+    img: cover ? cover : imgurl,
+    artists,
+    artistsText: genArtistisText(artists),
     duration,
-    publishTime,
     durationSecond: duration / 1000,
     durationText: formatTime(duration / 1000),
-    playCount: processCount(playCount),
-    ...rest
+    publishTime,
+    playCount: processCount(playCount)
   };
+}
+export function createMvs(mvs) {
+  return mvs.map(mv => createMv(mv));
 }
 
 export function createSonger(songer) {

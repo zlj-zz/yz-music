@@ -182,7 +182,7 @@ import {
   createUser,
   createSong,
   createAlbum,
-  createMv,
+  createMvs,
   playSonglist,
 } from "common/utils";
 
@@ -247,18 +247,9 @@ export default {
 
       // Get songer mv
       const res5 = await getSongerMvs(this.id);
-      let mvs = res5.data.mvs.map(
-        ({ id, name, imgurl, duration, playCount, publishTime }) => {
-          return createMv({
-            id,
-            name,
-            img: imgurl,
-            duration,
-            playCount,
-            publishTime,
-          });
-        }
-      );
+      console.log(res5);
+      let mvs = createMvs(res5.data.mvs);
+      console.log(mvs);
       this.mvs = mvs.length > 5 ? mvs.slice(0, 5) : mvs;
     },
     playHotSongs() {

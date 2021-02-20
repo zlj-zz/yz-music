@@ -53,7 +53,7 @@
               </h4>
 
               <div class="playlist__author" title="album.artists">
-                <a class="js_singer">{{ album.artists }}</a>
+                <a class="js_singer">{{ album.artistsText }}</a>
               </div>
               <div class="playlist__other">{{ album.publishTime }}</div>
               <a href="javascript:;" class="btn_operate_menu js_albumlist_more">
@@ -80,7 +80,7 @@
 <script>
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
 import { albumAreas, getTopAlbum } from "api";
-import { createAlbum } from "common/utils";
+import { createAlbums } from "common/utils";
 
 export default {
   data() {
@@ -104,16 +104,8 @@ export default {
         area: this.selectArea,
       }).then((res) => {
         let ds = res.data.monthData;
-        //console.log(ds);
-        let albums = ds.map((d) => {
-          return createAlbum({
-            id: d.id,
-            name: d.name,
-            img: d.picUrl,
-            artists: d.artist.name,
-            publishTime: d.publishTime,
-          });
-        });
+        console.log(ds);
+        let albums = createAlbums(ds);
         console.log(albums);
         this.allAlbums = albums;
         this.allAlbumsLength = albums.length;
