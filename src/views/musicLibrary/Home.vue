@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Banner from "components/content/Banner";
-import RecommendedBar from "components/content/RecommendedBar";
-import HomeTop from "components/content/HomeTop";
+import Banner from "components/common/Banner";
+import RecommendedBar from "components/common/RecommendedBar";
+import HomeTop from "components/common/HomeTop";
 
 export default {
   components: {

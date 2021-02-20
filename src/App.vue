@@ -8,9 +8,9 @@
 
 <script>
 import NavBar from "components/content/NavBar";
-import BackTop from "components/common/BackTop";
-import Player from "components/common/Player";
-import BottomFooter from "components/common/BottomFooter";
+import BackTop from "components/content/BackTop";
+import Player from "components/content/Player";
+import BottomFooter from "components/content/BottomFooter";
 
 export default {
   name: "#app",
@@ -26,19 +26,5 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

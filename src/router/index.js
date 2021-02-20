@@ -23,28 +23,114 @@ const routes = [
     redirect: "/MusicLibrary"
   },
   {
-    path: "/MusicLibrary",
     name: "MusicLibrary",
+    path: "/MusicLibrary",
     component: MusicLibrary,
+    meta: {
+      index: 0
+    },
     children: [
-      { path: "home", component: Home },
-      { path: "songers", component: Songers },
-      { path: "newdisc", component: NewDisc },
-      { path: "ranking", component: Ranking },
-      { path: "classified", component: Classified },
-      { path: "radions", component: Radions },
-      { path: "mv", component: MV },
-      { path: "songerDetail", component: SongerDetail },
-      { path: "songDetail", component: SongDetail },
-      { path: "albumDetail", component: AlbumDetail },
-      { path: "playlistDetail", component: PlaylistDetail },
-      { path: "searchResultDetail", component: SearchResultDetail }
+      {
+        path: "",
+        component: Home,
+        meta: {
+          name: "home"
+        }
+      },
+      {
+        path: "home",
+        component: Home,
+        meta: {
+          name: "home"
+        }
+      },
+      {
+        path: "songers",
+        component: Songers,
+
+        meta: {
+          name: "songers"
+        }
+      },
+      {
+        path: "newdisc",
+        component: NewDisc,
+        meta: {
+          name: "newdisc"
+        }
+      },
+      {
+        path: "ranking",
+        component: Ranking,
+        meta: {
+          name: "ranking"
+        }
+      },
+      {
+        path: "classified",
+        component: Classified,
+        meta: {
+          name: "classified"
+        }
+      },
+      {
+        path: "radions",
+        component: Radions,
+        meta: {
+          name: "ranking"
+        }
+      },
+      {
+        path: "mv",
+        component: MV,
+        meta: {
+          name: "mv"
+        }
+      },
+      {
+        path: "songerDetail",
+        component: SongerDetail,
+        meta: {
+          name: "songerDetail"
+        }
+      },
+      {
+        path: "songDetail",
+        component: SongDetail,
+        meta: {
+          name: "songDetail"
+        }
+      },
+      {
+        path: "albumDetail",
+        component: AlbumDetail,
+        meta: {
+          name: "albumDetail"
+        }
+      },
+      {
+        path: "playlistDetail",
+        component: PlaylistDetail,
+        meta: {
+          name: "playlistDetail"
+        }
+      },
+      {
+        path: "searchResultDetail",
+        component: SearchResultDetail,
+        meta: {
+          name: "searchResultDetail"
+        }
+      }
     ]
   },
   {
-    path: "/My",
     name: "My",
-    component: My
+    path: "/My",
+    component: My,
+    meta: {
+      index: 1
+    }
   }
 ];
 
