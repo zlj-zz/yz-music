@@ -22,7 +22,7 @@
           <div class="songlist__number">{{ idx + 1 }}</div>
           <div class="songlist__songname">
             <span class="songlist__songname_txt">
-              <a :title="song.name" @click="gotoSongDeail(song.id)">
+              <a :title="song.name" @click="gotoSongDetail(song.id)">
                 {{ song.name }}<span class="songlist__song_txt"></span>
               </a>
             </span>
@@ -59,6 +59,11 @@
 
 <script>
 import ModListMenu from "components/common/ModListMenu";
+import {
+  gotoSongDetail,
+  gotoSongerDetail,
+  gotoAlbumDetail,
+} from "common/utils";
 export default {
   props: {
     songs: {
@@ -71,27 +76,9 @@ export default {
     },
   },
   methods: {
-    gotoSongDeail(id) {
-      if (id && id != 0)
-        this.$router.push({
-          path: "/musicLibrary/songDetail",
-          query: { id: id },
-        });
-    },
-    gotoSongerDetail(id) {
-      if (id && id != 0)
-        this.$router.push({
-          path: "/musicLibrary/songerDetail",
-          query: { id: id },
-        });
-    },
-    gotoAlbumDetail(id) {
-      if (id && id != 0)
-        this.$router.push({
-          path: "/musicLibrary/albumDetail",
-          query: { id: id },
-        });
-    },
+    gotoSongDetail,
+    gotoSongerDetail,
+    gotoAlbumDetail,
   },
   components: {
     ModListMenu,

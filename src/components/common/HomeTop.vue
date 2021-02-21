@@ -11,7 +11,10 @@
         >
           <div class="toplist__box">
             <div id="toplist__bg" :class="'toplist__bg' + idx"></div>
-            <i class="mod_cover__icon_play js_play_toplist"></i>
+            <i
+              class="mod_cover__icon_play js_play_toplist"
+              @click="playSonglist(toplist)"
+            ></i>
             <i class="toplist__line"></i>
             <h3 class="toplist__hd">
               <a href="javascript:;" class="toplist__tit"
@@ -26,16 +29,19 @@
                   <a
                     href="javascript:;"
                     class="js_song"
-                    :data-id="toplist.tracks[songIdx - 1].id"
-                    @click="gotoSongDetail(toplist.tracks[songIdx - 1].id)"
+                    :data-id="toplist[songIdx - 1].id"
+                    @click="gotoSongDetail(toplist[songIdx - 1].id)"
                   >
-                    {{ parseSongName(toplist.tracks[songIdx - 1].name) }}
+                    {{ toplist[songIdx - 1].name }}
                   </a>
                 </div>
                 <div class="toplist__artist">
-                  <a href="javascript:;">{{
-                    parseArtistsName(toplist.tracks[songIdx - 1].ar)
-                  }}</a>
+                  <a
+                    @click="
+                      gotoSongerDetail(toplist[songIdx - 1].artists[0].id)
+                    "
+                    >{{ toplist[songIdx - 1].artistsText }}</a
+                  >
                 </div>
               </li>
             </ul>
@@ -47,7 +53,13 @@
 </template>
 
 <script>
-import { getTopList, toplistTypes } from "api";
+import { getPlaylistDetial, getSongDetail, toplistTypes } from "api";
+import {
+  createSongs,
+  gotoSongDetail,
+  gotoSongerDetail,
+  playSonglist,
+} from "common/utils";
 
 export default {
   data() {
@@ -62,28 +74,18 @@ export default {
   },
   methods: {
     updateTopList(toplistType) {
-      getTopList(toplistType).then((res) => {
-        //console.log(res);
-        this.toplists.push(res.data.playlist);
+      getPlaylistDetial(toplistType).then((res) => {
+        let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
+        getSongDetail(trackIds).then((res) => {
+          let songs = createSongs(res.data.songs);
+          console.log(songs);
+          this.toplists.push(songs);
+        });
       });
     },
-    parseSongName(name) {
-      return name;
-    },
-    parseArtistsName(nameList) {
-      let l = [];
-      for (let i of nameList) {
-        l.push(i.name);
-      }
-      let name = l.join("/");
-      return name;
-    },
-    gotoSongDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/songDetail",
-        query: { id: id },
-      });
-    },
+    gotoSongDetail,
+    gotoSongerDetail,
+    playSonglist,
   },
 };
 </script>

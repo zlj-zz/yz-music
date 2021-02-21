@@ -29,7 +29,7 @@
             href="javascript:;"
             class="singer_list_txt__link js_singer"
             :title="item.name"
-            @click="gotoSongerDetail({ id: item.id })"
+            @click="gotoSongerDetail(item.id)"
             >{{ item.name }}</a
           >
         </li>
@@ -67,6 +67,7 @@
 
 <script>
 import { getSongers, songerInitials, songerTypes, songerAreas } from "api";
+import { gotoSongerDetail } from "common/utils";
 
 import TypeSelectBar from "components/common/TypeSelectBar";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
@@ -131,9 +132,7 @@ export default {
         this.updateArtists();
       }
     },
-    gotoSongerDetail(query) {
-      this.$router.push({ path: "/musicLibrary/songerDetail", query: query });
-    },
+    gotoSongerDetail,
   },
   components: {
     TypeSelectBar,

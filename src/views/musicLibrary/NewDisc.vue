@@ -80,7 +80,7 @@
 <script>
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
 import { albumAreas, getTopAlbum } from "api";
-import { createAlbums } from "common/utils";
+import { createAlbums, gotoAlbumDetail } from "common/utils";
 
 export default {
   data() {
@@ -121,12 +121,7 @@ export default {
       console.log(v);
       this.page = v;
     },
-    gotoAlbumDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/albumDetail",
-        query: { id: id },
-      });
-    },
+    gotoAlbumDetail,
   },
   watch: {
     page(newPage) {

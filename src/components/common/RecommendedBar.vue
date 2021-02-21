@@ -65,7 +65,12 @@
 
 <script>
 import { getPlayList, getPlaylistDetial, getSongDetail } from "api";
-import { processCount, createSong, playSonglist } from "common/utils";
+import {
+  processCount,
+  createSong,
+  playSonglist,
+  gotoPlaylistDetail,
+} from "common/utils";
 
 export default {
   data() {
@@ -126,12 +131,7 @@ export default {
         });
       });
     },
-    gotoPlaylistDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/playlistDetail",
-        query: { id: id },
-      });
-    },
+    gotoPlaylistDetail,
   },
 };
 </script>

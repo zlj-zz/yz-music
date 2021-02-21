@@ -748,6 +748,7 @@
   transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
 }
 .mod_cover__icon_play {
+  cursor: pointer;
   position: absolute;
   left: 50%;
   top: 50%;
