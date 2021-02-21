@@ -51,53 +51,48 @@
           </div>
         </div>
         <div class="header__opt">
-          <!-- 未登录 -->
           <span class="mod_top_login">
+            <!-- 登录 -->
             <a
               class="top_login__link js_logined"
-              href="//y.qq.com/portal/profile.html#stat=y_new.top.user_pic"
               onclick="setStatCookie&amp;&amp;setStatCookie();"
-              style=""
+              :style="{ display: isLogged ? '' : 'none' }"
+              @mouseover="showUserPopup"
+              @mouseleave="hiddenUserPopup"
               ><img
-                src="http://thirdqq.qlogo.cn/g?b=sdk&amp;k=uwNbKsMJia8ASG007iakGJXA&amp;s=140&amp;t=1586579228"
                 onerror="this.src='//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=2592000';this.onerror=null;"
+                style="background-color: gray"
                 class="top_login__cover js_user_img"
+                :src="$store.state.user.user.avatarUrl"
               />
             </a>
+            <!-- 未登录 -->
             <a
               class="top_login__link js_login"
-              data-stat="y_new.top.login"
               href="javascript:;"
-              style="display: none"
+              :style="{ display: isLogged ? 'none' : '' }"
+              @click="showLoginPopup"
             >
               登录
             </a>
-
-            <a
-              class="login__link header__link js_login"
-              data-stat="y_new.top.login"
-              href="javascript:;"
-              style="display: none"
-              >登录</a
-            >
           </span>
           <!-- 用户信息 -->
-          <div class="popup_user">
+          <div
+            class="popup_user"
+            :class="isShowPopup ? 'drop' : ''"
+            @mouseover="showUserPopup"
+            @mouseleave="hiddenUserPopup"
+          >
             <div class="popup_user_data">
               <a
-                href="//y.qq.com/portal/profile.html#stat=y_new.top.pop.user_pic"
                 class="popup_user_data__cover_link"
                 onclick="setStatCookie&amp;&amp;setStatCookie();"
               >
                 <img
-                  src="http://thirdqq.qlogo.cn/g?b=sdk&amp;k=uwNbKsMJia8ASG007iakGJXA&amp;s=140&amp;t=1586579228"
                   onerror="this.src=\'//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=2592000\';this.onerror=null;"
                   class="popup_user_data__cover js_user_img"
-                />
-
-                <img
-                  src="//y.gtimg.cn/mediastyle/yqq/img/login_qq.png?max_age=2592000"
-                  class="popup_user_data__icon"
+                  style="background-color: gray"
+                  :src="$store.state.user.user.avatarUrl"
                 />
               </a>
               <!-- 自动垂直居中 -->
@@ -107,40 +102,25 @@
                     href="//y.qq.com/portal/profile.html#stat=y_new.top.pop.user_nickname"
                     onclick="setStatCookie&amp;&amp;setStatCookie();"
                     class=""
-                    >Zachary_</a
+                    >{{ $store.state.user.user.nickname }}</a
                   >
                 </div>
-                <div class="popup_user_data__lv">
+                <div class="popup_user_data__lv" style="overflow: hidden">
                   <a class="js_vip_jump" rel="noopener" target="_blank"
-                    ><img
-                      src=""
-                      alt="one"
-                      class="popup_user_data__lv_icon" /></a
-                  ><a class="js_vip_jump" rel="noopener" target="_blank"
-                    ><img src="" alt="two" class="popup_user_data__lv_icon"
-                  /></a>
+                    >签名：{{ $store.state.user.user.signature }}
+                  </a>
                 </div>
               </div>
             </div>
-
             <div class="popup_user_toolbar">
               <div class="popup_user_toolbar__item">
                 <div class="popup_user_toolbar__tit js_msgcenterdiv">
-                  <a
-                    href="//y.qq.com/portal/msg_center.html#stat=y_new.top.pop.msg_center"
-                    onclick="setStatCookie&amp;&amp;setStatCookie();"
-                    >评论通知</a
-                  >
+                  <a>评论通知</a>
                 </div>
               </div>
               <div class="popup_user_toolbar__item">
                 <div class="popup_user_toolbar__tit">
-                  <a
-                    href="javascript:;"
-                    class="js_logout"
-                    data-stat="y_new.top.pop.logout"
-                    >退出QQ登录</a
-                  >
+                  <a class="js_logout" @click="logout">退出QQ登录</a>
                 </div>
               </div>
             </div>
@@ -149,15 +129,75 @@
       </div>
     </div>
   </div>
+
+  <!-- 登陆弹框 -->
+  <div
+    id="divdialog_0"
+    class="mod_popup popup_login popup_login--download large"
+    data-aria="popup"
+    style="
+      position: fixed;
+      z-index: 100000;
+      top: 154.5px;
+      margin: 10px;
+      left: 369px;
+    "
+    v-if="isShowLoginPopup"
+  >
+    <div class="popup__hd">
+      <h2 class="popup__tit">
+        <a
+          href="javascript:;"
+          class="popup__tit_item current js_iframe_login"
+          data-type="qq"
+          style=""
+          >扫码登陆</a
+        >
+      </h2>
+    </div>
+    <a
+      href="javascript:;"
+      class="popup__close"
+      title="关闭"
+      @click="hiddenLoginPopup"
+      ><i class="popup__icon_close"></i><i class="icon_txt">关闭</i>
+    </a>
+
+    <div class="popup__bd" id="dialogbox">
+      <div class="phone"></div>
+      <img
+        id="frame_tips"
+        :src="qrurl"
+        class="popup_login_qq"
+        width="100%"
+        height="400px;"
+        frameborder="0"
+      />
+    </div>
+  </div>
+  <div
+    class="mod_popup_mask"
+    :style="{ display: isShowLoginPopup ? 'block' : 'none' }"
+  ></div>
 </template>
 
 <script>
 import SearchInput from "components/common/SearchInput";
+import {
+  getLoginKey,
+  getLoginQrCode,
+  getLoginQrScanState,
+  getLoginStatus,
+  logout,
+} from "api";
+
 export default {
   name: "NavBar",
   data() {
     return {
-      active: 0,
+      isShowLoginPopup: false,
+      isShowPopup: false,
+      qrurl: "",
       navData: [
         { title: "音乐库", path: "/" },
         { title: "我的音乐", path: "/My" },
@@ -177,9 +217,85 @@ export default {
       ],
     };
   },
+  computed: {
+    isLogged() {
+      return this.$store.state.user.isLogged;
+    },
+  },
+  mounted() {
+    this.getLoginStatus();
+  },
   methods: {
-    text() {
-      console.log("test", this.$route.meta.index);
+    getQr() {
+      getLoginKey().then((res) => {
+        let key = res.data.data.unikey;
+        getLoginQrCode(key).then((res) => {
+          console.log(res);
+          let qrimg = res.data.data.qrimg;
+          console.log(qrimg);
+          this.qrurl = qrimg;
+          console.log(this.qrurl);
+          this.checkScanState(key);
+        });
+      });
+    },
+    checkScanState(key) {
+      let timer = setInterval(async () => {
+        let res = await getLoginQrScanState(key);
+        console.log(res);
+        let code = res.data.code;
+        let cookie = res.data.cookie;
+        switch (code) {
+          case 800:
+            console.log("二维码过期");
+            clearInterval(timer);
+            break;
+          case 801:
+            break;
+          case 802:
+            console.log("已扫描");
+            break;
+          case 803:
+            console.log(cookie);
+            clearInterval(timer);
+            this.isShowLoginPopup = false;
+            this.getLoginStatus();
+            break;
+          default:
+            break;
+        }
+      }, 3000);
+    },
+    getLoginStatus() {
+      getLoginStatus().then((res) => {
+        console.log(res);
+        let profile = res.data.data.profile;
+        if (profile) {
+          this.$store.commit("user/setLoginStatus", true);
+          this.$store.commit("user/setUser", profile);
+          console.log(this.$store.state.user.isLogged);
+          console.log(this.$store.state.user.user);
+        }
+      });
+    },
+    logout() {
+      logout().then((res) => {
+        this.$store.commit("user/setLoginStatus", false);
+        alert("成功退出");
+      });
+    },
+    showLoginPopup() {
+      this.isShowLoginPopup = true;
+      this.getQr();
+    },
+    hiddenLoginPopup() {
+      this.isShowLoginPopup = false;
+    },
+    showUserPopup() {
+      this.isShowPopup = true;
+    },
+    hiddenUserPopup() {
+      this.isShowPopup = false;
     },
   },
   components: {
@@ -279,7 +395,7 @@ p {
 .header__opt {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 200px;
   height: 90px;
   line-height: 90px;
 }
@@ -315,7 +431,8 @@ p {
 
 .popup_user {
   position: absolute;
-  right: 0;
+  /*right: 0;*/
+  left: -15px;
   top: 90px;
   width: 288px;
   background-color: #fff;
@@ -369,6 +486,7 @@ p {
 .popup_user_toolbar {
   padding: 13px 20px 6px;
   font-size: 15px;
+  text-align: center;
 }
 .popup_user_toolbar__item {
   position: relative;
@@ -386,5 +504,100 @@ a:hover {
 .logo {
   font-size: 38px;
   padding-left: 20px;
+}
+
+/* login popup */
+.mod_popup {
+  position: absolute;
+  border: 1px solid #bfbfbf;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+}
+.popup_login {
+  width: 560px;
+  height: 410px;
+  overflow: hidden;
+}
+.popup_login--download {
+  position: relative;
+  z-index: 2;
+  height: 387px;
+}
+.popup_login.large {
+  width: 700px;
+}
+.popup__hd {
+  position: relative;
+  line-height: 55px;
+  text-align: center;
+  border-bottom: 1px solid #f2f2f2;
+}
+.popup__tit {
+  font-size: 16px;
+  font-weight: 400;
+}
+.popup__tit_item {
+  margin: 0 60px;
+}
+.popup__tit_item.current {
+  color: #31c27c;
+}
+
+.popup__close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  z-index: 2;
+}
+.popup__icon_close {
+  display: block;
+  margin: 6px auto;
+  width: 12px;
+  height: 12px;
+  background-position: 0 -200px;
+}
+
+.popup_login.large .popup__bd {
+  position: relative;
+  overflow: hidden;
+  height: 348px;
+}
+.popup_login.large iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 704px;
+  margin-left: -2px;
+}
+.popup_login.large .popup_login_qq {
+  width: 200px;
+  height: 200px;
+  margin-left: 150px;
+}
+
+.mod_popup_mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#33000000', endColorstr='#33000000');
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+.phone {
+  float: left;
+  margin-left: 120px;
+  width: 125px;
+  height: 220px;
+  background: url(../../assets/img/qr_guide.png);
+  background-size: auto;
+  background-size: contain;
 }
 </style>

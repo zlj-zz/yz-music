@@ -28,7 +28,6 @@ export default {
     updateBanner() {
       getBanner()
         .then((res) => {
-          console.log(res.data.banners);
           this.banners = res.data.banners;
           this.bannerLoading = false;
         })

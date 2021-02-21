@@ -91,7 +91,7 @@ export default {
       let limit = 10;
       getPlayList(limit, 1, key)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           this.playList = res.data.playlists;
           this.listLoading = false;
         })
@@ -121,7 +121,7 @@ export default {
               img: al.picUrl,
             });
           });
-          console.log(songs);
+          //console.log(songs);
           playSonglist(songs);
         });
       });

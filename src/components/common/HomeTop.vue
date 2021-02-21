@@ -63,7 +63,7 @@ export default {
   methods: {
     updateTopList(toplistType) {
       getTopList(toplistType).then((res) => {
-        console.log(res);
+        //console.log(res);
         this.toplists.push(res.data.playlist);
       });
     },
