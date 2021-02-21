@@ -104,20 +104,29 @@ export function createMv(mv) {
     duration,
     publishTime,
     playCount,
-    imgurl
+    imgurl,
+    vid,
+    title,
+    coverUrl,
+    creator,
+    durationms,
+    playTime
   } = mv;
+  let dt = duration ? duration : durationms;
+  let times = playCount ? playCount : playTime;
+  let c = artists ? artists : creator;
 
   return {
-    id,
-    name,
-    img: cover ? cover : imgurl,
-    artists,
-    artistsText: genArtistisText(artists),
-    duration,
-    durationSecond: duration / 1000,
-    durationText: formatTime(duration / 1000),
+    id: id ? id : vid,
+    name: name ? name : title,
+    img: cover ? cover : imgurl ? imgurl : coverUrl,
+    artists: c,
+    artistsText: genArtistisText(c),
+    duration: dt,
+    durationSecond: dt / 1000,
+    durationText: formatTime(dt / 1000),
     publishTime,
-    playCount: processCount(playCount)
+    playCount: processCount(times)
   };
 }
 export function createMvs(mvs) {

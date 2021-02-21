@@ -16,3 +16,6 @@ export const getAlbumDetail = id => requset.get(`/album/detail?id=${id}`);
 
 export const getTopAlbum = params =>
   requset.get("/top/album", { params: params });
+
+/* 登陆后使用 */
+export const getCollectedAlbum = () => requset.get("album/sublist");

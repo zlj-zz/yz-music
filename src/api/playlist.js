@@ -21,3 +21,6 @@ export const getPlaylistDynamicDetial = id =>
 
 // 获取歌单种类
 export const getCatList = () => requset.get("/playlist/catlist");
+
+/* 登陆后使用 */
+export const getUserPlaylists = id => requset.get(`/user/playlist?uid=${id}`);
