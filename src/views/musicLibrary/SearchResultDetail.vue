@@ -19,155 +19,13 @@
         </div>
 
         <!-- song -->
-        <div
-          class="js_search_tab_cont search_tab_cont"
-          id="song_box"
-          style="display: block"
-          v-if="selectedType == 1"
-        >
-          <div class="mod_songlist_toolbar">
-            <a href="javascript:;" class="mod_btn js_all_play"
-              ><i class="mod_btn__icon_play"></i>播放全部</a
-            >
-            <a href="javascript:;" class="mod_btn js_all_fav"
-              ><i class="mod_btn__icon_add"></i>添加到</a
-            >
-            <a href="javascript:;" class="mod_btn js_all_down"
-              ><i class="mod_btn__icon_down"></i>下载</a
-            >
-            <a href="javascript:;" class="mod_btn js_batch"
-              ><i class="mod_btn__icon_batch"></i>批量操作</a
-            >
-          </div>
-          <detail-songlist :songs="songs" :listType="'playlist'" />
-        </div>
+        <show-songs :songs="songs" v-if="selectedType == 1" />
         <!-- album -->
-        <div
-          class="js_search_tab_cont search_tab_cont"
-          id="album_box"
-          style="display: block"
-          v-if="selectedType == 10"
-        >
-          <div class="mod_playlist_text">
-            <ul class="playlist__header">
-              <li class="playlist__header_name">专辑</li>
-              <li class="playlist__header_author">歌手</li>
-              <li class="playlist__header_other">发行时间</li>
-            </ul>
-            <ul class="playlist__list">
-              <li
-                class="playlist__item"
-                v-for="album in albums"
-                :key="album.id"
-              >
-                <div class="playlist__cover" style="visibility: visible">
-                  <a class="js_album"
-                    ><img
-                      class="playlist__pic"
-                      style="display: block; visibility: visible"
-                      onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                      :alt="album.name"
-                      :src="album.img"
-                  /></a>
-                </div>
-                <h4 class="playlist__title">
-                  <span class="playlist__title_txt"
-                    ><a class="js_album" :title="album.name">{{
-                      album.name
-                    }}</a></span
-                  >
-                </h4>
-                <div class="playlist__author">
-                  <a class="js_singer" :title="album.artistsText">{{
-                    album.artistsText
-                  }}</a>
-                </div>
-                <div class="playlist__other">{{ album.publishTime }}</div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <show-albums :albums="albums" v-if="selectedType == 10" />
         <!-- mv -->
-        <div
-          class="js_search_tab_cont search_tab_cont"
-          id="mv_box"
-          style="display: block"
-          v-if="selectedType == 1004"
-        >
-          <div class="mod_mv_list">
-            <ul class="mv_list__list">
-              <li class="mv_list__item" v-for="mv in mvs" :key="mv.id">
-                <div class="mv_list__item_box" style="visibility: visible">
-                  <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
-                    <img
-                      class="mv_list__pic"
-                      style="display: block; visibility: visible"
-                      onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
-                      :alt="mv.name"
-                      :src="mv.img"
-                    />
-                    <i class="mod_cover__icon_play"></i>
-                    <!--div class="mv_list__time">04:10</div-->
-                  </a>
-                  <h3 class="mv_list__title">
-                    <a class="js_mv" :title="mv.name">{{ mv.name }}</a>
-                  </h3>
-                  <p class="mv_list__singer">
-                    <a class="js_singer" :title="mv.artistsText">{{
-                      mv.artistsText
-                    }}</a>
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <show-mvs :mvs="mvs" v-if="selectedType == 1004" />
         <!-- playlist -->
-        <div
-          class="js_search_tab_cont search_tab_cont"
-          id="playlist_box"
-          style="display: block"
-          v-if="selectedType == 1000"
-        >
-          <div class="mod_playlist_text">
-            <ul class="playlist__header">
-              <li class="playlist__header_name">歌单</li>
-              <li class="playlist__header_author">创建人</li>
-              <li class="playlist__header_other">播放量</li>
-            </ul>
-            <ul class="playlist__list">
-              <li
-                class="playlist__item"
-                v-for="playlist in playlists"
-                :key="playlist.id"
-              >
-                <div class="playlist__cover" style="visibility: visible">
-                  <a class="js_playlist"
-                    ><img
-                      class="playlist__pic"
-                      style="display: block; visibility: visible"
-                      onerror="this.src='//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000';this.onerror=null;"
-                      :src="playlist.img"
-                      :alt="playlist.name"
-                  /></a>
-                </div>
-                <h4 class="playlist__title">
-                  <span class="playlist__title_txt"
-                    ><a class="js_playlist" :title="playlist.name">{{
-                      playlist.name
-                    }}</a></span
-                  >
-                </h4>
-                <div class="playlist__author">
-                  <a class="js_user" title="playlist.creatorName">{{
-                    playlist.creatorName
-                  }}</a>
-                </div>
-                <div class="playlist__other">{{ playlist.playCount }}</div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <show-playlist :playlists="playlists" v-if="selectedType == 1000" />
         <!-- user -->
         <div
           class="js_search_tab_cont search_tab_cont"
@@ -264,6 +122,10 @@
 </template>
 
 <script>
+import ShowSongs from "components/common/ShowSongs";
+import ShowAlbums from "components/common/ShowAlbums";
+import ShowMvs from "components/common/ShowMvs";
+import ShowPlaylist from "components/common/ShowPlaylist";
 import DetailSonglist from "components/common/DetailSonglist";
 import ModListMenu from "components/common/ModListMenu";
 import { getSearchResult } from "api";
@@ -335,6 +197,10 @@ export default {
     selectedType(v) {},
   },
   components: {
+    ShowSongs,
+    ShowAlbums,
+    ShowMvs,
+    ShowPlaylist,
     DetailSonglist,
     ModListMenu,
   },
@@ -342,14 +208,10 @@ export default {
 </script>
 
 <style scoped>
-blockquote,
-body,
 button,
 dd,
 dl,
 dt,
-fieldset,
-form,
 h1,
 h2,
 h3,
@@ -357,15 +219,11 @@ h4,
 h5,
 h6,
 hr,
-html,
-input,
-lengend,
 li,
 ol,
 p,
 pre,
 td,
-textarea,
 th,
 ul {
   margin: 0;
@@ -534,17 +392,6 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 14px;
-}
-
-.mv_list__list {
-  margin-right: -20px;
-  zoom: 1;
-}
-.mv_list__item {
-  float: left;
-  width: 25%;
-  padding-bottom: 44px;
-  overflow: hidden;
 }
 
 .singer_list__item {
