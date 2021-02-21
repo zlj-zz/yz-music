@@ -1,5 +1,5 @@
 <template>
-  <div class="songer-main">
+  <div class="main">
     <detail-info-card
       :obj="songer"
       :cardType="'songer'"
@@ -26,13 +26,7 @@
         </div>
         <div class="mod_playlist">
           <ul class="playlist__list" id="albumlist">
-            <li
-              class="playlist__item"
-              onmouseover="this.className=(this.className+' playlist__item--hover')"
-              onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
-              v-for="album in albums"
-              :key="album.id"
-            >
+            <li class="playlist__item" v-for="album in albums" :key="album.id">
               <div class="playlist__item_box">
                 <div class="playlist__cover mod_cover">
                   <a class="js_album">
@@ -120,7 +114,7 @@
                   class="singer_list__cover js_singer"
                   hidefocus="true"
                   :title="songer.name"
-                  @click="gotoSongerDetail({ id: songer.id })"
+                  @click="gotoSongerDetail(songer.id)"
                 >
                   <img
                     class="singer_list__pic"
@@ -133,7 +127,7 @@
                   <a
                     class="js_singer"
                     :title="songer.name"
-                    @click="gotoSongerDetail({ id: songer.id })"
+                    @click="gotoSongerDetail(songer.id)"
                     >{{ songer.name }}</a
                   >
                 </h3>
@@ -184,6 +178,8 @@ import {
   createAlbum,
   createMvs,
   playSonglist,
+  gotoSongerDetail,
+  gotoAlbumDetail,
 } from "common/utils";
 
 export default {
@@ -276,15 +272,8 @@ export default {
         playSonglist(songs);
       });
     },
-    gotoAlbumDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/albumDetail",
-        query: { id: id },
-      });
-    },
-    gotoSongerDetail(query) {
-      this.$router.push({ path: "/musicLibrary/songerDetail", query: query });
-    },
+    gotoAlbumDetail,
+    gotoSongerDetail,
   },
   components: {
     DetailInfoCard,
@@ -323,15 +312,6 @@ ul {
   margin: 0;
   margin-right: 0px;
   padding: 0;
-}
-.songer-main {
-  z-index: 2;
-}
-.songer-main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
 }
 
 /*overwrite*/
@@ -434,5 +414,9 @@ ul {
   line-height: 22px;
   margin: 30px 5px 30px 10px;
   overflow-y: auto;
+}
+
+a:hover {
+  color: #31c27c;
 }
 </style>

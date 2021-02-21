@@ -100,7 +100,7 @@
         >
       </div>
       <div class="mod_songlist_toolbar">
-        <a class="mod_btn_green js_all_play" @click="playAll"
+        <a class="mod_btn_green js_all_play" @click="playSonglist(listDatas)"
           ><i class="mod_btn_green__icon_play"></i>播放全部</a
         >
         <a href="javascript:;" class="mod_btn js_all_fav"
@@ -183,7 +183,11 @@
                       :alt="song.name"
                     />
                   </a>
-                  <a class="js_song" :title="song.name">
+                  <a
+                    class="js_song"
+                    :title="song.name"
+                    @click="gotoSongDetail(song.id)"
+                  >
                     {{ song.name }}
                   </a>
                 </span>
@@ -211,7 +215,7 @@
 <script>
 import ModListMenu from "components/common/ModListMenu";
 import { getPlaylistDetial, getSongDetail } from "api";
-import { isDef, createSong, playSonglist } from "common/utils";
+import { isDef, createSong, playSonglist, gotoSongDetail } from "common/utils";
 
 export default {
   data() {
@@ -297,9 +301,8 @@ export default {
       else if (data == -9999) return "icon_rank_new";
       else return "icon_rank_down";
     },
-    playAll() {
-      playSonglist(this.listDatas);
-    },
+    playSonglist,
+    gotoSongDetail,
   },
   watch: {
     seletedType(newType) {
@@ -415,5 +418,8 @@ th {
   line-height: 20px;
   text-align: center;
   color: #999;
+}
+a.hover {
+  color: #31c27c;
 }
 </style>

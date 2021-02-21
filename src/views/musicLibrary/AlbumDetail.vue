@@ -15,140 +15,12 @@
           </div>
           <a class="about__more" @click="toggleShowMoreInfo">[更多]</a>
         </div>
-
-        <div class="other_part">
-          <h3 class="other_part__tit">此歌手的其他专辑</h3>
-          <div class="mod_playlist">
-            <ul class="playlist__list">
-              <li
-                class="playlist__item"
-                onmouseover="this.className=(this.className+' playlist__item--hover')"
-                onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
-              >
-                <div class="playlist__item_box">
-                  <div class="playlist__cover mod_cover">
-                    <a
-                      href="//y.qq.com/n/yqq/album/001ybzgu1cVjIO.html"
-                      class="js_album"
-                      data-stat="y_new.album.otheralbum.click"
-                      data-albummid="001ybzgu1cVjIO"
-                      data-albumid="7270497"
-                      ><img
-                        src="//y.gtimg.cn/music/photo_new/T002R90x90M000001ybzgu1cVjIO_1.jpg?max_age=2592000"
-                        onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                        alt="全职高手OST"
-                        class="playlist__pic" /><i
-                        class="mod_cover__icon_play js_play"
-                        data-stat="y_new.album.otheralbum.play"
-                      ></i
-                    ></a>
-                  </div>
-                  <h4 class="playlist__title">
-                    <span class="playlist__title_txt"
-                      ><a
-                        href="//y.qq.com/n/yqq/album/001ybzgu1cVjIO.html"
-                        class="js_album"
-                        data-stat="y_new.album.otheralbum.click"
-                        data-albummid="001ybzgu1cVjIO"
-                        data-albumid="7270497"
-                        title="全职高手OST"
-                        >全职高手OST</a
-                      ></span
-                    >
-                  </h4>
-                  <div class="playlist__author">2019-08-02</div>
-                </div>
-              </li>
-
-              <li
-                class="playlist__item"
-                onmouseover="this.className=(this.className+' playlist__item--hover')"
-                onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
-              >
-                <div class="playlist__item_box">
-                  <div class="playlist__cover mod_cover">
-                    <a
-                      href="//y.qq.com/n/yqq/album/000hweUb3m5RLy.html"
-                      class="js_album"
-                      data-stat="y_new.album.otheralbum.click"
-                      data-albummid="000hweUb3m5RLy"
-                      data-albumid="5984191"
-                      ><img
-                        src="//y.gtimg.cn/music/photo_new/T002R90x90M000000hweUb3m5RLy_1.jpg?max_age=2592000"
-                        onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                        alt="明日之后的你"
-                        class="playlist__pic" /><i
-                        class="mod_cover__icon_play js_play"
-                        data-stat="y_new.album.otheralbum.play"
-                      ></i
-                    ></a>
-                  </div>
-                  <h4 class="playlist__title">
-                    <span class="playlist__title_txt"
-                      ><a
-                        href="//y.qq.com/n/yqq/album/000hweUb3m5RLy.html"
-                        class="js_album"
-                        data-stat="y_new.album.otheralbum.click"
-                        data-albummid="000hweUb3m5RLy"
-                        data-albumid="5984191"
-                        title="明日之后的你"
-                        >明日之后的你</a
-                      ></span
-                    >
-                  </h4>
-                  <div class="playlist__author">2019-01-25</div>
-                </div>
-              </li>
-
-              <li
-                class="playlist__item"
-                onmouseover="this.className=(this.className+' playlist__item--hover')"
-                onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
-              >
-                <div class="playlist__item_box">
-                  <div class="playlist__cover mod_cover">
-                    <a
-                      href="//y.qq.com/n/yqq/album/001SMDDu4L2gbZ.html"
-                      class="js_album"
-                      data-stat="y_new.album.otheralbum.click"
-                      data-albummid="001SMDDu4L2gbZ"
-                      data-albumid="5863053"
-                      ><img
-                        src="//y.gtimg.cn/music/photo_new/T002R90x90M000001SMDDu4L2gbZ_1.jpg?max_age=2592000"
-                        onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                        alt="福气拱拱来"
-                        class="playlist__pic" /><i
-                        class="mod_cover__icon_play js_play"
-                        data-stat="y_new.album.otheralbum.play"
-                      ></i
-                    ></a>
-                  </div>
-                  <h4 class="playlist__title">
-                    <span class="playlist__title_txt"
-                      ><a
-                        href="//y.qq.com/n/yqq/album/001SMDDu4L2gbZ.html"
-                        class="js_album"
-                        data-stat="y_new.album.otheralbum.click"
-                        data-albummid="001SMDDu4L2gbZ"
-                        data-albumid="5863053"
-                        title="福气拱拱来"
-                        >福气拱拱来</a
-                      ></span
-                    >
-                  </h4>
-                  <div class="playlist__author">2019-01-15</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
 
     <div
       class="popup_data_detail"
       id="popup_data_detail"
-      data-aria="popup"
       style="z-index: 2147483647"
       :style="{ display: moreInfo ? '' : 'none' }"
       v-if="album.desc"
@@ -239,23 +111,6 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  z-index: 2;
-}
-.main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-blockquote,
-body,
-button,
-dd,
-dl,
-dt,
-fieldset,
-form,
 h1,
 h2,
 h3,
@@ -263,15 +118,9 @@ h4,
 h5,
 h6,
 hr,
-html,
-input,
 li,
 ol,
 p,
-pre,
-td,
-textarea,
-th,
 ul {
   margin: 0;
   margin-right: 0px;

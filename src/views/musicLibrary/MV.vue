@@ -1,6 +1,6 @@
 <template>
   <div class="mod_slide_box" style="position: relative">
-    <div class="main" style="z-index: 2" v-loading="mvLoading">
+    <div class="main" v-loading="mvLoading">
       <type-select-bar>
         <type-select-sub-bar
           :selectId="selectArea"
@@ -19,7 +19,6 @@
           <h2 class="part_detail__tit js_lib_title">全部MV</h2>
           <div class="part_switch" aria-label="排列方式">
             <a
-              href="javascript:;"
               class="part_switch__item part_switch__item--left"
               :class="
                 order == orders.NEW.dataId ? 'part_switch__item--select' : ''
@@ -28,7 +27,6 @@
               >{{ orders.NEW.name }}</a
             >
             <a
-              href="javascript:;"
               class="part_switch__item part_switch__item--right"
               :class="
                 order == orders.HOT.dataId ? 'part_switch__item--select' : ''
@@ -43,7 +41,6 @@
             <li class="mv_list__item" v-for="item in mvs" :key="item.id">
               <div class="mv_list__item_box" style="visibility: visible">
                 <a
-                  href="javascript:;"
                   class="mv_list__cover mod_cover js_mv"
                   :title="item.name"
                   hidefocus="true"
@@ -62,12 +59,9 @@
                   }}</a>
                 </h3>
                 <div class="mv_list__singer" title="5AM">
-                  <a
-                    href="javascript:;"
-                    class="js_singer"
-                    :title="item.artistName"
-                    >{{ item.artistName }}</a
-                  >
+                  <a class="js_singer" :title="item.artistName">{{
+                    item.artistName
+                  }}</a>
                 </div>
                 <div class="mv_list__info">
                   <span class="mv_list__listen">
@@ -85,7 +79,6 @@
     <div class="mod_slide_action">
       <div class="slide_action slide_action--left">
         <a
-          href="javascript:;"
           class="slide_action__btn slide_action__btn--left js_jump"
           data-p="prev"
           tabindex="-1"
@@ -97,7 +90,6 @@
       </div>
       <div class="slide_action slide_action--right">
         <a
-          href="javascript:;"
           class="slide_action__btn slide_action__btn--right js_jump"
           data-p="next"
           tabindex="-1"
@@ -112,10 +104,10 @@
 </template>
 
 <script>
-import { getAllMV, mvArea, mvOrder, mvType } from "api";
-import { processCount } from "common/utils";
 import TypeSelectBar from "components/common/TypeSelectBar";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
+import { getAllMV, mvArea, mvOrder, mvType } from "api";
+import { processCount } from "common/utils";
 
 export default {
   data() {
@@ -158,9 +150,6 @@ export default {
       this.order = id;
       this.updateMv();
     },
-    processCount(count) {
-      return processCount(count);
-    },
     nextPage() {
       if (this.more == true) {
         this.page++;
@@ -173,6 +162,7 @@ export default {
         this.updateMv();
       }
     },
+    processCount,
   },
   components: {
     TypeSelectBar,
@@ -182,41 +172,14 @@ export default {
 </script>
 
 <style scoped>
-.main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
-  position: relative;
-  text-align: left;
-  line-height: 1.5;
-  font-size: 14px;
-}
-blockquote,
-body,
-button,
-dd,
-dl,
-dt,
-fieldset,
-form,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-hr,
-html,
-input,
-lengend,
 li,
-ol,
 p,
-pre,
-td,
-textarea,
-th,
 ul {
   margin: 0;
   padding: 0;

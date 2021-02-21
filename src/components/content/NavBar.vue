@@ -79,7 +79,7 @@ export default {
           name: "classified",
           path: "/MusicLibrary/classified",
         },
-        { title: "电台", name: "radions", path: "/MusicLibrary/radions" },
+        //{ title: "电台", name: "radions", path: "/MusicLibrary/radions" },
         { title: "MV", name: "mv", path: "/MusicLibrary/mv" },
       ],
     };

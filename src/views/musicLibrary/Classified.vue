@@ -1,5 +1,5 @@
 <template>
-  <div class="main1" style="">
+  <div class="main">
     <!-- 标签筛选 -->
     <div class="mod_playlist_tag" id="taglist">
       <div class="js_normal" style="display: ">
@@ -137,7 +137,7 @@
                   <a
                     class="js_playlist"
                     :title="list.name"
-                    @click="gotoDetail(list.id)"
+                    @click="gotoPlaylistDetail(list.id)"
                     >{{ list.name }}</a
                   >
                 </span>
@@ -161,7 +161,12 @@
 
 <script>
 import { getCatList, getPlayList, getPlaylistDetial, getSongDetail } from "api";
-import { createPlaylists, createSongs, playSonglist } from "common/utils";
+import {
+  createPlaylists,
+  createSongs,
+  playSonglist,
+  gotoPlaylistDetail,
+} from "common/utils";
 
 export default {
   data() {
@@ -225,12 +230,6 @@ export default {
         });
       });
     },
-    gotoDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/playlistDetail",
-        query: { id: id },
-      });
-    },
     ifMore(idx, list) {
       if (idx == 0) return list.length > 6 ? true : false;
       else return list.length > 9 ? true : false;
@@ -257,6 +256,7 @@ export default {
       this.currentPage = 1;
       this.updatePlaylist();
     },
+    gotoPlaylistDetail,
   },
   watch: {
     selectedType(type) {
@@ -267,15 +267,6 @@ export default {
 </script>
 
 <style scoped>
-.main1 {
-  z-index: 2;
-}
-.main1 {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-
 .mod_playlist_tag {
   position: relative;
   padding: 60px 0 32px 0;
@@ -326,14 +317,6 @@ li,
 p {
   margin: 0;
   padding: 0;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
 }
 img {
   width: 250px;

@@ -42,7 +42,7 @@
               >
                 <h4 class="singer_list__title">
                   <div class="singer_list__cover" style="visibility: visible">
-                    <a href="javascript:;" class="js_user">
+                    <a class="js_user">
                       <img
                         class="singer_list__pic"
                         style="display: block; visibility: visible"
@@ -240,16 +240,6 @@ ul {
 }
 button {
   cursor: pointer;
-}
-
-.main {
-  z-index: 2;
-}
-.main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
 }
 
 .mod_tab {

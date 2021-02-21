@@ -26,7 +26,6 @@
           :key="item.id"
         >
           <a
-            href="javascript:;"
             class="singer_list_txt__link js_singer"
             :title="item.name"
             @click="gotoSongerDetail(item.id)"
@@ -39,7 +38,6 @@
     <div class="mod_slide_action">
       <div class="slide_action slide_action--left">
         <a
-          href="javascript:;"
           class="slide_action__btn slide_action__btn--left js_jump"
           data-p="prev"
           tabindex="-1"
@@ -51,7 +49,6 @@
       </div>
       <div class="slide_action slide_action--right">
         <a
-          href="javascript:;"
           class="slide_action__btn slide_action__btn--right js_jump"
           data-p="next"
           tabindex="-1"
@@ -66,11 +63,10 @@
 </template>
 
 <script>
-import { getSongers, songerInitials, songerTypes, songerAreas } from "api";
-import { gotoSongerDetail } from "common/utils";
-
 import TypeSelectBar from "components/common/TypeSelectBar";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
+import { getSongers, songerInitials, songerTypes, songerAreas } from "api";
+import { gotoSongerDetail } from "common/utils";
 
 export default {
   name: "Songers",
@@ -142,14 +138,4 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  z-index: 2;
-}
-
-.main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
 </style>

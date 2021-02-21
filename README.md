@@ -1,6 +1,6 @@
-# yz-music
+# YZ-music
 
-**This is a music website made with `Vue`.**
+**This is a music website made with `Vue3`.**
 
 Some components use [element plus](https://github.com/element-plus/element-plus), imitating the style of QQ music
 

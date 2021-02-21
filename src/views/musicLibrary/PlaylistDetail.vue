@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist-main">
+  <div class="main">
     <detail-info-card :obj="playlist" :cardType="'pl'" @btnClick="cardClick" />
 
     <div class="detail_layout">
@@ -25,9 +25,9 @@
             style="display: "
             >[更多]</a
           > -->
-          <a href="javascript:;" class="btn_edit js_edit" style="display: none"
-            ><i class="icon_txt">编辑</i></a
-          >
+          <a href="javascript:;" class="btn_edit js_edit" style="display: none">
+            <i class="icon_txt">编辑</i>
+          </a>
         </div>
 
         <div class="other_part" id="similaralbum" style="display: none">
@@ -111,14 +111,6 @@ export default {
 </script>
 
 <style scoped>
-.playlist-main,
-.section_inner {
-  z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-
 .mod_songlist {
   font-size: 14px;
   overflow: hidden;

@@ -234,39 +234,15 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  z-index: 2;
-}
-.main,
-.section_inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-blockquote,
-body,
-button,
-dd,
-dl,
-dt,
-fieldset,
-form,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-hr,
-html,
-input,
 li,
 ol,
 p,
-pre,
-td,
-textarea,
-th,
 ul {
   margin: 0;
   margin-right: 0px;
