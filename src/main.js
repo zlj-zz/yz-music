@@ -6,7 +6,7 @@ import store from "./store";
 
 import ElementPlus from "element-plus";
 import "element-plus/lib/theme-chalk/index.css";
-import "@/assets/css/base.css";
+import "@/assets/css/base.scss";
 import "@/assets/css/fakeqqmusic.scss";
 
 createApp(App)

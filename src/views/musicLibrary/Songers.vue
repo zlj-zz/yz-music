@@ -120,5 +120,14 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+.main {
+  ul,
+  li {
+    margin: auto;
+    padding: auto;
+  }
+}
+</style>
 <style scoped>
 </style>

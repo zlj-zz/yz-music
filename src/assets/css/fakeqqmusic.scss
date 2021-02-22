@@ -3,6 +3,27 @@ $deepgreen: #2caf6f;
 $white: #fff;
 $black: #000;
 
+.main {
+  z-index: 2;
+  button,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+.main,
+.section_inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .mod_btn {
   border: 1px solid #c9c9c9;
   color: $black;
@@ -382,6 +403,40 @@ $black: #000;
   border-style: solid;
 }
 
+/* 分类歌单选中类型时 */
+.part_tags {
+  position: relative;
+  float: left;
+  line-height: 38px;
+  margin: 8px 6px 0 0;
+  padding: 0 25px 0 10px;
+  border: 1px solid #c9c9c9;
+  border-radius: 2px;
+  font-size: 14px;
+  .part_tags__delete:hover {
+    background-color: rgba(225, 225, 225, 0.3);
+    border-radius: 12px;
+  }
+}
+.part_tags:hover {
+  background-color: #37c27c;
+  border-color: #37c27c;
+  color: #fff;
+  .part_tags__delete {
+    background-position: -160px -80px;
+  }
+}
+.part_tags__delete {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  margin-top: -8px;
+  width: 16px;
+  height: 16px;
+  background-position: -160px -120px;
+  overflow: hidden;
+}
+
 /* *************
  * MV 列表 css */
 .mv_list__list {
@@ -553,7 +608,9 @@ $black: #000;
 }
 
 /*
- **********
+ *
+ *
+ *
  *  Ranking page */
 
 /*右边css*/
@@ -802,24 +859,20 @@ $black: #000;
   font-size: 0;
   height: 36px;
 }
-.popup__icon_close,
-.popup__icon_close.sprite,
-.popup__icon_tips,
-.popup__icon_tips.sprite,
-.popup_download__icon,
-.popup_download__icon.sprite,
-.popup_tips__icon,
-.popup_tips__icon.sprite {
-  background-image: url(../img/icon_popup.png);
-}
 
 /*
- ************
+ *
+ *
+ *
  * 新碟页面 */
 /*下*/
 .mod_playlist {
   overflow: hidden;
   font-size: 0;
+  .playlist__item_box {
+    position: relative;
+    margin-right: 20px;
+  }
   .playlist__list {
     margin-right: -20px;
   }
@@ -914,8 +967,6 @@ img .playlist__pic {
 }
 
 /*
- *
- *
  *
  *
  *
@@ -1077,6 +1128,16 @@ img .playlist__pic {
   z-index: 999;
   text-align: center;
 }
+.popup__icon_close,
+.popup__icon_close.sprite,
+.popup__icon_tips,
+.popup__icon_tips.sprite,
+.popup_download__icon,
+.popup_download__icon.sprite,
+.popup_tips__icon,
+.popup_tips__icon.sprite {
+  background-image: url(../img/icon_popup.png);
+}
 .popup_tips__icon {
   display: block;
   width: 46px;
@@ -1090,11 +1151,31 @@ img .playlist__pic {
   font-weight: 400;
 }
 
+/* 弹出分类框 */
+.popup_tag {
+  position: absolute;
+  top: 175px;
+  left: 0;
+  right: 24px;
+  border: 1px solid #bfbfbf;
+  background-color: #fff;
+  padding: 19px 0 15px;
+  z-index: 4;
+}
+.popup_tag {
+  box-shadow: 0 0 10px rgba(183, 183, 183, 0.65);
+  border: 0 none;
+  .playlist_tag__tags {
+    margin-left: 16px;
+    line-height: 26px;
+  }
+  .playlist_tag__itembox {
+    width: auto;
+    margin-right: 32px;
+  }
+}
+
 /*
- *
- *
- *
- *
  *
  *
  *
@@ -1173,10 +1254,6 @@ img .playlist__pic {
  *
  *
  *
- *
- *
- *
- *
  * pop detail */
 .popup_data_detail {
   position: absolute;
@@ -1198,4 +1275,8 @@ img .playlist__pic {
   font-size: 20px;
   font-weight: 400;
   padding: 0 0 20px;
+}
+
+.c_tx_thin {
+  color: #999;
 }

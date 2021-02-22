@@ -1,0 +1,54 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+a,
+a * {
+  cursor: pointer;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  border: 0 none;
+  /*image-rendering: optimizeQuality;*/
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+/* 分页条 */
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #31c27c;
+  color: #fff;
+}
+.el-pagination.is-background .el-pager li.active {
+  color: #fff;
+  cursor: default;
+}
+.el-pagination.is-background .el-pager li:hover {
+  color: #31c27c;
+}
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: #31c27c;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
+  background-color: #31c27c;
+  color: #fff;
+}

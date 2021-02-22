@@ -6,7 +6,6 @@
         <div v-for="(key, idx) in categories" :key="key">
           <div
             class="playlist_tag__list"
-            :data="idx"
             :class="idx == 0 ? 'playlist_tag__list--lang' : ''"
           >
             <h3 class="playlist_tag__tit c_tx_thin">{{ key }}</h3>
@@ -24,7 +23,7 @@
                       ? 'playlist_tag__item--expand'
                       : ''
                   "
-                  @click="selectType(item.name)"
+                  @click="selectType(item.name, -999)"
                   >{{ item.name }}</a
                 >
               </li>
@@ -38,20 +37,26 @@
                   :class="
                     playlistTpyes[idx].showMore
                       ? 'playlist_tag__item--expand'
+                      : showMoreIdx == idx
+                      ? 'playlist_tag__item--expand'
                       : ''
                   "
                   @click="showMoreTypes(idx)"
-                  >更多<i class="playlist_tag__arrow sprite"></i
+                  :id="showMoreIdx"
+                  >{{ showMoreIdx == idx ? selectedType : "更多"
+                  }}<i class="playlist_tag__arrow sprite"></i
                 ></a>
               </li>
             </ul>
           </div>
+          <!-- 更多标签展示 -->
           <div
             class="popup_tag"
             :style="{
               display: playlistTpyes[idx].showMore ? 'block' : 'none',
             }"
             v-if="ifMore(idx, playlistTpyes[idx].list)"
+            @mouseleave="showMoreMouseLeave"
           >
             <ul class="playlist_tag__tags">
               <li
@@ -66,7 +71,7 @@
                       ? 'playlist_tag__item--expand'
                       : ''
                   "
-                  @click="selectType(item.name)"
+                  @click="selectType(item.name, idx)"
                   >{{ item.name }}</a
                 >
               </li>
@@ -90,6 +95,7 @@
             >
           </span>
         </h2>
+        <!-- 排列方式 -->
         <div class="part_switch" id="sortbox" aria-label="排列方式">
           <a
             href="javascript:;"
@@ -108,7 +114,6 @@
           >
         </div>
       </div>
-
       <!-- 歌单展示 -->
       <div class="mod_playlist mod_playlist--all">
         <ul class="playlist__list" id="playlist_box">
@@ -156,6 +161,18 @@
         </ul>
       </div>
     </div>
+    <div style="padding-bottom: 20px">
+      <el-pagination
+        background
+        style="text-align: center"
+        layout="prev, pager, next"
+        :page-size="limit"
+        :total="allLength"
+        :current-page="currentPage"
+        @current-change="currentChange"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -173,12 +190,15 @@ export default {
     return {
       loading: true,
       subLoading: true,
+      limit: 20,
+      currentPage: 1,
+      allLength: 0,
+      allPage: 1,
+      showMoreIdx: 0,
       categories: {},
       playlistTpyes: [],
       selectedType: "全部",
       selectedOrder: "hot",
-      currentPage: 1,
-      allPage: 1,
       playlists: [],
     };
   },
@@ -207,17 +227,17 @@ export default {
       });
     },
     updatePlaylist() {
-      let limit = 20;
       getPlayList(
-        limit,
+        this.limit,
         this.currentPage,
         this.selectedType,
         this.selectedOrder
       ).then((res) => {
         let lists = createPlaylists(res.data.playlists);
+        this.playlists = lists;
+        this.allLength = res.data.total;
         console.log(res.data);
         console.log(lists);
-        this.playlists = lists;
       });
     },
     playTheList(id) {
@@ -225,7 +245,7 @@ export default {
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
           let songs = createSongs(res.data.songs);
-          console.log(songs);
+          //console.log(songs);
           playSonglist(songs);
         });
       });
@@ -243,23 +263,43 @@ export default {
       else return list.length > 9 ? list.slice(9) : list;
     },
     showMoreTypes(idx) {
+      if (this.playlistTpyes[idx].showMore) {
+        this.showMoreIdx = -999;
+      } else {
+        this.showMoreIdx = idx;
+      }
       this.playlistTpyes[idx].showMore = !this.playlistTpyes[idx].showMore;
     },
-    selectType(type) {
+    showMoreMouseLeave() {
+      this.playlistTpyes[this.showMoreIdx].showMore = false;
+    },
+    selectType(type, idx) {
       if (this.selectedType != type) this.selectedType = type;
+      if (idx) {
+        this.showMoreIdx = idx;
+        this.playlistTpyes[this.showMoreIdx].showMore = false;
+      }
     },
     deleteSeleted() {
       this.selectedType = "全部";
+      this.showMoreIdx = -999;
     },
     selectOrder(order) {
       this.selectedOrder = order;
       this.currentPage = 1;
       this.updatePlaylist();
     },
+    currentChange(v) {
+      this.currentPage = v;
+    },
     gotoPlaylistDetail,
   },
   watch: {
     selectedType(type) {
+      this.currentPage = 1;
+      this.updatePlaylist();
+    },
+    currentPage(newPage) {
       this.updatePlaylist();
     },
   },
@@ -267,6 +307,14 @@ export default {
 </script>
 
 <style scoped>
+a:hover {
+  color: #31c27c;
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
 .mod_playlist_tag {
   position: relative;
   padding: 60px 0 32px 0;
@@ -291,9 +339,6 @@ export default {
   margin-bottom: 8px;
   margin-top: -6px;
 }
-.c_tx_thin {
-  color: #999;
-}
 .playlist_tag__line {
   position: absolute;
   top: 0;
@@ -301,25 +346,6 @@ export default {
   width: 1px;
   height: 108px;
   background-color: #eeeef0;
-}
-a:hover {
-  color: #31c27c;
-}
-button,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul,
-li,
-p {
-  margin: 0;
-  padding: 0;
-}
-img {
-  width: 250px;
 }
 
 .playlist_tag__itembox {
@@ -351,94 +377,6 @@ img {
   max-width: 68px;
 }
 
-.mod_part,
-.mod_part_detail {
-  position: relative;
-  margin-bottom: 30px;
-}
-.part__hd,
-.part_detail__hd {
-  overflow: hidden;
-  height: 60px;
-}
-.part__tit,
-.part_detail__tit {
-  float: left;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 58px;
-}
-.mod_playlist .playlist__item {
-  display: inline-block;
-  width: 20%;
-  padding-bottom: 44px;
-  overflow: hidden;
-  font-size: 14px;
-  vertical-align: top;
-}
-.mod_playlist .playlist__cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-.mod_playlist .playlist__title {
-  overflow: hidden;
-}
-.mod_playlist .playlist__title_txt {
-  float: left;
-  max-width: 100%;
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 22px;
-  max-height: 44px;
-}
-.mod_playlist .playlist__author,
-.mod_playlist .playlist__author a,
-.mod_playlist .playlist__other {
-  color: #999;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 22px;
-}
-.mod_playlist .playlist__item_box {
-  position: relative;
-  margin-right: 20px;
-}
-.mod_playlist {
-  overflow: hidden;
-  font-size: 0;
-}
-.mod_playlist .playlist__list {
-  margin-right: -20px;
-}
-
-/* 弹出分类框 */
-.popup_tag {
-  position: absolute;
-  top: 175px;
-  left: 0;
-  right: 24px;
-  border: 1px solid #bfbfbf;
-  background-color: #fff;
-  padding: 19px 0 15px;
-  z-index: 4;
-}
-.popup_tag {
-  box-shadow: 0 0 10px rgba(183, 183, 183, 0.65);
-  border: 0 none;
-}
-.popup_tag .playlist_tag__tags {
-  margin-left: 16px;
-  line-height: 26px;
-}
-.popup_tag .playlist_tag__itembox {
-  width: auto;
-  margin-right: 32px;
-}
-
 /* 箭头 */
 .playlist_tag__arrow {
   display: inline-block;
@@ -454,39 +392,5 @@ img {
 .playlist_tag__item--expand .playlist_tag__arrow,
 .playlist_tag__item--expand:hover .playlist_tag__arrow {
   background-position: -100px -260px;
-}
-
-/* 选中类型时 */
-.part_tags {
-  position: relative;
-  float: left;
-  line-height: 38px;
-  margin: 8px 6px 0 0;
-  padding: 0 25px 0 10px;
-  border: 1px solid #c9c9c9;
-  border-radius: 2px;
-  font-size: 14px;
-}
-.part_tags:hover {
-  background-color: #37c27c;
-  border-color: #37c27c;
-  color: #fff;
-}
-.part_tags__delete {
-  position: absolute;
-  top: 50%;
-  right: 4px;
-  margin-top: -8px;
-  width: 16px;
-  height: 16px;
-  background-position: -160px -120px;
-  overflow: hidden;
-}
-.part_tags:hover .part_tags__delete {
-  background-position: -160px -80px;
-}
-.part_tags .part_tags__delete:hover {
-  background-color: rgba(225, 225, 225, 0.3);
-  border-radius: 12px;
 }
 </style>

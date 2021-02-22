@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="home-main">
     <banner />
     <recommended-bar />
     <home-top />
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-.main {
+.home-main {
   font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
   line-height: 1.5;
   max-width: 100%;

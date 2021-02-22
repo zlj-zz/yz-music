@@ -160,19 +160,6 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-p,
-ul {
-  margin: 0;
-  padding: 0;
-}
-
 /*导航条*/
 .mod_tag {
   position: relative;
@@ -192,24 +179,4 @@ a:hover {
 }
 </style>
 
-<style>
-.el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: #31c27c;
-  color: #fff;
-}
-.el-pagination.is-background .el-pager li.active {
-  color: #fff;
-  cursor: default;
-}
-.el-pagination.is-background .el-pager li:hover {
-  color: #31c27c;
-}
-.el-pagination.is-background .el-pager li:not(.disabled):hover {
-  color: #31c27c;
-}
-.el-pagination.is-background .el-pager li:not(.disabled).active:hover {
-  background-color: #31c27c;
-  color: #fff;
-}
-</style>
 
