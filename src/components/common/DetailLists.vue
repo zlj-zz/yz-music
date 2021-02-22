@@ -1,44 +1,42 @@
 <template>
-  <div
-    class="js_search_tab_cont search_tab_cont"
-    id="playlist_box"
-    style="display: block"
-  >
+  <div class="js_search_tab_cont search_tab_cont" style="display: block">
     <div class="mod_playlist_text">
       <ul class="playlist__header">
-        <li class="playlist__header_name">歌单</li>
-        <li class="playlist__header_author">创建人</li>
-        <li class="playlist__header_other">播放量</li>
+        <li class="playlist__header_name">{{ titles[kind][0] }}</li>
+        <li class="playlist__header_author">{{ titles[kind][1] }}</li>
+        <li class="playlist__header_other">{{ titles[kind][2] }}</li>
       </ul>
       <ul class="playlist__list">
-        <li
-          class="playlist__item"
-          v-for="playlist in playlists"
-          :key="playlist.id"
-        >
+        <li class="playlist__item" v-for="l in lists" :key="l.id">
           <div class="playlist__cover" style="visibility: visible">
-            <a class="js_playlist"
+            <a class="js_album"
               ><img
                 class="playlist__pic"
                 style="display: block; visibility: visible"
-                onerror="this.src='//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000';this.onerror=null;"
-                :src="playlist.img"
-                :alt="playlist.name"
+                onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
+                :alt="l.name"
+                :src="l.img"
             /></a>
           </div>
           <h4 class="playlist__title">
-            <span class="playlist__title_txt"
-              ><a class="js_playlist" :title="playlist.name">{{
-                playlist.name
-              }}</a></span
-            >
+            <span class="playlist__title_txt">
+              <a class="js_album" :title="l.name">{{ l.name }}</a>
+            </span>
           </h4>
           <div class="playlist__author">
-            <a class="js_user" title="playlist.creatorName">{{
-              playlist.creatorName
+            <a class="js_singer" v-if="kind == 0" :title="l.artistsText">{{
+              l.artistsText
+            }}</a>
+            <a class="js_singer" v-else-if="kind == 1" :title="l.artistsText">{{
+              l.creatorName
             }}</a>
           </div>
-          <div class="playlist__other">{{ playlist.playCount }}</div>
+          <div class="playlist__other" v-if="kind == 0">
+            {{ l.publishTime }}
+          </div>
+          <div class="playlist__other" v-else-if="kind == 1">
+            {{ l.playCount }}
+          </div>
         </li>
       </ul>
     </div>
@@ -47,11 +45,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      titles: {
+        0: ["专辑", "歌手", "发行时间"],
+        1: ["歌单", "创建人", "播放量"],
+      },
+    };
+  },
   props: {
-    playlists: {
+    lists: {
       type: Array,
       default: [],
     },
+    // 0: album, 1: playlist
+    kind: { default: 0 },
   },
 };
 </script>

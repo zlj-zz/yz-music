@@ -14,8 +14,8 @@
       >
     </div>
     <div class="profile_cont">
-      <show-playlist :playlists="playlists" v-if="selected == '歌单'" />
-      <show-albums :albums="albums" v-if="selected == '专辑'" />
+      <detail-lists :lists="playlists" :kind="1" v-if="selected == '歌单'" />
+      <detail-lists :lists="albums" v-if="selected == '专辑'" />
       <show-mvs :mvs="mvs" v-if="selected == '视频'" />
     </div>
   </div>
@@ -23,8 +23,7 @@
 
 
 <script>
-import ShowPlaylist from "components/common/ShowPlaylist";
-import ShowAlbums from "components/common/ShowAlbums";
+import DetailLists from "components/common/DetailLists";
 import ShowMvs from "components/common/ShowMvs";
 import { getUserPlaylists, getCollectedAlbum, getCollectedMvs } from "api";
 import { createPlaylists, createAlbums, createMvs } from "common/utils";
@@ -77,8 +76,7 @@ export default {
     },
   },
   components: {
-    ShowPlaylist,
-    ShowAlbums,
+    DetailLists,
     ShowMvs,
   },
 };

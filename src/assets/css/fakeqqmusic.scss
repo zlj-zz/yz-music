@@ -25,6 +25,12 @@ $black: #000;
   position: relative;
 }
 
+.mod_search {
+  position: relative;
+  height: 247px;
+  background-position: 50%;
+  background-size: cover;
+}
 .mod_btn {
   border: 1px solid #c9c9c9;
   color: $black;
@@ -51,6 +57,11 @@ $black: #000;
   white-space: nowrap;
   box-sizing: border-box;
   overflow: hidden;
+}
+.mod_btn__icon_play {
+  width: 13px;
+  height: 16px;
+  background-position: -60px -220px;
 }
 .mod_btn_green__icon_play {
   width: 13px;
@@ -231,29 +242,6 @@ $black: #000;
   .list_menu__icon_delete {
     background-position: -40px -160px;
   }
-}
-
-/* **************
- * 歌手列表 css */
-.singer_list_txt {
-  margin-right: -20px;
-  overflow: hidden;
-  margin-bottom: 60px;
-}
-
-.singer_list_txt__item {
-  float: left;
-  width: 20%;
-}
-
-.singer_list_txt__link {
-  float: left;
-  max-width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-  line-height: 36px;
 }
 
 /* **********
@@ -1063,6 +1051,13 @@ $black: #000;
   }
 }
 
+.mod_lyric_list,
+.mod_mv_list,
+.mod_playlist_text,
+.mod_songlist {
+  padding-bottom: 40px;
+}
+
 .mod_playlist .playlist__cover:hover .playlist__pic {
   transform: scale(1.07) translateZ(0);
   transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
@@ -1350,16 +1345,41 @@ img .playlist__pic {
 .songlist__song_txt {
   margin-left: 10px;
 }
+
+.singer_list__item {
+  position: relative;
+  height: 80px;
+  display: table;
+  width: 100%;
+  .singer_list__title {
+    width: 40%;
+    min-width: 280px;
+    font-weight: 400;
+    text-indent: 20px;
+    overflow: hidden;
+    line-height: 80px;
+    padding-left: 20px;
+    font-size: 0;
+  }
+  .singer_list__pic {
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 50%;
+  }
+  .singer_list__cover {
+    position: relative;
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
+  }
+}
 .singer_list__cover {
   margin-left: auto;
   margin-right: auto;
-}
-.singer_list__cover,
-.singer_list__pic {
-  display: block;
-  width: 140px;
-  height: 140px;
-  border-radius: 126px;
 }
 .singer_list__cover,
 .singer_list__pic {
@@ -1377,6 +1397,74 @@ img .playlist__pic {
   zoom: 1;
   *width: 100%;
   margin: 20px 30px 4px;
+}
+.singer_list__user_txt {
+  color: #999;
+}
+
+/* 搜索用户界面 */
+.singer_list__title_txt {
+  float: left;
+  max-width: 310px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+.singer_list__count,
+.singer_list__other,
+.singer_list__playlist,
+.singer_list__title {
+  display: table-cell;
+  height: 80px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.singer_list__playlist,
+.singer_list__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.singer_list__playlist {
+  width: 22%;
+  padding-left: 20px;
+}
+.singer_list__count {
+  width: 22%;
+  padding-left: 15px;
+}
+.singer_list__other {
+  width: 122px;
+}
+.singer_list__btn_focus {
+  display: block;
+  width: 122px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+/* **************
+ * 歌手列表 css */
+.singer_list_txt {
+  margin-right: -20px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.singer_list_txt__item {
+  float: left;
+  width: 20%;
+}
+
+.singer_list_txt__link {
+  float: left;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 36px;
 }
 
 /*

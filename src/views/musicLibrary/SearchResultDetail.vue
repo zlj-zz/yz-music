@@ -21,11 +21,15 @@
         <!-- song -->
         <show-songs :songs="songs" v-if="selectedType == 1" />
         <!-- album -->
-        <show-albums :albums="albums" v-if="selectedType == 10" />
+        <detail-lists :lists="albums" v-if="selectedType == 10" />
         <!-- mv -->
         <show-mvs :mvs="mvs" v-if="selectedType == 1004" />
         <!-- playlist -->
-        <show-playlist :playlists="playlists" v-if="selectedType == 1000" />
+        <detail-lists
+          :lists="playlists"
+          :kind="1"
+          v-if="selectedType == 1000"
+        />
         <!-- user -->
         <div
           class="js_search_tab_cont search_tab_cont"
@@ -83,10 +87,9 @@
 
 <script>
 import ShowSongs from "components/common/ShowSongs";
-import ShowAlbums from "components/common/ShowAlbums";
 import ShowMvs from "components/common/ShowMvs";
-import ShowPlaylist from "components/common/ShowPlaylist";
 import ShowLyrics from "components/common/ShowLyrics";
+import DetailLists from "components/common/DetailLists";
 import ModListMenu from "components/common/ModListMenu";
 import { getSearchResult } from "api";
 import {
@@ -151,169 +154,25 @@ export default {
   },
   components: {
     ShowSongs,
-    ShowAlbums,
     ShowMvs,
-    ShowPlaylist,
     ShowLyrics,
+    DetailLists,
     ModListMenu,
   },
 };
 </script>
 
 <style scoped>
-button,
-dd,
 dl,
 dt,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
 li,
 ol,
-p,
 pre,
 td,
 th,
 ul {
   margin: 0;
   padding: 0;
-}
-.mod_search {
-  position: relative;
-  height: 247px;
-  background-position: 50%;
-  background-size: cover;
-}
-.icon_txt {
-  font: 0/0 a;
-}
-button {
-  cursor: pointer;
-}
-
-.mod_tab {
-  position: relative;
-  zoom: 1;
-  border-bottom: 1px solid #f7f7f7;
-  margin-bottom: 30px;
-}
-.mod_tab,
-.mod_tab__item {
-  height: 56px;
-  line-height: 56px;
-}
-.mod_tab__current {
-  color: #31c27c;
-}
-.mod_tab__item {
-  position: relative;
-  float: left;
-  font-size: 16px;
-  overflow: hidden;
-  margin-right: 55px;
-}
-.mod_tab,
-.mod_tab__item {
-  height: 56px;
-  line-height: 56px;
-}
-
-.mod_btn__icon_play {
-  width: 13px;
-  height: 16px;
-  background-position: -60px -220px;
-}
-
-.mod_playlist_text {
-  zoom: 1;
-  font-size: 14px;
-}
-.mod_lyric_list,
-.mod_mv_list,
-.mod_playlist_text,
-.mod_songlist {
-  padding-bottom: 40px;
-}
-
-.singer_list__item {
-  position: relative;
-  height: 80px;
-  display: table;
-  width: 100%;
-}
-.singer_list__title {
-  width: 40%;
-  min-width: 280px;
-  font-weight: 400;
-  text-indent: 20px;
-  overflow: hidden;
-  line-height: 80px;
-  padding-left: 20px;
-  font-size: 0;
-}
-.singer_list__cover {
-  position: relative;
-  float: left;
-  width: 60px;
-  height: 60px;
-  margin-top: 10px;
-}
-.singer_list__pic {
-  height: 100%;
-  object-fit: cover;
-}
-.singer_list__pic {
-  display: block;
-  width: 100%;
-  min-height: 50px;
-  border-radius: 50%;
-}
-.singer_list__title_txt {
-  float: left;
-  max-width: 310px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-}
-.singer_list__user_txt {
-  color: #999;
-}
-.singer_list__count,
-.singer_list__other,
-.singer_list__playlist,
-.singer_list__title {
-  display: table-cell;
-  height: 80px;
-  vertical-align: middle;
-  box-sizing: border-box;
-}
-.singer_list__playlist,
-.singer_list__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-}
-.singer_list__playlist {
-  width: 22%;
-  padding-left: 20px;
-}
-.singer_list__count {
-  width: 22%;
-  padding-left: 15px;
-}
-.singer_list__other {
-  width: 122px;
-}
-.singer_list__btn_focus {
-  display: block;
-  width: 122px;
-  text-align: center;
-  margin-right: 20px;
 }
 
 .mod_btn,
