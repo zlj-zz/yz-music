@@ -12,7 +12,7 @@
             :class="
               item.dataId == seletedType ? 'toplist_nav__link--current' : ''
             "
-            @click="onSelectType(item.dataId)"
+            @click="onSelectType(item)"
             >{{ item.name }}</a
           >
         </dd>
@@ -29,7 +29,7 @@
             :class="
               item.dataId == seletedType ? 'toplist_nav__link--current' : ''
             "
-            @click="onSelectType(item.dataId)"
+            @click="onSelectType(item)"
             >{{ item.name }}</a
           >
         </dd>
@@ -46,7 +46,7 @@
             :class="
               item.dataId == seletedType ? 'toplist_nav__link--current' : ''
             "
-            @click="onSelectType(item.dataId)"
+            @click="onSelectType(item)"
             >{{ item.name }}</a
           >
         </dd>
@@ -63,7 +63,7 @@
             :class="
               item.dataId == seletedType ? 'toplist_nav__link--current' : ''
             "
-            @click="onSelectType(item.dataId)"
+            @click="onSelectType(item)"
             >{{ item.name }}</a
           >
         </dd>
@@ -72,7 +72,7 @@
 
     <div class="mod_toplist">
       <div class="toplist__hd_rk">
-        <h1 class="toplist__tit1">飙升榜</h1>
+        <h1 class="toplist__tit1">{{ seletedTypeName }}</h1>
         <span class="toplist_switch">
           <a
             href="javascript:;"
@@ -250,6 +250,7 @@ export default {
         { name: "日本Oricon", dataId: "60131" },
         { name: "法国 NRJ Vos Hits 周榜", dataId: "27135204" },
       ],
+      seletedTypeName: "飙升榜",
       seletedType: "19723756",
       listDatas: [],
     };
@@ -258,8 +259,9 @@ export default {
     this.updatedTopList();
   },
   methods: {
-    onSelectType(id) {
-      this.seletedType = id;
+    onSelectType(type) {
+      this.seletedType = type.dataId;
+      this.seletedTypeName = type.name;
     },
     formatTime(duration) {
       return formatTime(duration);
@@ -327,44 +329,20 @@ export default {
   font-size: 14px;
   line-height: 1.5;
 }
+a.hover {
+  color: #31c27c;
+}
 dd,
-dt,
 h1,
 ul,
-li,
-h2 {
+li {
   margin: 0;
   padding: 0;
-}
-
-a {
-  font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
-}
-input,
-select,
-textarea,
-th {
-  color: #000;
-  background-color: #fff;
-  font-size: 14px;
-  line-height: 1.5;
-  font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
-  font-family: Tahoma, Arial, 微软雅黑, sans-serif/9;
 }
 
 /*overwrite*/
 .mod_btn,
 .mod_btn_green {
-  border-radius: 2px;
-  font-size: 14px;
-  margin-right: 6px;
-  padding: 0 23px;
-  height: 38px;
-  line-height: 38px;
-  display: inline-block;
-  white-space: nowrap;
-  box-sizing: border-box;
-  overflow: hidden;
   text-align: left;
 }
 .songlist__item {
@@ -418,8 +396,5 @@ th {
   line-height: 20px;
   text-align: center;
   color: #999;
-}
-a.hover {
-  color: #31c27c;
 }
 </style>

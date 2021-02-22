@@ -236,8 +236,7 @@ export default {
         let lists = createPlaylists(res.data.playlists);
         this.playlists = lists;
         this.allLength = res.data.total;
-        console.log(res.data);
-        console.log(lists);
+        //console.log(res.data);
       });
     },
     playTheList(id) {
@@ -277,7 +276,6 @@ export default {
       if (this.selectedType != type) this.selectedType = type;
       if (idx) {
         this.showMoreIdx = idx;
-        this.playlistTpyes[this.showMoreIdx].showMore = false;
       }
     },
     deleteSeleted() {

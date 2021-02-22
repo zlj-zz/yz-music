@@ -12,6 +12,7 @@ $black: #000;
   h4,
   h5,
   h6,
+  dd
   p {
     margin: 0;
     padding: 0;
@@ -672,6 +673,10 @@ $black: #000;
   font-size: 14px;
 }
 
+.mod_list_menu {
+  font-size: 0;
+  height: 36px;
+}
 .mod_songlist {
   font-size: 14px;
   overflow: hidden;
@@ -760,50 +765,6 @@ $black: #000;
   white-space: nowrap;
   font-size: 14px;
 }
-.icon_rank_popular {
-  width: 15px;
-  height: 15px;
-  margin-top: 27px;
-  background-position: 0 -60px;
-}
-.icon_rank_up {
-  width: 14px;
-  height: 13px;
-  margin-top: 28px;
-  background-position: 0 0;
-}
-.icon_rank_down {
-  width: 14px;
-  height: 13px;
-  margin-top: 28px;
-  background-position: 0 -15px;
-}
-.icon_rank_keep {
-  width: 14px;
-  height: 3px;
-  margin-top: 38px;
-  background-position: 0 -30px;
-}
-.icon_rank_new {
-  width: 23px;
-  height: 8px;
-  margin-top: 36px;
-  background-position: 0 -40px;
-}
-.icon_rank_down,
-.icon_rank_keep,
-.icon_rank_new,
-.icon_rank_popular,
-.icon_rank_re,
-.icon_rank_up {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  background-image: url(../img/icon_rank.png);
-}
-.icon_txt {
-  font: 0/0 a;
-}
 .songlist__songname {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -855,9 +816,50 @@ $black: #000;
   right: 10px;
   margin-top: -18px;
 }
-.mod_list_menu {
-  font-size: 0;
-  height: 36px;
+
+.icon_rank_popular {
+  width: 15px;
+  height: 15px;
+  margin-top: 27px;
+  background-position: 0 -60px;
+}
+.icon_rank_up {
+  width: 14px;
+  height: 13px;
+  margin-top: 28px;
+  background-position: 0 0;
+}
+.icon_rank_down {
+  width: 14px;
+  height: 13px;
+  margin-top: 28px;
+  background-position: 0 -15px;
+}
+.icon_rank_keep {
+  width: 14px;
+  height: 3px;
+  margin-top: 38px;
+  background-position: 0 -30px;
+}
+.icon_rank_new {
+  width: 23px;
+  height: 8px;
+  margin-top: 36px;
+  background-position: 0 -40px;
+}
+.icon_rank_down,
+.icon_rank_keep,
+.icon_rank_new,
+.icon_rank_popular,
+.icon_rank_re,
+.icon_rank_up {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url(../img/icon_rank.png);
+}
+.icon_txt {
+  font: 0/0 a;
 }
 
 /*
@@ -1265,6 +1267,13 @@ img .playlist__pic {
   border-radius: 4px;
   border: 1px solid #ddd;
   z-index: 99;
+}
+.popup_data_detail__cont {
+  max-height: 400px;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 30px 5px 30px 10px;
+  overflow-y: auto;
 }
 .popup_data_detail__cont p,
 .popup_data_detail__tit {

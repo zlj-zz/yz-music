@@ -17,7 +17,7 @@
       <div class="mod_part_detail">
         <div class="part_detail__hd">
           <h2 class="part_detail__tit js_lib_title">全部MV</h2>
-          <div class="part_switch" aria-label="排列方式">
+          <div class="part_switch">
             <a
               class="part_switch__item part_switch__item--left"
               :class="
@@ -113,7 +113,9 @@ export default {
   data() {
     return {
       mvLoading: true,
+      limit: 20,
       page: 1,
+      allLength: 0,
       more: true,
       order: mvOrder.NEW.dataId,
       orders: mvOrder,
@@ -129,12 +131,18 @@ export default {
   },
   methods: {
     updateMv() {
-      let limit = 20;
-      getAllMV(limit, this.page, this.order, this.selectArea, this.selectType)
+      getAllMV(
+        this.limit,
+        this.page,
+        this.order,
+        this.selectArea,
+        this.selectType
+      )
         .then((res) => {
           console.log(res);
           this.mvs = res.data.data;
           this.mvLoading = false;
+          this.allLength = res.data.count;
         })
         .catch((err) => console.log(err));
     },
@@ -162,6 +170,9 @@ export default {
         this.updateMv();
       }
     },
+    currentChange(v) {
+      this.page = v;
+    },
     processCount,
   },
   components: {
@@ -172,14 +183,7 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 li,
-p,
 ul {
   margin: 0;
   padding: 0;

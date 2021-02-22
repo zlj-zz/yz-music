@@ -93,12 +93,9 @@ export default {
     toggleShowMoreInfo() {
       this.moreInfo = !this.moreInfo;
     },
-    playAll() {
-      playSonglist(this.songs);
-    },
     cardClick(v) {
       if (v == "all") {
-        this.playAll();
+        playSonglist(this.songs);
       }
     },
   },
@@ -111,16 +108,7 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
 li,
-ol,
-p,
 ul {
   margin: 0;
   margin-right: 0px;
@@ -135,13 +123,5 @@ ul {
   max-height: 88px;
   overflow: hidden;
   font-size: 14.3px;
-}
-
-.popup_data_detail__cont {
-  max-height: 400px;
-  font-size: 14px;
-  line-height: 22px;
-  margin: 30px 5px 30px 10px;
-  overflow-y: auto;
 }
 </style>

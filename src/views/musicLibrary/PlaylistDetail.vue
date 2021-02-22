@@ -25,7 +25,7 @@
             style="display: "
             >[更多]</a
           > -->
-          <a href="javascript:;" class="btn_edit js_edit" style="display: none">
+          <a class="btn_edit js_edit" style="display: none">
             <i class="icon_txt">编辑</i>
           </a>
         </div>
@@ -96,11 +96,8 @@ export default {
         });
       });
     },
-    playAll() {
-      playSonglist(this.songs);
-    },
     cardClick(v) {
-      if (v == "all") this.playAll();
+      if (v == "all") playSonglist(this.songs);
     },
   },
   components: {
@@ -111,11 +108,4 @@ export default {
 </script>
 
 <style scoped>
-.mod_songlist {
-  font-size: 14px;
-  overflow: hidden;
-}
-.mod_songlist {
-  padding-bottom: 60px;
-}
 </style>
