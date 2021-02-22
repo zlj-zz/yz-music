@@ -1,16 +1,21 @@
+$green: #31c27c;
+$deepgreen: #2caf6f;
+$white: #fff;
+$black: #000;
+
 .mod_btn {
   border: 1px solid #c9c9c9;
-  color: #000;
+  color: $black;
 }
 .mod_btn_green {
-  border: 1px solid #31c27c;
-  background-color: #31c27c;
-  color: #fff;
+  border: 1px solid $green;
+  background-color: $green;
+  color: $white;
 }
 .mod_btn_green:hover {
-  background-color: #2caf6f;
-  border-color: #2caf6f;
-  color: #fff;
+  background-color: $deepgreen;
+  border-color: $deepgreen;
+  color: $white;
 }
 .mod_btn,
 .mod_btn_green {
@@ -145,29 +150,32 @@
 .list_menu__icon_delete {
   background-position: 0 -160px;
 }
-.list_menu__item:hover .list_menu__icon_play {
-  background-position: -40px 0;
-}
-.list_menu__item:hover .list_menu__icon_pause {
-  background-position: -40px -200px;
-}
-.list_menu__item:hover .list_menu__icon_share {
-  background-position: -40px -40px;
-}
-.list_menu__item:hover .list_menu__icon_add {
-  background-position: -40px -80px;
-}
-.list_menu__item:hover .list_menu__icon_down {
-  background-position: -40px -120px;
-}
-.list_menu__item:hover .list_menu__icon_down_vip {
-  background-position: -40px -280px;
-}
-.list_menu__item:hover .list_menu__icon_edit {
-  background-position: -40px -240px;
-}
-.list_menu__item:hover .list_menu__icon_delete {
-  background-position: -40px -160px;
+
+.list_menu__item:hover {
+  .list_menu__icon_play {
+    background-position: -40px 0;
+  }
+  .list_menu__icon_pause {
+    background-position: -40px -200px;
+  }
+  .list_menu__icon_share {
+    background-position: -40px -40px;
+  }
+  .list_menu__icon_add {
+    background-position: -40px -80px;
+  }
+  .list_menu__icon_down {
+    background-position: -40px -120px;
+  }
+  .list_menu__icon_down_vip {
+    background-position: -40px -280px;
+  }
+  .list_menu__icon_edit {
+    background-position: -40px -240px;
+  }
+  .list_menu__icon_delete {
+    background-position: -40px -160px;
+  }
 }
 
 /* **************
@@ -230,12 +238,14 @@
 .slide_action__btn--right {
   transform: translateX(100%);
 }
-.mod_slide_box:hover .slide_action__btn {
-  opacity: 1;
-  visibility: none;
-  transform: translateX(0);
-  transition-property: opacity, transform, background, width;
-  transition-duration: 0.5s;
+.mod_slide_box:hover {
+  .slide_action__btn {
+    opacity: 1;
+    visibility: none;
+    transform: translateX(0);
+    transition-property: opacity, transform, background, width;
+    transition-duration: 0.5s;
+  }
 }
 .slide_action--left,
 .slide_action__btn--left {
@@ -264,9 +274,6 @@
   filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#19000000', endColorstr='#19000000');
   background: url(#);
   background: rgba(0, 0, 0, 0.1);
-}
-.icon_txt {
-  font: 0/0 a;
 }
 
 /* 切换小圆点 */
@@ -359,9 +366,9 @@
 }
 .part_switch__item--select,
 .part_switch__item--select:hover {
-  background-color: #31c27c;
-  color: #fff;
-  border-color: #31c27c;
+  background-color: $green;
+  color: $white;
+  border-color: $green;
   z-index: 2;
 }
 .part_switch__item {
@@ -469,6 +476,83 @@
 }
 
 /*
+ *
+ *
+ * 首页 top 榜 */
+.toplist_main {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 1400px;
+}
+.toplist__list {
+  font-size: 0;
+  margin-right: -20px;
+  color: $white;
+  font-size: 14px;
+}
+.toplist__item {
+  display: inline-block;
+  width: 18%;
+  .mod_cover__icon_play {
+    top: 114px;
+    margin-top: 0;
+    margin-bottom: 0;
+    z-index: 2;
+  }
+}
+.toplist__box {
+  position: relative;
+  margin-right: 20px;
+  height: 500px;
+  overflow: hidden;
+}
+
+#toplist__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+}
+.toplist__item .toplist__bg {
+  transform: scale(1);
+  transition: transform 0.75s;
+}
+.toplist__hd {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  text-align: center;
+  font-size: 100%;
+  color: $black;
+}
+.toplist__hd::before {
+  content: "";
+  display: block;
+  width: 66px;
+  height: 22px;
+  margin: 0 auto 9px;
+}
+.toplist__tit {
+  height: 36px;
+  line-height: 1;
+  font-size: 26px;
+  color: $white;
+  font-weight: 400;
+}
+.toplist__line {
+  position: absolute;
+  left: 50%;
+  top: 148px;
+  margin-left: -18px;
+  width: 36px;
+  height: 2px;
+  background: $white;
+}
+
+/*
  **********
  *  Ranking page */
 
@@ -501,8 +585,8 @@
 }
 .toplist_nav__link--current,
 .toplist_nav__link--current:hover {
-  background-color: #31c27c;
-  color: #fff;
+  background-color: $green;
+  color: $white;
 }
 
 /*左上*/
@@ -584,6 +668,18 @@
   clear: both;
   font-size: 0;
   overflow: hidden;
+  .mod_list_menu {
+    pointer-events: none;
+  }
+  .mod_list_menu {
+    position: absolute;
+    right: -10px;
+    right: -9999px\9;
+    top: 50%;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 .songlist__item--even {
   background-color: rgba(0, 0, 0, 0.01);
@@ -648,6 +744,9 @@
   margin-right: auto;
   background-image: url(../img/icon_rank.png);
 }
+.icon_txt {
+  font: 0/0 a;
+}
 .songlist__songname {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -667,9 +766,6 @@
   background-position: -40px -280px;
   vertical-align: middle;
   margin-right: 6px;
-}
-.icon_txt {
-  font: 0/0 a;
 }
 .songlist__item .songlist__icon:nth-child(2) + .songlist__songname_txt {
   max-width: 62%;
@@ -694,19 +790,7 @@
   margin-right: 20px;
   margin-top: 5px;
 }
-.songlist__item .mod_list_menu {
-  pointer-events: none;
-}
 
-.songlist__item .mod_list_menu {
-  position: absolute;
-  right: -10px;
-  right: -9999px\9;
-  top: 50%;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
 .songlist__item--current .mod_list_menu,
 .songlist__item:hover .mod_list_menu {
   opacity: 1;
@@ -736,42 +820,67 @@
 .mod_playlist {
   overflow: hidden;
   font-size: 0;
-}
-.mod_playlist .playlist__list {
-  margin-right: -20px;
+  .playlist__list {
+    margin-right: -20px;
+  }
+  .playlist__item {
+    display: inline-block;
+    width: 20%;
+    padding-bottom: 44px;
+    overflow: hidden;
+    font-size: 14px;
+    vertical-align: top;
+  }
+  .playlist__item_box {
+    position: relative;
+    margin-right: 20px;
+    text-align: left;
+  }
+  .playlist__title {
+    overflow: hidden;
+  }
+  .playlist__title_txt {
+    float: left;
+    max-width: 100%;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 22px;
+    max-height: 44px;
+  }
+  .playlist__cover {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding-top: 100%;
+    margin-bottom: 15px;
+  }
+  .playlist__pic {
+    height: 100%;
+    object-fit: cover;
+  }
+  .playlist__pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .playlist__pic {
+    transform: scale(1) translateZ(0);
+    transition: transform 0.75s;
+  }
+  .playlist__author,
+  .playlist__author a,
+  .playlist__other {
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 22px;
+  }
 }
 
-.mod_playlist .playlist__item {
-  display: inline-block;
-  width: 20%;
-  padding-bottom: 44px;
-  overflow: hidden;
-  font-size: 14px;
-  vertical-align: top;
-}
-.mod_playlist .playlist__item_box {
-  position: relative;
-  margin-right: 20px;
-  text-align: left;
-}
-.mod_playlist .playlist__cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding-top: 100%;
-  margin-bottom: 15px;
-}
-.mod_playlist .playlist__pic {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-.mod_playlist .playlist__pic {
-  transform: scale(1) translateZ(0);
-  transition: transform 0.75s;
-}
 .mod_playlist .playlist__cover:hover .playlist__pic {
   transform: scale(1.07) translateZ(0);
   transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
@@ -802,19 +911,6 @@ img .playlist__pic {
   display: block;
   visibility: visible;
   width: 250px;
-}
-
-.mod_playlist .playlist__title {
-  overflow: hidden;
-}
-.mod_playlist .playlist__author,
-.mod_playlist .playlist__author a,
-.mod_playlist .playlist__other {
-  color: #999;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 22px;
 }
 
 /*
@@ -896,14 +992,13 @@ img .playlist__pic {
   position: absolute;
   bottom: 23px;
   font-size: 0;
-}
-
-.data__actions .mod_btn,
-.data__actions .mod_btn_green {
-  min-width: 122px;
-  text-align: center;
-  padding: 0 18px;
-  font-family: 微软雅黑;
+  .mod_btn,
+  .mod_btn_green {
+    min-width: 122px;
+    text-align: center;
+    padding: 0 18px;
+    font-family: 微软雅黑;
+  }
 }
 
 .detail_layout {
@@ -921,6 +1016,31 @@ img .playlist__pic {
   width: 290px;
   margin-right: -343px;
   padding-bottom: 20px;
+  .playlist__item {
+    width: 33.333333%;
+    padding-bottom: 14px;
+  }
+  .mv_list__item_box {
+    margin-right: 0;
+  }
+  .mv_list__cover,
+  .playlist__cover {
+    margin-bottom: 4px;
+  }
+  .playlist__cover:hover .playlist__pic,
+  .playlist__pic {
+    -webkit-transform: none;
+    -webkit-transition: none;
+    transform: none;
+    transition: none;
+  }
+  .mv_list__singer,
+  .mv_list__title,
+  .playlist__title,
+  .playlist__title_txt {
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
 }
 .other_part {
   overflow: hidden;
@@ -930,32 +1050,6 @@ img .playlist__pic {
   font-size: 20px;
   font-weight: 400;
   line-height: 46px;
-}
-.mod_playlist {
-  overflow: hidden;
-  font-size: 0;
-}
-.mod_playlist .playlist__list {
-  margin-right: -20px;
-}
-.mod_playlist .playlist__item {
-  display: inline-block;
-  width: 20%;
-  padding-bottom: 44px;
-  overflow: hidden;
-  font-size: 14px;
-  vertical-align: top;
-}
-.mod_playlist .playlist__item_box {
-  position: relative;
-  margin-right: 20px;
-}
-.mod_playlist .playlist__cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding-top: 100%;
-  margin-bottom: 15px;
 }
 .data__cover_mask {
   position: absolute;
@@ -967,64 +1061,8 @@ img .playlist__pic {
     0 0 no-repeat;
   pointer-events: none;
 }
-.mod_playlist .playlist__pic {
-  height: 100%;
-  object-fit: cover;
-}
-.mod_playlist .playlist__pic {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-.mod_playlist .playlist__title {
-  overflow: hidden;
-}
-.mod_playlist .playlist__title_txt {
-  float: left;
-  max-width: 100%;
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 22px;
-  max-height: 44px;
-}
-.mod_playlist .playlist__author,
-.mod_playlist .playlist__author a,
-.mod_playlist .playlist__other {
-  color: #999;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 22px;
-}
 .mod_mv_list {
   overflow: hidden;
-}
-.detail_layout__other .playlist__item {
-  width: 33.333333%;
-  padding-bottom: 14px;
-}
-.detail_layout__other .mv_list__item_box {
-  margin-right: 0;
-}
-.detail_layout__other .mv_list__cover,
-.detail_layout__other .playlist__cover {
-  margin-bottom: 4px;
-}
-.detail_layout__other .playlist__cover:hover .playlist__pic,
-.detail_layout__other .playlist__pic {
-  -webkit-transform: none;
-  -webkit-transition: none;
-  transform: none;
-  transition: none;
-}
-.detail_layout__other .mv_list__singer,
-.detail_layout__other .mv_list__title,
-.detail_layout__other .playlist__title,
-.detail_layout__other .playlist__title_txt {
-  line-height: 1.5;
-  margin-bottom: 0;
 }
 
 .mod_popup_tips {
@@ -1048,7 +1086,7 @@ img .playlist__pic {
 }
 .popup_tips__tit {
   font-size: 14px;
-  color: #fff;
+  color: $white;
   font-weight: 400;
 }
 
@@ -1145,7 +1183,7 @@ img .playlist__pic {
   top: 364px;
   right: 303px;
   width: 580px;
-  background: #fff;
+  background: $white;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
   border-radius: 4px;
   border: 1px solid #ddd;
