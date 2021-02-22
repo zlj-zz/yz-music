@@ -2,11 +2,16 @@
   <el-carousel
     indicator-position="outside"
     type="card"
-    height="400px"
+    height="350px"
     v-loading="bannerLoading"
+    v-if="banners.length > 0"
   >
-    <el-carousel-item v-for="banner in banners" :key="banner.targetId">
-      <img :src="banner.imageUrl" :alt="banner.typeTitle" />
+    <el-carousel-item
+      v-for="banner in banners"
+      :key="banner.targetId"
+      :lable="banner.typeTitle"
+    >
+      <img :src="banner.imageUrl" :alt="banner.typeTitle" class="banner-img" />
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -21,7 +26,7 @@ export default {
       banners: [],
     };
   },
-  mounted() {
+  created() {
     this.updateBanner();
   },
   methods: {
@@ -38,11 +43,11 @@ export default {
 </script>
 
 <style scoped>
-.el-carousel__item h3 {
+.el-carousel__item img {
   color: #475669;
   font-size: 18px;
   opacity: 0.75;
-  line-height: 400px;
+  line-height: 300px;
   margin: 0;
 }
 
@@ -52,5 +57,10 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
 }
 </style>

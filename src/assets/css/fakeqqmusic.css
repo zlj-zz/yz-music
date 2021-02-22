@@ -269,6 +269,35 @@
   font: 0/0 a;
 }
 
+/* 切换小圆点 */
+.mod_slide_switch {
+  width: 100%;
+  text-align: center;
+  font-size: 0;
+}
+.slide_switch__item {
+  display: inline-block;
+  width: 28px;
+  height: 12px;
+  padding: 0 0 26px;
+  margin: 0 1px;
+  background: 0 0;
+}
+.slide_switch__bg {
+  display: block;
+  width: 8px;
+  height: 8px;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#19000000', endColorstr='#19000000');
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin: 0 auto;
+}
+.slide_switch__item--current .slide_switch__bg,
+.slide_switch__item:hover .slide_switch__bg {
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#4C000000', endColorstr='#4C000000');
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 /*******************
  * mv 顶头标题 css */
 .mod_part,

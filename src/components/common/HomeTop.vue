@@ -97,6 +97,7 @@ export default {
 .toplist_main {
   margin: 0 auto;
   text-align: center;
+  max-width: 1400px;
 }
 .toplist__list {
   font-size: 0;
@@ -130,7 +131,7 @@ li {
   background-image: linear-gradient(#e66754, #8888e5);
 }
 .toplist__bg1 {
-  background-image: linear-gradient(#987526, #1998e5);
+  background-image: linear-gradient(#ffa500, #1998e5);
 }
 .toplist__bg2 {
   background-image: linear-gradient(#335484, #3698e5);

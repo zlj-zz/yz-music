@@ -34,37 +34,14 @@
         </li>
       </ul>
     </div>
-
-    <div class="mod_slide_action">
-      <div class="slide_action slide_action--left">
-        <a
-          class="slide_action__btn slide_action__btn--left js_jump"
-          data-p="prev"
-          tabindex="-1"
-          @click="prevPage()"
-        >
-          <i class="icon_txt">上一页</i
-          ><i class="slide_action__arrow slide_action__arrow--left sprite"></i>
-        </a>
-      </div>
-      <div class="slide_action slide_action--right">
-        <a
-          class="slide_action__btn slide_action__btn--right js_jump"
-          data-p="next"
-          tabindex="-1"
-          @click="nextPage()"
-        >
-          <i class="icon_txt">下一页</i
-          ><i class="slide_action__arrow slide_action__arrow--right sprite"></i>
-        </a>
-      </div>
-    </div>
+    <push-button @btnClick="btnClick" />
   </div>
 </template>
 
 <script>
 import TypeSelectBar from "components/common/TypeSelectBar";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
+import PushButton from "components/common/PushButton";
 import { getSongers, songerInitials, songerTypes, songerAreas } from "api";
 import { gotoSongerDetail } from "common/utils";
 
@@ -128,11 +105,17 @@ export default {
         this.updateArtists();
       }
     },
+    btnClick(key) {
+      console.log(key);
+      if (key == "left") this.prevPage();
+      else if (key == "right") this.nextPage();
+    },
     gotoSongerDetail,
   },
   components: {
     TypeSelectBar,
     TypeSelectSubBar,
+    PushButton,
   },
 };
 </script>

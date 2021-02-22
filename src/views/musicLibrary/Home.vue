@@ -24,7 +24,8 @@ export default {
 .main {
   font-family: poppin, Tahoma, Arial, 微软雅黑, sans-serif;
   line-height: 1.5;
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
+  background-image: linear-gradient(#f5f5f5, #fff);
 }
 </style>
