@@ -6,13 +6,11 @@
       <div class="detail_layout__main">
         <!--歌词 start-->
         <div class="mod_lyric">
-          <input id="copy_content" style="display: none" />
           <div class="lyric__hd">
             <h2 class="lyric__tit">歌词</h2>
             <a
               class="btn_copy sprite"
               id="copy_link"
-              href="javascript:;"
               title="复制歌词"
               @click="copyLyric"
               ><i class="icon_txt">复制</i></a
@@ -26,10 +24,7 @@
             <div class="lyric__cont_box" id="lrc_content">
               <p v-for="(item, idx) in lyric" :key="idx">{{ item }}</p>
             </div>
-            <a
-              href="javascript:;"
-              class="c_tx_highlight js_open_lyric"
-              @click="toggleLyric"
+            <a class="c_tx_highlight js_open_lyric" @click="toggleLyric"
               >[{{ isShowAllLyric ? "收起" : "展开" }}]</a
             >
           </div>
@@ -44,8 +39,6 @@
             <ul class="playlist__list" v-if="simiSongs">
               <li
                 class="playlist__item"
-                onmouseover="this.className=(this.className+' playlist__item--hover')"
-                onmouseout="this.className=this.className.replace(/ playlist__item--hover/, '')"
                 v-for="simiSong in simiSongs"
                 :key="simiSong.id"
               >
@@ -105,21 +98,14 @@
       </div>
     </div>
   </div>
-  <div
-    class="mod_popup_tips"
-    id="popup"
-    style="z-index: 2147483647; left: 646px; top: 326px"
-    :style="{ display: ifShowTip ? '' : 'none' }"
-  >
-    <i class="popup_tips__icon"></i>
-    <h2 class="popup_tips__tit">{{ tip }}</h2>
-  </div>
+  <black-tip :ifShow="ifShowTip" :tip="tip" />
 </template>
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import BlackTip from "components/common/BlackTip";
 import { getSongDetail, getSongLiyric, getSimiSong, getMvDetail } from "api";
-import { createSong, formatDate, playTheSong } from "common/utils";
+import { createSong, formatDate, playTheSong, copyText } from "common/utils";
 
 export default {
   data() {
@@ -198,11 +184,7 @@ export default {
     copyLyric() {
       if (this.lyric) {
         let lyricText = this.lyric.join(" ");
-        let input = document.getElementById("copy_content");
-
-        input.value = lyricText;
-        input.select();
-        document.execCommand("copy");
+        copyText(lyricText);
         this.showTip("复制成功");
       }
     },
@@ -229,6 +211,7 @@ export default {
   },
   components: {
     DetailInfoCard,
+    BlackTip,
   },
 };
 </script>

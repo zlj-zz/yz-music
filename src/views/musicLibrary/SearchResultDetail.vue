@@ -75,47 +75,7 @@
           </div>
         </div>
         <!-- lyric -->
-        <div
-          class="js_search_tab_cont search_tab_cont"
-          id="lyric_box"
-          style="display: block"
-          v-if="selectedType == 1006"
-        >
-          <div class="mod_lyric_list">
-            <ul class="lyric_list__list">
-              <li
-                class="lyric_list__item"
-                v-for="lyric in lyrics"
-                :key="lyric.id"
-              >
-                <h3 class="lyric_list__tit">
-                  <a title="">{{ lyric.name }}</a>
-                  －
-                  <a class="singer_name" :title="lyric.artistsText">{{
-                    lyric.artistsText
-                  }}</a>
-                </h3>
-                <h4 class="lyric_list__album">
-                  <a class="album_name" :title="lyric.albumName">{{
-                    lyric.albumName
-                  }}</a>
-                </h4>
-                <div class="lyric_list__cont" :class="lyric.class">
-                  <div v-html="processLyric(lyric.lyrics)"></div>
-                </div>
-                <div class="lyric_list__toolbar">
-                  <button class="mod_btn js_clip" @click="moreLyric(lyric)">
-                    <i class="mod_btn__icon_more"></i>
-                    {{ lyric.class ? "收起" : "展开" }}
-                  </button>
-                  <button class="mod_btn js_lyric_copy">
-                    <i class="mod_btn__icon_copy"></i>复制歌词
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <show-lyrics :lyrics="lyrics" v-if="selectedType == 1006" />
       </div>
     </div>
   </div>
@@ -126,7 +86,7 @@ import ShowSongs from "components/common/ShowSongs";
 import ShowAlbums from "components/common/ShowAlbums";
 import ShowMvs from "components/common/ShowMvs";
 import ShowPlaylist from "components/common/ShowPlaylist";
-import DetailSonglist from "components/common/DetailSonglist";
+import ShowLyrics from "components/common/ShowLyrics";
 import ModListMenu from "components/common/ModListMenu";
 import { getSearchResult } from "api";
 import {
@@ -165,13 +125,6 @@ export default {
     changeSelectedType(id) {
       if (id != this.selectedType) this.selectedType = id;
     },
-    processLyric(lyrics) {
-      return lyrics.join("<br/>");
-    },
-    moreLyric(l) {
-      console.log("jfkalj");
-      l.class = l.class ? "" : "lyric_list__cont--max";
-    },
     search() {
       getSearchResult({ keywords: this.keyword, type: 1 }).then((res) => {
         this.songs = createSongs(res.data.result.songs);
@@ -201,7 +154,7 @@ export default {
     ShowAlbums,
     ShowMvs,
     ShowPlaylist,
-    DetailSonglist,
+    ShowLyrics,
     ModListMenu,
   },
 };
@@ -285,104 +238,6 @@ button {
 .mod_songlist {
   padding-bottom: 40px;
 }
-.mod_playlist_text .playlist__header {
-  height: 50px;
-  line-height: 50px;
-  background-color: #fbfbfd;
-  color: #999;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__header_author,
-.mod_playlist_text .playlist__header_name,
-.mod_playlist_text .playlist__header_number,
-.mod_playlist_text .playlist__number {
-  float: left;
-  padding-left: 20px;
-}
-.mod_playlist_text .playlist__header_name {
-  width: 57%;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__header_author {
-  width: 30%;
-}
-.mod_playlist_text .playlist__header_other,
-.mod_playlist_text .playlist__other {
-  width: 7.5%;
-}
-.mod_playlist_text .playlist__header_other,
-.mod_playlist_text .playlist__other {
-  float: right;
-  padding-right: 20px;
-  text-align: right;
-}
-.mod_playlist_text .playlist__item {
-  position: relative;
-  height: 70px;
-  line-height: 70px;
-  zoom: 1;
-  overflow: hidden;
-  clear: both;
-  font-size: 0;
-}
-.mod_playlist_text .playlist__cover {
-  float: left;
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  margin-top: 10px;
-  padding-left: 20px;
-}
-.mod_playlist_text .playlist__pic {
-  height: 100%;
-  object-fit: cover;
-}
-.mod_playlist_text .playlist__pic {
-  display: block;
-  width: 100%;
-  min-height: 50px;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__number,
-.mod_playlist_text .playlist__other,
-.mod_playlist_text .playlist__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-}
-.mod_playlist_text .playlist__title {
-  width: 52.66667%;
-  font-weight: 400;
-  text-indent: 15px;
-  overflow: hidden;
-}
-.mod_playlist_text .playlist__title_txt {
-  float: left;
-  max-width: 90%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__count,
-.mod_playlist_text .playlist__number,
-.mod_playlist_text .playlist__title {
-  float: left;
-  height: 70px;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__header_author {
-  width: 30%;
-}
-.mod_playlist_text .playlist__author,
-.mod_playlist_text .playlist__number,
-.mod_playlist_text .playlist__other,
-.mod_playlist_text .playlist__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-}
 
 .singer_list__item {
   position: relative;
@@ -461,58 +316,8 @@ button {
   margin-right: 20px;
 }
 
-.mod_lyric_list {
-  margin-top: -20px;
-}
-.lyric_list__item {
-  position: relative;
-  font-size: 14px;
-  line-height: 28px;
-  padding: 20px 0 20px;
-  border-bottom: 1px solid #f7f7f7;
-}
-.lyric_list__album,
-.lyric_list__tit {
-  font-weight: 400;
-}
-.lyric_list__cont {
-  height: 196px;
-  overflow: hidden;
-  color: #999;
-}
-.lyric_list__cont--max {
-  height: initial;
-}
-.lyric_list__toolbar {
-  margin-top: 10px;
-}
-.mod_btn {
-  border: 1px solid #c9c9c9;
-  color: #000;
-}
 .mod_btn,
 .mod_btn_green {
   background-color: #fff;
-  border-radius: 2px;
-  font-size: 14px;
-  margin-right: 6px;
-  padding: 0 23px;
-  height: 38px;
-  line-height: 38px;
-  display: inline-block;
-  white-space: nowrap;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.mod_btn__icon_new {
-  width: 16px;
-  height: 16px;
-  background-position: 0 -180px;
-}
-.mod_btn__icon_copy {
-  width: 16px;
-  height: 14px;
-  background-position: -40px -100px;
-  vertical-align: -2px;
 }
 </style>

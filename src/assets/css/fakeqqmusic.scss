@@ -12,7 +12,7 @@ $black: #000;
   h4,
   h5,
   h6,
-  dd
+  dd,
   p {
     margin: 0;
     padding: 0;
@@ -96,6 +96,17 @@ $black: #000;
   height: 16px;
   background-position: -120px 0;
 }
+.mod_btn__icon_new {
+  width: 16px;
+  height: 16px;
+  background-position: 0 -180px;
+}
+.mod_btn__icon_copy {
+  width: 16px;
+  height: 14px;
+  background-position: -40px -100px;
+  vertical-align: -2px;
+}
 .mod_btn__icon_add,
 .mod_btn__icon_batch,
 .mod_btn__icon_comment,
@@ -128,6 +139,28 @@ $black: #000;
   margin-right: 6px;
   background-image: url(../img/icon_sprite.png);
   background-repeat: no-repeat;
+}
+
+.mod_tab {
+  position: relative;
+  zoom: 1;
+  border-bottom: 1px solid #f7f7f7;
+  margin-bottom: 30px;
+}
+.mod_tab,
+.mod_tab__item {
+  height: 56px;
+  line-height: 56px;
+}
+.mod_tab__current {
+  color: $green;
+}
+.mod_tab__item {
+  position: relative;
+  float: left;
+  font-size: 16px;
+  overflow: hidden;
+  margin-right: 55px;
 }
 
 .list_menu__item {
@@ -933,6 +966,100 @@ $black: #000;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 22px;
+  }
+}
+
+.mod_playlist_text {
+  zoom: 1;
+  font-size: 14px;
+  .playlist__header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #fbfbfd;
+    color: #999;
+  }
+  .playlist__header_name {
+    width: 57%;
+  }
+  .playlist__author,
+  .playlist__header_author,
+  .playlist__header_name,
+  .playlist__header_number,
+  .playlist__number {
+    float: left;
+    padding-left: 20px;
+  }
+  .playlist__author,
+  .playlist__number,
+  .playlist__other,
+  .playlist__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  .playlist__author,
+  .playlist__count,
+  .playlist__number,
+  .playlist__title {
+    float: left;
+    height: 70px;
+  }
+  .playlist__author,
+  .playlist__number,
+  .playlist__other,
+  .playlist__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  .playlist__author,
+  .playlist__header_author {
+    width: 30%;
+  }
+  .playlist__header_other,
+  .playlist__other {
+    width: 7.5%;
+    float: right;
+    padding-right: 20px;
+    text-align: right;
+  }
+  .playlist__item {
+    position: relative;
+    height: 70px;
+    line-height: 70px;
+    zoom: 1;
+    overflow: hidden;
+    clear: both;
+    font-size: 0;
+  }
+  .playlist__cover {
+    float: left;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  .playlist__pic {
+    object-fit: cover;
+    height: 100%;
+    display: block;
+    width: 100%;
+    min-height: 50px;
+  }
+  .playlist__title {
+    width: 52.66667%;
+    font-weight: 400;
+    text-indent: 15px;
+    overflow: hidden;
+  }
+  .playlist__title_txt {
+    float: left;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
