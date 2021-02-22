@@ -20,6 +20,7 @@
       class="list_menu__item list_menu__down js_down"
       title="下载"
       aria-haspopup="true"
+      v-if="kind == 0"
     >
       <i class="list_menu__icon_down"></i>
       <span class="icon_txt">下载</span>
@@ -36,20 +37,55 @@
 </template>
 
 <script>
-import { playTheSong } from "common/utils";
+import { playTheSong, playSonglist, createSongs } from "common/utils";
+import { getPlaylistDetial, getSongDetail, getAlbum } from "api";
+
 export default {
   props: {
     song: {
       type: Object,
       default: {},
     },
+    id: { default: 0 },
+    // 0: song, 1: album , 2: playlist
+    kind: { default: 0 },
   },
   methods: {
     play() {
-      if (this.song) {
-        playTheSong(this.song);
+      switch (this.kind) {
+        case 0:
+          if (this.song) {
+            playTheSong(this.song);
+          }
+          console.log(this.song);
+          break;
+        case 1:
+          this.playAlbum(this.id);
+          break;
+        case 2:
+          this.playTheList(this.id);
+          break;
+        default:
+          console.log(this.kind);
       }
-      console.log(this.song);
+    },
+    playTheList(listId) {
+      getPlaylistDetial(listId).then((res) => {
+        let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
+        let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
+          let songs = createSongs(res.data.songs);
+          //console.log(songs);
+          playSonglist(songs);
+        });
+      });
+    },
+    playAlbum(id) {
+      getAlbum(this.id).then((res) => {
+        let ds = res.data;
+        let songs = createSongs(ds.songs);
+        console.log(this.songs);
+        playSonglist(songs);
+      });
     },
   },
 };

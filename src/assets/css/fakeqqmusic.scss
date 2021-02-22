@@ -1049,6 +1049,21 @@ $black: #000;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .mod_list_menu {
+    position: absolute;
+    left: 44%;
+    left: -9999px\9;
+    top: 19px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .playlist__item--current .mod_list_menu,
+  .playlist__item--hover .mod_list_menu {
+    opacity: 1;
+    left: 44%;
+    pointer-events: inherit;
+  }
 }
 
 .mod_lyric_list,
