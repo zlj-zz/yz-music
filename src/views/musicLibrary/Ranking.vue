@@ -179,7 +179,8 @@
                     <img
                       class="songlist__pic"
                       style="display: block; visibility: visible"
-                      :src="song.img"
+                      src=""
+                      v-lazy="song.img"
                       :alt="song.name"
                     />
                   </a>

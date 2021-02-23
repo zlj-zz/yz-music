@@ -19,9 +19,9 @@
               ><img
                 class="playlist__pic"
                 style="display: block; visibility: visible"
-                onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
+                src="//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000"
+                v-lazy="l.img"
                 :alt="l.name"
-                :src="l.img"
             /></a>
           </div>
           <h4 class="playlist__title">

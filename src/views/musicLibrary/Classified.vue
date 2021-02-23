@@ -130,8 +130,8 @@
                   ><img
                     class="playlist__pic"
                     style="display: block; visibility: visible"
-                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/cover_playlist.png?max_age=31536000';this.onerror=null;"
-                    :src="list.img"
+                    src="//y.gtimg.cn/mediastyle/global/img/cover_playlist.png?max_age=31536000"
+                    v-lazy="list.img"
                     :alt="list.name"
                   />
                   <i class="mod_cover__icon_play js_play"></i>

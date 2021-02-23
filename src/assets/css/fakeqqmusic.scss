@@ -1396,22 +1396,25 @@ img .playlist__pic {
   margin-left: auto;
   margin-right: auto;
 }
-.singer_list__cover,
-.singer_list__pic {
-  display: block;
-  width: 140px;
-  height: 140px;
-  border-radius: 126px;
-}
-.singer_list__title {
-  font-size: 16px;
-  font-weight: 400;
+.singer_list__item_box {
+  position: relative;
+  margin-right: 20px;
+  background-color: #fbfbfd;
+  min-height: 195px;
+  padding: 25px 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  zoom: 1;
-  *width: 100%;
-  margin: 20px 30px 4px;
+  .singer_list__title {
+    font-size: 16px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    zoom: 1;
+    *width: 100%;
+    margin: 20px 30px 4px;
+    min-width: 0;
+    padding-left: 5px;
+  }
 }
 .singer_list__user_txt {
   color: #999;

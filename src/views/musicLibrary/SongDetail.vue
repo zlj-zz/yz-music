@@ -46,7 +46,8 @@
                   <div class="playlist__cover mod_cover">
                     <a class="js_playlist" @click="gotoSongDetail(simiSong.id)">
                       <img
-                        :src="simiSong.img"
+                        src=""
+                        v-lazy="simiSong.img"
                         :alt="simiSong.name"
                         class="playlist__pic"
                       />
@@ -77,9 +78,9 @@
               <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
                 <img
                   class="mv_list__pic"
-                  :src="mv.img"
-                  onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
-                  alt="{{mv.name}}"
+                  src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"
+                  v-lazy="mv.img"
+                  :alt="mv.name"
                 />
                 <i class="mod_cover__icon_play"></i>
               </a>

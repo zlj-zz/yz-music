@@ -27,8 +27,8 @@
               >
                 <a class="js_album">
                   <img
-                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                    :src="album.img"
+                    src="//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000"
+                    v-lazy="album.img"
                     :alt="album.name"
                     class="playlist__pic"
                     style="display: block; visibility: visible"

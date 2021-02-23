@@ -30,9 +30,9 @@
               <div class="playlist__cover mod_cover">
                 <a class="js_playlist" @click="playTheList(item.id)">
                   <img
-                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000';this.onerror=null;"
                     class="playlist__pic"
-                    :src="item.coverImgUrl"
+                    src="//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000"
+                    v-lazy="item.coverImgUrl"
                     :alt="item.name"
                   /><i class="mod_cover__mask"></i
                   ><i class="mod_cover__icon_play js_play"></i>

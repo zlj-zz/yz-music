@@ -11,7 +11,12 @@
       :key="banner.targetId"
       :lable="banner.typeTitle"
     >
-      <img :src="banner.imageUrl" :alt="banner.typeTitle" class="banner-img" />
+      <img
+        src=""
+        v-lazy="banner.imageUrl"
+        :alt="banner.typeTitle"
+        class="banner-img"
+      />
     </el-carousel-item>
   </el-carousel>
 </template>

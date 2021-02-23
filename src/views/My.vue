@@ -19,8 +19,8 @@
       <div class="section_inner">
         <div class="profile__cover_link">
           <img
-            onerror="this.src='//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=31536000';this.onerror=null;"
-            :src="$store.state.user.user.avatarUrl"
+            src="//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=31536000"
+            v-lazy="$store.state.user.user.avatarUrl"
             alt="$store.state.user.user.nickname"
             class="profile__cover"
             id="profileHead"

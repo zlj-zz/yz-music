@@ -42,7 +42,7 @@
           >
         </div>
         <div class="head j-flag">
-          <img v-if="hasCurrentSong" :src="currentSong.img" />
+          <img v-if="hasCurrentSong" v-lazy="currentSong.img" src="" />
           <a hidefocus="true" class="mask"></a>
         </div>
         <div class="play">

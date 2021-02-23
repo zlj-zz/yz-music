@@ -32,8 +32,8 @@
                   <a class="js_album">
                     <img
                       class="playlist__pic"
-                      onerror="this.src='//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000';this.onerror=null;"
-                      :src="album.img"
+                      src="//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000"
+                      v-lazy="album.img"
                       :alt="album.name"
                     />
                     <i
@@ -76,8 +76,8 @@
                 <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
                   <img
                     class="mv_list__pic"
-                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
-                    :src="mv.img"
+                    src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"
+                    v-lazy="mv.img"
                     :alt="mv.name"
                   />
                   <i class="mod_cover__icon_play"></i>
@@ -118,8 +118,8 @@
                 >
                   <img
                     class="singer_list__pic"
-                    onerror="this.src='//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000';this.onerror=null;"
-                    :src="songer.img"
+                    src="//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000"
+                    v-lazy="songer.img"
                     :alt="songer.name"
                   />
                 </a>
@@ -175,7 +175,7 @@ import {
   createSimiSonger,
   createUser,
   createSong,
-  createAlbum,
+  createAlbums,
   createMvs,
   playSonglist,
   gotoSongerDetail,
@@ -229,23 +229,12 @@ export default {
       // Get songer album
       const res4 = await getSongerAlbums({ id: this.id, limit: 5, offset: 0 });
       console.log(res4);
-      this.albums = res4.data.hotAlbums.map(
-        ({ id, name, publishTime, artists, picUrl }) => {
-          return createAlbum({
-            id,
-            name,
-            img: picUrl,
-            artists,
-            publishTime,
-          });
-        }
-      );
+      this.albums = createAlbums(res4.data.hotAlbums);
+      console.log(this.albums);
 
       // Get songer mv
       const res5 = await getSongerMvs(this.id);
-      console.log(res5);
       let mvs = createMvs(res5.data.mvs);
-      console.log(mvs);
       this.mvs = mvs.length > 5 ? mvs.slice(0, 5) : mvs;
     },
     playHotSongs() {
@@ -283,30 +272,11 @@ export default {
 </script>
 
 <style scoped>
-blockquote,
-body,
-button,
 dd,
 dl,
 dt,
-fieldset,
-form,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 hr,
-html,
-input,
-lengend,
-li,
-ol,
-p,
-pre,
 td,
-textarea,
 th,
 ul {
   margin: 0;
@@ -353,16 +323,6 @@ ul {
 .mod_part .playlist__item {
   padding-bottom: 0;
 }
-.mv_list__list {
-  margin-right: -20px;
-  zoom: 1;
-}
-.mv_list__item {
-  float: left;
-  width: 25%;
-  padding-bottom: 44px;
-  overflow: hidden;
-}
 
 .mod_singer_list {
   overflow: hidden;
@@ -381,23 +341,13 @@ ul {
   margin-bottom: 20px;
   overflow: hidden;
 }
-.singer_list__item_box {
-  position: relative;
-  margin-right: 20px;
-  background-color: #fbfbfd;
-  min-height: 195px;
-  padding: 25px 0;
-  overflow: hidden;
-}
-.singer_list__title {
-  font-size: 16px;
-  font-weight: 400;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  zoom: 1;
-  *width: 100%;
-  margin: 20px 30px 4px;
+.singer_list__cover,
+.singer_list__pic {
+  float: none;
+  display: block;
+  width: 140px;
+  height: 140px;
+  border-radius: 126px;
 }
 
 .mod_mv {

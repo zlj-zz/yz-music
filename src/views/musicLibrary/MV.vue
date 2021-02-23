@@ -48,7 +48,8 @@
                   <img
                     style="display: block; visibility: visible"
                     class="mv_list__pic"
-                    :src="item.cover"
+                    src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"
+                    v-lazy="item.cover"
                     :alt="item.name"
                   />
                   <i class="mod_cover__icon_play"></i>

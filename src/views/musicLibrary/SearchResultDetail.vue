@@ -50,9 +50,9 @@
                       <img
                         class="singer_list__pic"
                         style="display: block; visibility: visible"
-                        onerror="this.src='//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=31536000';this.onerror=null;"
+                        src="//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=31536000"
+                        v-lazy="user.img"
                         :alt="user.name"
-                        :src="user.img"
                       />
                     </a>
                   </div>

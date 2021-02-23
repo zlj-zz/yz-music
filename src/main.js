@@ -8,11 +8,13 @@ import ElementPlus from "element-plus";
 import "element-plus/lib/theme-chalk/index.css";
 import "@/assets/css/base.scss";
 import "@/assets/css/fakeqqmusic.scss";
+import LazyPlugin from "common/lazy-load";
 
 createApp(App)
   .use(store)
   .use(router)
   .use(ElementPlus)
+  .use(LazyPlugin)
   .mount("#app");
 
 // import { getBanner } from "./api";

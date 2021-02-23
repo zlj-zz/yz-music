@@ -12,9 +12,9 @@
               <img
                 class="mv_list__pic"
                 style="display: block; visibility: visible"
-                onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
+                src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"
+                v-lazy="mv.img"
                 :alt="mv.name"
-                :src="mv.img"
               />
               <i class="mod_cover__icon_play"></i>
               <!--div class="mv_list__time">04:10</div-->
