@@ -36,8 +36,13 @@
             >
           </div>
         </div>
-        <div class="mod_mv">
-          <ul class="mv_list__list" id="mv_list">
+        <div
+          class="mod_mv"
+          id="mv_list_div"
+          ref="mvList"
+          style="max-height: 700px; overflow-y: scroll"
+        >
+          <ul class="mv_list__list" id="mv_list" style="overflow: auto">
             <li class="mv_list__item" v-for="item in mvs" :key="item.id">
               <div class="mv_list__item_box" style="visibility: visible">
                 <a
@@ -73,32 +78,13 @@
               </div>
             </li>
           </ul>
+          <div
+            style="text-align: center; color: #999"
+            :style="{ display: more ? 'none' : '' }"
+          >
+            <span>我也是有底线的~</span>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="mod_slide_action">
-      <div class="slide_action slide_action--left">
-        <a
-          class="slide_action__btn slide_action__btn--left js_jump"
-          data-p="prev"
-          tabindex="-1"
-          @click="prevPage()"
-        >
-          <i class="icon_txt">上一页</i
-          ><i class="slide_action__arrow slide_action__arrow--left sprite"></i>
-        </a>
-      </div>
-      <div class="slide_action slide_action--right">
-        <a
-          class="slide_action__btn slide_action__btn--right js_jump"
-          data-p="next"
-          tabindex="-1"
-          @click="nextPage()"
-        >
-          <i class="icon_txt">下一页</i
-          ><i class="slide_action__arrow slide_action__arrow--right sprite"></i>
-        </a>
       </div>
     </div>
   </div>
@@ -129,6 +115,7 @@ export default {
   },
   mounted() {
     this.updateMv();
+    this.$refs.mvList.addEventListener("scroll", this.loadMore);
   },
   methods: {
     updateMv() {
@@ -140,39 +127,40 @@ export default {
         this.selectType
       )
         .then((res) => {
-          console.log(res);
-          this.mvs = res.data.data;
+          //console.log(res);
+          this.mvs.push(...res.data.data);
           this.mvLoading = false;
           this.allLength = res.data.count;
+          this.more = res.data.hasMore;
         })
         .catch((err) => console.log(err));
     },
     areaSelect(id) {
       this.selectArea = id;
+      this.page = 1;
       this.updateMv();
     },
     typeSelect(id) {
       this.selectType = id;
+      this.page = 1;
       this.updateMv();
     },
     switchOrder(id) {
       this.order = id;
+      this.page = 1;
       this.updateMv();
     },
-    nextPage() {
-      if (this.more == true) {
-        this.page++;
-        this.updateMv();
+    loadMore() {
+      const scrollDom = document.getElementById("mv_list_div");
+      if (
+        scrollDom.clientHeight + parseInt(scrollDom.scrollTop) ===
+        scrollDom.scrollHeight
+      ) {
+        if (this.more) {
+          this.page++;
+          this.updateMv();
+        }
       }
-    },
-    prevPage() {
-      if (this.page > 1) {
-        this.page--;
-        this.updateMv();
-      }
-    },
-    currentChange(v) {
-      this.page = v;
     },
     processCount,
   },
