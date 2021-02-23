@@ -183,30 +183,14 @@ export default {
   color: #31c27c;
 }
 
+.mod_playlist .playlist__list {
+  padding: 0;
+}
 /* list */
 .mod_playlist {
   overflow: hidden;
   font-size: 0;
-}
-.mod_slide {
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.mod_playlist {
   margin-right: -20px;
-}
-.slide__list {
-  position: relative;
-  font-size: 0;
-  width: 1250%;
-  transition-duration: 1s;
-}
-.slide__item {
-  width: 2%;
-}
-.mod_playlist .playlist__list {
-  margin-right: -20px;
-  padding: 0;
 }
 .playlist__item {
   display: inline-block;
@@ -223,29 +207,11 @@ export default {
   width: 1.6%;
   padding-bottom: 0;
 }
-.mod_playlist .playlist__item_box {
-  position: relative;
-  margin-right: 20px;
-}
 .mod_index--hot .playlist__item_box {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-}
-.mod_playlist .playlist__cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding-top: 100%;
-  margin-bottom: 15px;
-}
-.mod_playlist .playlist__pic {
-  height: 100%;
-  object-fit: cover;
-}
-.mod_playlist .playlist__title {
-  overflow: hidden;
 }
 
 a:hover {

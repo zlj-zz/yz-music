@@ -319,6 +319,21 @@ $black: #000;
   background: rgba(0, 0, 0, 0.1);
 }
 
+/* 超长滑动条（home）*/
+.mod_slide {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.slide__list {
+  position: relative;
+  font-size: 0;
+  width: 1250%;
+  transition-duration: 1s;
+}
+.slide__item {
+  width: 2%;
+}
+
 /* 切换小圆点 */
 .mod_slide_switch {
   width: 100%;

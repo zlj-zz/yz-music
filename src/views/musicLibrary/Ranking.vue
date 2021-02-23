@@ -3,7 +3,6 @@
     <div class="toplist_nav">
       <dl class="toplist_nav__list">
         <dt class="toplist_nav__tit">巅峰榜</dt>
-
         <dd class="toplist_nav__item">
           <a
             class="toplist_nav__link"
@@ -20,7 +19,6 @@
 
       <dl class="toplist_nav__list">
         <dt class="toplist_nav__tit">地区榜</dt>
-
         <dd class="toplist_nav__item">
           <a
             class="toplist_nav__link"
@@ -37,7 +35,6 @@
 
       <dl class="toplist_nav__list">
         <dt class="toplist_nav__tit">特色榜</dt>
-
         <dd class="toplist_nav__item">
           <a
             class="toplist_nav__link"
@@ -54,7 +51,6 @@
 
       <dl class="toplist_nav__list">
         <dt class="toplist_nav__tit">全球榜</dt>
-
         <dd class="toplist_nav__item">
           <a
             class="toplist_nav__link"
@@ -103,19 +99,19 @@
         <a class="mod_btn_green js_all_play" @click="playSonglist(listDatas)"
           ><i class="mod_btn_green__icon_play"></i>播放全部</a
         >
-        <a href="javascript:;" class="mod_btn js_all_fav"
+        <a class="mod_btn js_all_fav"
           ><i class="mod_btn__icon_add"></i>添加到</a
         >
-        <a href="javascript:;" class="mod_btn js_all_down"
+        <a class="mod_btn js_all_down"
           ><i class="mod_btn__icon_down"></i>下载</a
         >
-        <a href="javascript:;" class="mod_btn js_batch"
+        <a class="mod_btn js_batch"
           ><i class="mod_btn__icon_batch"></i>批量操作</a
         >
         <a class="mod_btn js_into_comment" href="#comment_box"
-          ><i class="mod_btn__icon_comment"></i>评论({{
-            processCount(commentCount)
-          }})</a
+          ><i class="mod_btn__icon_comment"></i>评论{{
+            "(" + processCount(commentCount) + ")"
+          }}</a
         >
       </div>
 
@@ -227,7 +223,15 @@
 <script>
 import ModListMenu from "components/common/ModListMenu";
 import CommontBox from "components/common/CommontBox";
-import { getPlaylistDetial, getSongDetail, getCommentsNew } from "api";
+import {
+  topRankingtype,
+  aereRankingtype,
+  specialRankingtype,
+  globalRankingtype,
+  getPlaylistDetial,
+  getSongDetail,
+  getCommentsNew,
+} from "api";
 import {
   isDef,
   createSong,
@@ -240,35 +244,10 @@ export default {
   data() {
     return {
       loading: true,
-      topRankingtype: [
-        { name: "飙升榜", dataId: "19723756" },
-        { name: "新歌榜", dataId: "3779629" },
-        { name: "热歌榜", dataId: "3778678" },
-        { name: "原创榜", dataId: "2884035" },
-      ],
-      aereRankingtype: [
-        { name: "欧美榜", dataId: "2809513713" },
-        { name: "韩语榜", dataId: "745956260" },
-        { name: "日语榜", dataId: "5059644681" },
-      ],
-      specialRankingtype: [
-        { name: "古典榜", dataId: "71384707" },
-        { name: "说唱榜", dataId: "99131959" },
-        { name: "电子榜", dataId: "1978921795" },
-        { name: "ACG榜", dataId: "71385702" },
-        { name: "乡村榜", dataId: "3112516681" },
-        { name: "摇滚榜", dataId: "5059633707" },
-        { name: "古风榜", dataId: "5059642708" },
-        { name: "民谣榜", dataId: "5059661515" },
-      ],
-      globalRankingtype: [
-        { name: "UK排行周榜", dataId: "180106" },
-        { name: "美国Billboard榜", dataId: "60198" },
-        { name: "Beatport全球电子舞曲榜", dataId: "3812895" },
-        { name: "iTuness榜", dataId: "11641012" },
-        { name: "日本Oricon", dataId: "60131" },
-        { name: "法国 NRJ Vos Hits 周榜", dataId: "27135204" },
-      ],
+      topRankingtype,
+      aereRankingtype,
+      specialRankingtype,
+      globalRankingtype,
       seletedTypeName: "飙升榜",
       seletedType: "19723756",
       listDatas: [],

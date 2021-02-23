@@ -1,6 +1,10 @@
 <template>
   <div class="main">
-    <detail-info-card :obj="song" @btnClick="cardClick" />
+    <detail-info-card
+      :obj="song"
+      :commentCount="commentCount"
+      @btnClick="cardClick"
+    />
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -30,6 +34,15 @@
           </div>
         </div>
         <!--歌词 end-->
+
+        <!-- comment -->
+        <commont-box
+          :comments="comments"
+          :limit="pageSize"
+          :currentPage="commentPage"
+          :total="commentCount"
+          @current-change="currentChange"
+        />
       </div>
       <!--相似歌曲-->
       <div class="detail_layout__other">
@@ -105,8 +118,21 @@
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import BlackTip from "components/common/BlackTip";
-import { getSongDetail, getSongLiyric, getSimiSong, getMvDetail } from "api";
-import { createSong, formatDate, playTheSong, copyText } from "common/utils";
+import CommontBox from "components/common/CommontBox";
+import {
+  getSongDetail,
+  getSongLiyric,
+  getSimiSong,
+  getMvDetail,
+  getCommentsNew,
+} from "api";
+import {
+  createSong,
+  formatDate,
+  playTheSong,
+  copyText,
+  gotoSongDetail,
+} from "common/utils";
 
 export default {
   data() {
@@ -118,6 +144,10 @@ export default {
       lyric: [],
       simiSongs: null,
       mv: null,
+      pageSize: 20,
+      commentPage: 1,
+      commentCount: 0,
+      comments: [],
     };
   },
   created() {
@@ -144,10 +174,9 @@ export default {
               : formatDate(d.publishTime, "yyyy-MM-dd"),
         });
         // 如果有mv， 获取mv信息
-        console.log(d.mv);
         if (d.mv != 0) {
           getMvDetail(d.mv).then((res) => {
-            console.log(res);
+            //console.log(res);
             let d = res.data.data;
             this.mv = {
               id: d.id,
@@ -157,6 +186,7 @@ export default {
             };
           });
         }
+        this.getComment();
       });
       // 获取歌词
       getSongLiyric(this.songId).then((res) => {
@@ -197,33 +227,42 @@ export default {
         this.ifShowTip = false;
       }, 1000);
     },
-    gotoSongDetail(id) {
-      this.$router.push({
-        path: "/musicLibrary/songDetail",
-        query: { id: id },
+    gotoSongDetail,
+    cardClick(v) {
+      if (v == "all") playTheSong(this.song);
+    },
+    getComment() {
+      let params = {
+        type: 0,
+        pageSize: this.pageSize,
+        pageNo: this.commentPage,
+        id: this.song.id,
+        sortType: 2,
+      };
+      getCommentsNew(params).then((res) => {
+        this.commentCount =
+          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
+        this.comments = res.data.data.comments;
       });
     },
-    play() {
-      playTheSong(this.song);
+    currentChange(v) {
+      this.commentPage = v;
     },
-    cardClick(v) {
-      if (v == "all") this.play();
+  },
+  watch: {
+    commentPage() {
+      this.getComment();
     },
   },
   components: {
     DetailInfoCard,
     BlackTip,
+    CommontBox,
   },
 };
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 li,
 ol,
 p,
@@ -260,14 +299,5 @@ ul {
 .lyric__cont.limit .lyric__cont_box {
   max-height: 390px;
   overflow: hidden;
-}
-.lyric__cont {
-  font-size: 14px;
-  color: #000;
-  line-height: 26px;
-}
-.c_tx_current,
-.c_tx_highlight {
-  color: #31c27c;
 }
 </style>

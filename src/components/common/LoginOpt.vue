@@ -17,7 +17,6 @@
       <!-- 未登录 -->
       <a
         class="top_login__link js_login"
-        href="javascript:;"
         :style="{ display: isLogged ? 'none' : '' }"
         @click="showLoginPopup"
       >

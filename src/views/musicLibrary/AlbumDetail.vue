@@ -1,10 +1,23 @@
 <template>
   <div class="main">
-    <detail-info-card :obj="album" :cardType="'album'" @btnClick="cardClick" />
+    <detail-info-card
+      :obj="album"
+      :cardType="'album'"
+      :commentCount="commentCount"
+      @btnClick="cardClick"
+    />
 
     <div class="detail_layout">
       <div class="detail_layout__main">
         <detail-songlist :songs="songs" :listType="'album'" />
+        <!-- comment -->
+        <commont-box
+          :comments="comments"
+          :limit="pageSize"
+          :currentPage="commentPage"
+          :total="commentCount"
+          @current-change="currentChange"
+        />
       </div>
 
       <div class="detail_layout__other">
@@ -40,8 +53,8 @@
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import DetailSonglist from "components/common/DetailSonglist";
-import ModListMenu from "components/common/ModListMenu";
-import { getAlbum } from "api";
+import CommontBox from "components/common/CommontBox";
+import { getAlbum, getCommentsNew } from "api";
 import { createSong, playSonglist, formatDate } from "common/utils";
 
 export default {
@@ -51,6 +64,10 @@ export default {
       id: this.$route.query.id,
       album: {},
       songs: [],
+      pageSize: 20,
+      commentPage: 1,
+      commentCount: 0,
+      comments: [],
     };
   },
   mounted() {
@@ -88,6 +105,7 @@ export default {
           }
         );
         console.log(this.songs);
+        this.getComment();
       });
     },
     toggleShowMoreInfo() {
@@ -98,11 +116,33 @@ export default {
         playSonglist(this.songs);
       }
     },
+    getComment() {
+      let params = {
+        type: 3,
+        pageSize: this.pageSize,
+        pageNo: this.commentPage,
+        id: this.album.id,
+        sortType: 2,
+      };
+      getCommentsNew(params).then((res) => {
+        this.commentCount =
+          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
+        this.comments = res.data.data.comments;
+      });
+    },
+    currentChange(v) {
+      this.commentPage = v;
+    },
+  },
+  watch: {
+    commentPage() {
+      this.getComment();
+    },
   },
   components: {
     DetailInfoCard,
     DetailSonglist,
-    ModListMenu,
+    CommontBox,
   },
 };
 </script>

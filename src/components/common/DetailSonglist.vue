@@ -87,19 +87,10 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
 li,
 ol,
 p,
-pre,
 td,
-textarea,
 th,
 ul {
   margin: 0;

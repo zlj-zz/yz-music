@@ -117,7 +117,7 @@
           href="#comment_box"
           @click="btnClick('comment')"
         >
-          <i class="mod_btn__icon_comment"></i>评论()
+          <i class="mod_btn__icon_comment"></i>评论({{ commentCount }})
         </a>
         <a
           href="javascript:;"
@@ -147,6 +147,9 @@ export default {
       type: String,
       default: "song",
     },
+    commentCount: {
+      default: 0,
+    },
   },
   methods: {
     btnClick(v) {
@@ -160,12 +163,6 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 li,
 ul {
   margin: 0;
