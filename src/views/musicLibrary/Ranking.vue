@@ -113,7 +113,9 @@
           ><i class="mod_btn__icon_batch"></i>批量操作</a
         >
         <a class="mod_btn js_into_comment" href="#comment_box"
-          ><i class="mod_btn__icon_comment"></i>评论(913)</a
+          ><i class="mod_btn__icon_comment"></i>评论({{
+            processCount(commentCount)
+          }})</a
         >
       </div>
 
@@ -209,14 +211,30 @@
           </li>
         </ul>
       </div>
+
+      <!--commont-->
+      <commont-box
+        :comments="comments"
+        :limit="pageSize"
+        :currentPage="commentPage"
+        :total="commentCount"
+        @current-change="currentChange"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import ModListMenu from "components/common/ModListMenu";
-import { getPlaylistDetial, getSongDetail } from "api";
-import { isDef, createSong, playSonglist, gotoSongDetail } from "common/utils";
+import CommontBox from "components/common/CommontBox";
+import { getPlaylistDetial, getSongDetail, getCommentsNew } from "api";
+import {
+  isDef,
+  createSong,
+  playSonglist,
+  gotoSongDetail,
+  processCount,
+} from "common/utils";
 
 export default {
   data() {
@@ -254,10 +272,15 @@ export default {
       seletedTypeName: "飙升榜",
       seletedType: "19723756",
       listDatas: [],
+      pageSize: 20,
+      commentPage: 1,
+      commentCount: 0,
+      comments: [],
     };
   },
   mounted() {
     this.updatedTopList();
+    this.getComment();
   },
   methods: {
     onSelectType(type) {
@@ -304,16 +327,43 @@ export default {
       else if (data == -9999) return "icon_rank_new";
       else return "icon_rank_down";
     },
+    getComment() {
+      let params = {
+        type: 2,
+        pageSize: this.pageSize,
+        pageNo: this.commentPage,
+        id: this.seletedType,
+        sortType: 2,
+      };
+      getCommentsNew(params).then((res) => {
+        console.log(res.data);
+        this.commentCount =
+          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
+        this.comments = res.data.data.comments;
+        console.log(this.commentCount);
+        console.log(this.comments);
+      });
+    },
+    currentChange(v) {
+      this.commentPage = v;
+    },
     playSonglist,
     gotoSongDetail,
+    processCount,
   },
   watch: {
     seletedType(newType) {
       this.updatedTopList();
+      this.commentPage = 1;
+      this.getComment();
+    },
+    commentPage() {
+      this.getComment();
     },
   },
   components: {
     ModListMenu,
+    CommontBox,
   },
 };
 </script>

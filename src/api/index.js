@@ -8,4 +8,5 @@ export * from "./songer";
 export * from "./mv";
 export * from "./album";
 export * from "./search";
+export * from "./comment";
 export * from "./other";
