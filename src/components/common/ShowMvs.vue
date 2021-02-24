@@ -8,7 +8,11 @@
       <ul class="mv_list__list">
         <li class="mv_list__item" v-for="mv in mvs" :key="mv.id">
           <div class="mv_list__item_box" style="visibility: visible">
-            <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
+            <a
+              class="mv_list__cover mod_cover js_mv"
+              hidefocus="true"
+              @click="gotoMvDetail(mv.id)"
+            >
               <img
                 class="mv_list__pic"
                 style="display: block; visibility: visible"
@@ -20,7 +24,9 @@
               <!--div class="mv_list__time">04:10</div-->
             </a>
             <h3 class="mv_list__title">
-              <a class="js_mv" :title="mv.name">{{ mv.name }}</a>
+              <a class="js_mv" :title="mv.name" @click="gotoMvDetail(mv.id)">{{
+                mv.name
+              }}</a>
             </h3>
             <p class="mv_list__singer">
               <a class="js_singer" :title="mv.artistsText">{{
@@ -35,15 +41,19 @@
 </template>
 
 <script>
+import { gotoMvDetail } from "common/utils";
+
 export default {
   props: {
     mvs: { type: Array, default: [] },
+  },
+  methods: {
+    gotoMvDetail,
   },
 };
 </script>
 
 <style scoped>
-h3,
 hr,
 li,
 ol,

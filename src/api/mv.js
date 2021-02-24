@@ -37,5 +37,7 @@ export const getAllMV = (limit, page, order, area, type) => {
 
 export const getMvDetail = id => requset.get(`/mv/detail?mvid=${id}`);
 
+export const getMvPlayUrl = id => requset.get(`/mv/url?id=${id}`);
+
 /* 登陆后使用 */
 export const getCollectedMvs = () => requset.get("/mv/sublist");

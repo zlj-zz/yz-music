@@ -49,6 +49,7 @@
                   class="mv_list__cover mod_cover js_mv"
                   :title="item.name"
                   hidefocus="true"
+                  @click="gotoMvDetail(item.id)"
                 >
                   <img
                     style="display: block; visibility: visible"
@@ -60,9 +61,12 @@
                   <i class="mod_cover__icon_play"></i>
                 </a>
                 <h3 class="mv_list__title">
-                  <a href="javascript:;" class="js_mv" :title="item.name">{{
-                    item.name
-                  }}</a>
+                  <a
+                    class="js_mv"
+                    :title="item.name"
+                    @click="gotoMvDetail(item.id)"
+                    >{{ item.name }}</a
+                  >
                 </h3>
                 <div class="mv_list__singer" title="5AM">
                   <a class="js_singer" :title="item.artistName">{{
@@ -94,7 +98,7 @@
 import TypeSelectBar from "components/common/TypeSelectBar";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
 import { getAllMV, mvArea, mvOrder, mvType } from "api";
-import { processCount } from "common/utils";
+import { processCount, gotoMvDetail } from "common/utils";
 
 export default {
   data() {
@@ -114,41 +118,50 @@ export default {
     };
   },
   mounted() {
-    this.updateMv();
+    this.initMv();
     this.$refs.mvList.addEventListener("scroll", this.loadMore);
   },
   methods: {
-    updateMv() {
-      getAllMV(
-        this.limit,
-        this.page,
-        this.order,
-        this.selectArea,
-        this.selectType
-      )
-        .then((res) => {
-          //console.log(res);
-          this.mvs.push(...res.data.data);
-          this.mvLoading = false;
-          this.allLength = res.data.count;
-          this.more = res.data.hasMore;
-        })
-        .catch((err) => console.log(err));
+    async getMv() {
+      let res;
+      try {
+        res = await getAllMV(
+          this.limit,
+          this.page,
+          this.order,
+          this.selectArea,
+          this.selectType
+        );
+      } catch (e) {
+        console.log(e);
+      }
+      this.mvLoading = false;
+      this.allLength = res.data.count;
+      this.more = res.data.hasMore;
+      return res.data.data;
+    },
+    async initMv() {
+      let mvs = await this.getMv();
+      this.mvs = mvs;
+    },
+    async updateMv() {
+      let mvs = await this.getMv();
+      this.mvs.push(...mvs);
     },
     areaSelect(id) {
       this.selectArea = id;
       this.page = 1;
-      this.updateMv();
+      this.initMv();
     },
     typeSelect(id) {
       this.selectType = id;
       this.page = 1;
-      this.updateMv();
+      this.initMv();
     },
     switchOrder(id) {
       this.order = id;
       this.page = 1;
-      this.updateMv();
+      this.initMv();
     },
     loadMore() {
       const scrollDom = document.getElementById("mv_list_div");
@@ -163,6 +176,7 @@ export default {
       }
     },
     processCount,
+    gotoMvDetail,
   },
   components: {
     TypeSelectBar,

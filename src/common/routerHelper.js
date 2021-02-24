@@ -31,3 +31,11 @@ export function gotoAlbumDetail(id) {
       query: { id: id }
     });
 }
+
+export function gotoMvDetail(id) {
+  if (id && id != 0)
+    Router.push({
+      path: "/musicLibrary/mvDetail",
+      query: { id: id }
+    });
+}

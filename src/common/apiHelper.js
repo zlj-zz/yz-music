@@ -110,7 +110,8 @@ export function createMv(mv) {
     coverUrl,
     creator,
     durationms,
-    playTime
+    playTime,
+    desc
   } = mv;
   let dt = duration ? duration : durationms;
   let times = playCount ? playCount : playTime;
@@ -126,7 +127,8 @@ export function createMv(mv) {
     durationSecond: dt / 1000,
     durationText: formatTime(dt / 1000),
     publishTime,
-    playCount: processCount(times)
+    playCount: processCount(times),
+    desc: desc
   };
 }
 export function createMvs(mvs) {

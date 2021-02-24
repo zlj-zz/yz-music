@@ -12,6 +12,7 @@ const SongerDetail = () => import("views/musicLibrary/SongerDetail");
 const SongDetail = () => import("views/musicLibrary/SongDetail");
 const AlbumDetail = () => import("views/musicLibrary/AlbumDetail");
 const PlaylistDetail = () => import("views/musicLibrary/PlaylistDetail");
+const MvDetail = () => import("views/musicLibrary/MvDetail");
 const SearchResultDetail = () =>
   import("views/musicLibrary/SearchResultDetail");
 
@@ -92,6 +93,11 @@ const routes = [
         path: "playlistDetail",
         component: PlaylistDetail,
         meta: { name: "playlistDetail" }
+      },
+      {
+        path: "mvDetail",
+        component: MvDetail,
+        meta: { name: "mvDetail" }
       },
       {
         path: "searchResultDetail",
