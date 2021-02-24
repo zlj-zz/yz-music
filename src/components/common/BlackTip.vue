@@ -5,7 +5,7 @@
     style="z-index: 2147483647; left: 646px; top: 326px"
     :style="{ display: ifShow ? '' : 'none' }"
   >
-    <i class="popup_tips__icon"></i>
+    <i :class="processIcon()"></i>
     <h2 class="popup_tips__tit">{{ tip }}</h2>
   </div>
 </template>
@@ -19,6 +19,22 @@ export default {
     tip: {
       type: String,
       default: "",
+    },
+    // 0: tip, 1: warn
+    iconType: { default: 0 },
+  },
+  methods: {
+    processIcon() {
+      switch (this.iconType) {
+        case 0:
+          return "popup_tips__icon";
+          break;
+        case 1:
+          return "popup_tips__icon_warn";
+          break;
+        default:
+          return "";
+      }
     },
   },
 };

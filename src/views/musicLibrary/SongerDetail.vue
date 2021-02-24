@@ -228,9 +228,7 @@ export default {
 
       // Get songer album
       const res4 = await getSongerAlbums({ id: this.id, limit: 5, offset: 0 });
-      console.log(res4);
       this.albums = createAlbums(res4.data.hotAlbums);
-      console.log(this.albums);
 
       // Get songer mv
       const res5 = await getSongerMvs(this.id);

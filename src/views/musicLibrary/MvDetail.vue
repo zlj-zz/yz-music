@@ -81,7 +81,7 @@ export default {
     this.id = this.$route.query.id;
     getMvDetail(this.id).then((res) => {
       this.mv = createMv(res.data.data);
-      console.log(this.mv);
+      //console.log(this.mv);
     });
     this.updateMv();
     this.getComment();

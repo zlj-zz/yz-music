@@ -118,6 +118,10 @@ $black: #000;
   background-position: -40px -100px;
   vertical-align: -2px;
 }
+.mod_btn__icon_like--like,
+.mod_btn_green__icon_like--like {
+  background-position: 0 -80px;
+}
 .mod_btn__icon_add,
 .mod_btn__icon_batch,
 .mod_btn__icon_comment,
@@ -1303,6 +1307,14 @@ img .playlist__pic {
   height: 46px;
   background-position: 0 -150px;
   margin: 0 auto 16px;
+}
+.popup_tips__icon_warn {
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 16px;
+  background-position: 0 -220px;
+  background-image: url(../img/icon_popup.png);
 }
 .popup_tips__tit {
   font-size: 14px;

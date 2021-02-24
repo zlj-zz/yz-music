@@ -35,7 +35,7 @@
         <div class="data__desc_txt" id="short_desc">
           {{ obj.desc }}
         </div>
-        <a href="javascript:;" class="js_desc" @click="moreClick">[更多]</a>
+        <a class="js_desc" @click="moreClick">[更多]</a>
       </div>
       <!-- Info -->
       <ul class="data__info" v-if="cardType != 'songer'">
@@ -110,7 +110,11 @@
           {{ cardType == "song" ? "播放" : "播放全部" }}
         </a>
         <a class="mod_btn js_fav_taoge" @click="btnClick('collection')">
-          <i class="mod_btn__icon_like"></i>收藏
+          <i
+            class="mod_btn__icon_like"
+            :class="obj.subscribed ? 'mod_btn__icon_like--like' : ''"
+          ></i
+          >收藏
         </a>
         <a
           class="mod_btn js_into_comment"
@@ -120,9 +124,9 @@
           <i class="mod_btn__icon_comment"></i>评论({{ commentCount }})
         </a>
         <a
-          href="javascript:;"
           class="mod_btn js_more"
           @click="btnClick('more')"
+          style="display: none"
         >
           <i class="mod_btn__icon_menu"></i>更多
         </a>

@@ -159,7 +159,7 @@ export default {
       // 获取歌曲信息
       getSongDetail(this.songId).then((res) => {
         let d = res.data.songs[0];
-        //console.log(d);
+        //console.log(res);
         this.song = createSong({
           id: d.id,
           name: d.name,

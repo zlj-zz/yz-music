@@ -68,7 +68,6 @@ export default {
     updateArtists() {
       getSongers(this.initial, this.type, this.area, this.page)
         .then((res) => {
-          console.log(res);
           this.artists = res.data.artists;
           this.more = res.data.more;
           this.loading = false;

@@ -52,17 +52,20 @@
       </div>
     </div>
   </div>
+  <black-tip :ifShow="ifShowTip" :iconType="tipType" :tip="tip" />
 </template>
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import DetailSonglist from "components/common/DetailSonglist";
 import CommontBox from "components/common/CommontBox";
+import BlackTip from "components/common/BlackTip";
 import {
   getPlayList,
   getPlaylistDetial,
   getSongDetail,
   getCommentsNew,
+  toggleLikePlaylist,
 } from "api";
 import { processCount, createSong, playSonglist } from "common/utils";
 
@@ -76,6 +79,9 @@ export default {
       commentPage: 1,
       commentCount: 0,
       comments: [],
+      ifShowTip: false,
+      tip: "",
+      tipType: 1,
     };
   },
   created() {
@@ -84,7 +90,6 @@ export default {
   methods: {
     init() {
       getPlaylistDetial(this.id).then((res) => {
-        console.log(res);
         let d = res.data.playlist;
         this.playlist = {
           id: d.id,
@@ -97,12 +102,11 @@ export default {
           playCount: processCount(d.playCount),
           subscribedCount: processCount(d.subscribedCount),
           shareCount: processCount(d.shareCount),
+          subscribed: d.subscribed,
         };
-        console.log(this.playlist);
 
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
-          console.log(res.data.songs);
           let songs = res.data.songs.map(({ id, name, al, ar, mv, dt }) => {
             return createSong({
               id,
@@ -122,6 +126,30 @@ export default {
     },
     cardClick(v) {
       if (v == "all") playSonglist(this.songs);
+      else if (v == "collection") {
+        if (this.$store.state.user.isLogged) {
+          if (!this.playlist.subscribed) {
+            toggleLikePlaylist({ t: 1, id: this.playlist.id }).then((res) => {
+              this.playlist.subscribed = true;
+              this.showTip("收藏成功，已添加到收藏歌单", 0);
+            });
+          } else {
+            toggleLikePlaylist({ t: 2, id: this.playlist.id }).then((res) => {
+              this.playlist.subscribed = false;
+              this.showTip("取消收藏成功", 0);
+            });
+          }
+        } else this.showTip("请先登陆", 1);
+      }
+    },
+    showTip(tip, type) {
+      this.tipType = type;
+      this.tip = tip;
+      this.ifShowTip = true;
+      if (this.tipTimer) clearTimeout(this.tipTimer);
+      setTimeout(() => {
+        this.ifShowTip = false;
+      }, 1300);
     },
     getComment() {
       let params = {
@@ -150,6 +178,7 @@ export default {
     DetailInfoCard,
     DetailSonglist,
     CommontBox,
+    BlackTip,
   },
 };
 </script>

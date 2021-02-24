@@ -79,7 +79,6 @@ export default {
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         getSongDetail(trackIds).then((res) => {
           let songs = createSongs(res.data.songs);
-          console.log(songs);
           this.toplists.push(songs);
         });
       });

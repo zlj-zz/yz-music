@@ -24,3 +24,9 @@ export const getCatList = () => requset.get("/playlist/catlist");
 
 /* 登陆后使用 */
 export const getUserPlaylists = id => requset.get(`/user/playlist?uid=${id}`);
+
+/* 收藏/取消收藏歌单
+ * 登陆后使用
+ * t : 类型,1:收藏,2:取消收藏 id : 歌单 id */
+export const toggleLikePlaylist = params =>
+  requset.get("/playlist/subscribe", { params: params });
