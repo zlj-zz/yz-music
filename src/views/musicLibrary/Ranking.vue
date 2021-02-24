@@ -315,12 +315,9 @@ export default {
         sortType: 2,
       };
       getCommentsNew(params).then((res) => {
-        console.log(res.data);
         this.commentCount =
           res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
         this.comments = res.data.data.comments;
-        console.log(this.commentCount);
-        console.log(this.comments);
       });
     },
     currentChange(v) {
