@@ -276,6 +276,7 @@ export default {
       if (this.selectedType != type) this.selectedType = type;
       if (idx) {
         this.showMoreIdx = idx;
+        if (idx != -999) this.playlistTpyes[this.showMoreIdx].showMore = false;
       }
     },
     deleteSeleted() {
