@@ -16,7 +16,7 @@
 
       <div class="mod_part_detail">
         <div class="part_detail__hd">
-          <h2 class="part_detail__tit js_lib_title">全部MV</h2>
+          <h2 class="part_detail__tit">全部MV</h2>
           <div class="part_switch">
             <a
               class="part_switch__item part_switch__item--left"
@@ -46,7 +46,7 @@
             <li class="mv_list__item" v-for="item in mvs" :key="item.id">
               <div class="mv_list__item_box" style="visibility: visible">
                 <a
-                  class="mv_list__cover mod_cover js_mv"
+                  class="mv_list__cover mod_cover"
                   :title="item.name"
                   hidefocus="true"
                   @click="gotoMvDetail(item.id)"
@@ -61,17 +61,12 @@
                   <i class="mod_cover__icon_play"></i>
                 </a>
                 <h3 class="mv_list__title">
-                  <a
-                    class="js_mv"
-                    :title="item.name"
-                    @click="gotoMvDetail(item.id)"
-                    >{{ item.name }}</a
-                  >
+                  <a :title="item.name" @click="gotoMvDetail(item.id)">{{
+                    item.name
+                  }}</a>
                 </h3>
                 <div class="mv_list__singer" title="5AM">
-                  <a class="js_singer" :title="item.artistName">{{
-                    item.artistName
-                  }}</a>
+                  <a :title="item.artistName">{{ item.artistName }}</a>
                 </div>
                 <div class="mv_list__info">
                   <span class="mv_list__listen">

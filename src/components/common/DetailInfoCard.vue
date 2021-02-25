@@ -12,7 +12,7 @@
       <i class="data__cover_mask" v-if="cardType == 'album'"></i>
     </span>
     <div class="data__cont">
-      <div class="data__name js_box">
+      <div class="data__name">
         <h1 id="p_name_show" class="data__name_txt" :title="obj.name">
           {{ obj.name }}
         </h1>
@@ -35,26 +35,21 @@
         <div class="data__desc_txt" id="short_desc">
           {{ obj.desc }}
         </div>
-        <a class="js_desc" @click="moreClick">[更多]</a>
+        <a @click="moreClick">[更多]</a>
       </div>
       <!-- Info -->
       <ul class="data__info" v-if="cardType != 'songer'">
-        <li class="data_info__item js_box" style="display: ">
+        <li class="data_info__item" style="display: ">
           <div class="data_tag_box" v-if="obj.tags">
             标签：<span id="choosebox1">
-              <a
-                class="data_info__tags js_jump"
-                v-for="tag in obj.tags"
-                :key="tag"
+              <a class="data_info__tags" v-for="tag in obj.tags" :key="tag"
                 >{{ tag }}
               </a>
             </span>
           </div>
         </li>
         <li class="data_info__item" v-if="obj.albumName">
-          专辑：<a class="js_album" :title="obj.albumName">{{
-            obj.albumName
-          }}</a>
+          专辑：<a :title="obj.albumName">{{ obj.albumName }}</a>
         </li>
         <li class="data_info__item" v-if="obj.type">分类：{{ obj.type }}</li>
         <li class="data_info__item" v-if="obj.version">
@@ -105,7 +100,7 @@
       </ul>
 
       <div class="data__actions" v-if="cardType != 'songer'">
-        <a class="mod_btn_green js_all_play" @click="btnClick('all')">
+        <a class="mod_btn_green" @click="btnClick('all')">
           <i class="mod_btn_green__icon_play"></i>
           {{ cardType == "song" ? "播放" : "播放全部" }}
         </a>
@@ -116,11 +111,7 @@
           ></i
           >收藏
         </a>
-        <a
-          class="mod_btn js_into_comment"
-          href="#comment_box"
-          @click="btnClick('comment')"
-        >
+        <a class="mod_btn" href="#comment_box" @click="btnClick('comment')">
           <i class="mod_btn__icon_comment"></i>评论({{ commentCount }})
         </a>
         <a
@@ -132,7 +123,7 @@
         </a>
       </div>
       <div class="data__actions" v-if="cardType == 'songer'">
-        <a class="mod_btn_green js_singer_radio" @click="btnClick('hot')">
+        <a class="mod_btn_green" @click="btnClick('hot')">
           <i class="mod_btn_green__icon_play"></i>播放歌手热门歌曲
         </a>
       </div>

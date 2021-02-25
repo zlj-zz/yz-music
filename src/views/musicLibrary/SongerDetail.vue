@@ -7,14 +7,12 @@
       @moreClick="toggleShowMoreInfo"
     />
 
-    <div id="index_tab" class="js_tab">
+    <div id="index_tab">
       <div class="mod_part">
         <div class="part__hd">
           <h2 class="part__tit">热门歌曲</h2>
 
-          <a class="part__more js_goto_tab">
-            全部<i class="icon_part_arrow sprite"></i>
-          </a>
+          <a class="part__more"> 全部<i class="icon_part_arrow sprite"></i> </a>
         </div>
 
         <detail-songlist :songs="hotSongs" :listType="'songer'" />
@@ -37,7 +35,7 @@
                       :alt="album.name"
                     />
                     <i
-                      class="mod_cover__icon_play js_play"
+                      class="mod_cover__icon_play"
                       @click="playAlbum(album.id)"
                     ></i>
                   </a>
@@ -65,15 +63,13 @@
       <div class="mod_part" v-if="mvs.length > 0">
         <div class="part__hd">
           <h2 class="part__tit">MV</h2>
-          <a class="part__more js_goto_tab">
-            全部<i class="icon_part_arrow sprite"></i>
-          </a>
+          <a class="part__more"> 全部<i class="icon_part_arrow sprite"></i> </a>
         </div>
         <div class="mod_mv">
           <ul class="mv_list__list" id="mvlist">
             <li class="mv_list__item" v-for="mv in mvs" :key="mv.id">
               <div class="mv_list__item_box">
-                <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
+                <a class="mv_list__cover mod_cover" hidefocus="true">
                   <img
                     class="mv_list__pic"
                     src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"

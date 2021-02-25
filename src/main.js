@@ -4,18 +4,32 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 
-import ElementPlus from "element-plus";
-import "element-plus/lib/theme-chalk/index.css";
 import "@/assets/css/base.scss";
 import "@/assets/css/fakeqqmusic.scss";
 import LazyPlugin from "common/lazy-load";
+import {
+  ElIcon,
+  ElLoading,
+  ElBacktop,
+  ElInput,
+  ElAutocomplete,
+  ElCarousel,
+  ElCarouselItem,
+  ElPagination,
+  ElEmpty
+} from "element-plus";
 
 createApp(App)
   .use(store)
   .use(router)
-  .use(ElementPlus)
   .use(LazyPlugin)
+  .use(ElIcon)
+  .use(ElLoading)
+  .use(ElBacktop)
+  .use(ElInput)
+  .use(ElAutocomplete)
+  .use(ElCarousel)
+  .use(ElCarouselItem)
+  .use(ElPagination)
+  .use(ElEmpty)
   .mount("#app");
-
-// import { getBanner } from "./api";
-// getBanner().then(res => console.log(res));

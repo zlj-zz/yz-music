@@ -57,20 +57,19 @@
               >
                 <div class="playlist__item_box">
                   <div class="playlist__cover mod_cover">
-                    <a class="js_playlist" @click="gotoSongDetail(simiSong.id)">
+                    <a @click="gotoSongDetail(simiSong.id)">
                       <img
                         src=""
                         v-lazy="simiSong.img"
                         :alt="simiSong.name"
                         class="playlist__pic"
                       />
-                      <i class="mod_cover__icon_play js_play"></i>
+                      <i class="mod_cover__icon_play"></i>
                     </a>
                   </div>
                   <h4 class="playlist__title">
                     <span class="playlist__title_txt"
                       ><a
-                        class="js_playlist"
                         :title="simiSong.name"
                         @click="gotoSongDetail(simiSong.id)"
                         >{{ simiSong.name }}</a
@@ -88,7 +87,7 @@
           <h3 class="other_part__tit">相关MV</h3>
           <div class="mod_mv_list">
             <div class="mv_list__item_box">
-              <a class="mv_list__cover mod_cover js_mv" hidefocus="true">
+              <a class="mv_list__cover mod_cover" hidefocus="true">
                 <img
                   class="mv_list__pic"
                   src="//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000"

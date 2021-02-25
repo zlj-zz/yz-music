@@ -19,7 +19,7 @@
         <h1 class="mv__title">
           <span class="mv__name" title="Falsetto">{{ mv.name }}</span>
           <span class="mv__line">-</span>
-          <a class="mv__singer js_singer">{{ mv.artistsText }}</a>
+          <a class="mv__singer">{{ mv.artistsText }}</a>
         </h1>
         <span class="mv__listen">播放量：{{ mv.playCount }}</span>
       </div>

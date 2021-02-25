@@ -1,7 +1,6 @@
 <template>
-  <div class="singer_tag__list js_index">
+  <div class="singer_tag__list">
     <a
-      href="javascript:;"
       class="singer_tag__item"
       v-for="(item, key) in items"
       :key="key"

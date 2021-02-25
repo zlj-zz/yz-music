@@ -70,30 +70,17 @@
       <div class="toplist__hd_rk">
         <h1 class="toplist__tit1">{{ seletedTypeName }}</h1>
         <span class="toplist_switch">
-          <a
-            href="javascript:;"
-            class="toplist_switch__btn js_prev_week"
-            style="display: none"
+          <a class="toplist_switch__btn" style="display: none"
             ><i class="toplist_switch__arrow_prev sprite"></i
             ><i class="icon_txt">上一期</i></a
           >
           <!-- <span class="toplist_switch__data js_chosed_week">2021-02-13</span> -->
-          <a
-            href="javascript:;"
-            class="toplist_switch__btn js_next_week"
-            style="display: none"
+          <a class="toplist_switch__btn" style="display: none"
             ><i class="toplist_switch__arrow_next sprite"></i
             ><i class="icon_txt">下一期</i></a
           >
         </span>
-        <a
-          href="javascript:;"
-          class="toplist__rule js_desc"
-          data-left="-650"
-          data-top="-78"
-          data-target="popup_data_detail"
-          >榜单规则</a
-        >
+        <a class="toplist__rule js_desc">榜单规则</a>
       </div>
       <div class="mod_songlist_toolbar">
         <a class="mod_btn_green js_all_play" @click="playSonglist(listDatas)"
@@ -118,7 +105,7 @@
       <div class="mod_songlist" v-loading="loading">
         <ul class="songlist__header">
           <li class="songlist__edit sprite">
-            <input type="checkbox" class="songlist__checkbox js_check_all" />
+            <input type="checkbox" class="songlist__checkbox" />
           </li>
           <li class="songlist__header_name">歌曲</li>
           <li class="songlist__header_author">歌手</li>
@@ -182,11 +169,7 @@
                       :alt="song.name"
                     />
                   </a>
-                  <a
-                    class="js_song"
-                    :title="song.name"
-                    @click="gotoSongDetail(song.id)"
-                  >
+                  <a :title="song.name" @click="gotoSongDetail(song.id)">
                     {{ song.name }}
                   </a>
                 </span>

@@ -3,7 +3,7 @@
     <span class="mod_top_login">
       <!-- 登录 -->
       <a
-        class="top_login__link js_logined"
+        class="top_login__link"
         :style="{ display: isLogged ? '' : 'none' }"
         @mouseover="showUserPopup"
         @mouseleave="hiddenUserPopup"
@@ -16,7 +16,7 @@
       </a>
       <!-- 未登录 -->
       <a
-        class="top_login__link js_login"
+        class="top_login__link"
         :style="{ display: isLogged ? 'none' : '' }"
         @click="showLoginPopup"
       >
@@ -81,20 +81,10 @@
   >
     <div class="popup__hd">
       <h2 class="popup__tit">
-        <a
-          href="javascript:;"
-          class="popup__tit_item current js_iframe_login"
-          data-type="qq"
-          style=""
-          >扫码登陆</a
-        >
+        <a class="popup__tit_item current" style="">扫码登陆</a>
       </h2>
     </div>
-    <a
-      href="javascript:;"
-      class="popup__close"
-      title="关闭"
-      @click="hiddenLoginPopup"
+    <a class="popup__close" title="关闭" @click="hiddenLoginPopup"
       ><i class="popup__icon_close"></i><i class="icon_txt">关闭</i>
     </a>
 
@@ -103,7 +93,7 @@
       <img
         id="frame_tips"
         :src="qrurl"
-        class="popup_login_qq"
+        class="popup_login_qr"
         width="100%"
         height="400px;"
         frameborder="0"
@@ -390,7 +380,7 @@ a:hover {
   width: 704px;
   margin-left: -2px;
 }
-.popup_login.large .popup_login_qq {
+.popup_login.large .popup_login_qr {
   width: 200px;
   height: 200px;
   margin-left: 150px;

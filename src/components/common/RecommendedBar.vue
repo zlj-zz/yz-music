@@ -28,7 +28,7 @@
           >
             <div class="playlist__item_box">
               <div class="playlist__cover mod_cover">
-                <a class="js_playlist" @click="playTheList(item.id)">
+                <a @click="playTheList(item.id)">
                   <img
                     class="playlist__pic"
                     src="//y.gtimg.cn/mediastyle/global/img/playlist_300.png?max_age=31536000"
@@ -51,12 +51,9 @@
         </ul>
       </div>
 
-      <div
-        class="mod_slide_switch js_switch"
-        data-stat="y_new.index.playlist.pager"
-      >
+      <div class="mod_slide_switch">
         <a
-          class="js_jump slide_switch__item"
+          class="slide_switch__item"
           :class="showNo ? '' : 'slide_switch__item--current'"
           @mouseover="switchShow(false)"
         >
@@ -64,7 +61,7 @@
           <i class="icon_txt">1</i>
         </a>
         <a
-          class="js_jump slide_switch__item"
+          class="slide_switch__item"
           :class="showNo ? 'slide_switch__item--current' : ''"
           @mouseover="switchShow(true)"
         >

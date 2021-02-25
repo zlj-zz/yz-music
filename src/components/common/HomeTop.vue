@@ -11,10 +11,7 @@
         >
           <div class="toplist__box">
             <div id="toplist__bg" :class="'toplist__bg' + idx"></div>
-            <i
-              class="mod_cover__icon_play js_play_toplist"
-              @click="playSonglist(toplist)"
-            ></i>
+            <i class="mod_cover__icon_play" @click="playSonglist(toplist)"></i>
             <i class="toplist__line"></i>
             <h3 class="toplist__hd">
               <a href="javascript:;" class="toplist__tit"
@@ -27,7 +24,6 @@
                 <div class="toplist__number">{{ songIdx }}</div>
                 <div class="toplist__songname">
                   <a
-                    href="javascript:;"
                     class="js_song"
                     :data-id="toplist[songIdx - 1].id"
                     @click="gotoSongDetail(toplist[songIdx - 1].id)"

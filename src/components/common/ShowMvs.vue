@@ -24,14 +24,10 @@
               <!--div class="mv_list__time">04:10</div-->
             </a>
             <h3 class="mv_list__title">
-              <a class="js_mv" :title="mv.name" @click="gotoMvDetail(mv.id)">{{
-                mv.name
-              }}</a>
+              <a :title="mv.name" @click="gotoMvDetail(mv.id)">{{ mv.name }}</a>
             </h3>
             <p class="mv_list__singer">
-              <a class="js_singer" :title="mv.artistsText">{{
-                mv.artistsText
-              }}</a>
+              <a :title="mv.artistsText">{{ mv.artistsText }}</a>
             </p>
           </div>
         </li>

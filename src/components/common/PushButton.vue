@@ -2,9 +2,8 @@
   <div class="mod_slide_action">
     <div class="slide_action slide_action--left">
       <a
-        class="slide_action__btn slide_action__btn--left js_jump"
+        class="slide_action__btn slide_action__btn--left"
         data-p="prev"
-        tabindex="-1"
         @click="btnClick('left')"
       >
         <i class="icon_txt">上一页</i
@@ -13,9 +12,8 @@
     </div>
     <div class="slide_action slide_action--right">
       <a
-        class="slide_action__btn slide_action__btn--right js_jump"
+        class="slide_action__btn slide_action__btn--right"
         data-p="next"
-        tabindex="-1"
         @click="btnClick('right')"
       >
         <i class="icon_txt">下一页</i

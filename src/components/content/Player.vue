@@ -7,7 +7,7 @@
     >
       <div class="updn">
         <div class="left f-fl">
-          <a href="javascript:;" class="btn" @click="switchLock"></a>
+          <a class="btn" @click="switchLock"></a>
         </div>
         <div class="right f-fl"></div>
       </div>
@@ -15,16 +15,10 @@
       <div class="hand" title="展开播放条"></div>
       <div class="wrap" id="g_player" style="margin-left: -490px">
         <div class="btns">
-          <a
-            href="javascript:;"
-            hidefocus="true"
-            class="prv"
-            title="上一首(ctrl+←)"
-            @click="prev"
+          <a hidefocus="true" class="prv" title="上一首(ctrl+←)" @click="prev"
             >上一首</a
           >
           <a
-            href="javascript:;"
             hidefocus="true"
             class="ply j-flag"
             title="播放/暂停(p)"
@@ -32,12 +26,7 @@
             @click="togglePlay"
             >播放/暂停</a
           >
-          <a
-            href="javascript:;"
-            hidefocus="true"
-            class="nxt"
-            title="下一首(ctrl+→)"
-            @click="next"
+          <a hidefocus="true" class="nxt" title="下一首(ctrl+→)" @click="next"
             >下一首</a
           >
         </div>
@@ -78,20 +67,8 @@
           </div>
         </div>
         <div class="oper f-fl">
-          <a
-            href="javascript:;"
-            hidefocus="true"
-            class="icn icn-add j-flag"
-            title="收藏"
-            >收藏</a
-          >
-          <a
-            href="javascript:;"
-            hidefocus="true"
-            class="icn icn-share"
-            title="分享"
-            >分享</a
-          >
+          <a hidefocus="true" class="icn icn-add j-flag" title="收藏">收藏</a>
+          <a hidefocus="true" class="icn icn-share" title="分享">分享</a>
         </div>
         <div class="ctrl f-fl f-pr j-flag">
           <div

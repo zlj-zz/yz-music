@@ -2,7 +2,7 @@
   <div class="mod_songlist">
     <ul class="songlist__header">
       <li class="songlist__edit songlist__edit--check sprite">
-        <input type="checkbox" class="songlist__checkbox js_check_all" />
+        <input type="checkbox" class="songlist__checkbox" />
       </li>
       <li class="songlist__header_name">歌曲</li>
       <li class="songlist__header_author">歌手</li>

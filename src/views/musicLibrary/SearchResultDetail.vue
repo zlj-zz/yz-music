@@ -9,7 +9,7 @@
       <div class="result">
         <div class="mod_tab" role="nav">
           <a
-            class="mod_tab__item js_tab"
+            class="mod_tab__item"
             v-for="item in selectTypes"
             :key="item.typeId"
             :class="selectedType == item.typeId ? 'mod_tab__current' : ''"
@@ -58,7 +58,7 @@
                   </div>
 
                   <span class="singer_list__title_txt"
-                    ><a class="js_user" :title="user.name"
+                    ><a :title="user.name"
                       >{{ user.name }}
                       <span class="singer_list__user_txt"> </span></a
                   ></span>
@@ -66,11 +66,11 @@
                 <div class="singer_list__playlist">
                   歌单：{{ user.playlistCount }}
                 </div>
-                <div class="singer_list__count js_num_follow" data-num="78">
+                <div class="singer_list__count" data-num="78">
                   粉丝：{{ user.followeds }}
                 </div>
                 <div class="singer_list__other">
-                  <a class="mod_btn singer_list__btn_focus js_focus_user">
+                  <a class="mod_btn singer_list__btn_focus">
                     <i class="mod_btn__icon_new"></i>关注
                   </a>
                 </div>

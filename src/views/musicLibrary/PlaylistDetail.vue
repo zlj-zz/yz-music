@@ -21,7 +21,7 @@
       </div>
 
       <div class="detail_layout__other">
-        <div class="mod_about js_box" id="album_desc" style="display: ">
+        <div class="mod_about" id="album_desc" style="display: ">
           <h3 class="about__tit">简介</h3>
           <div class="about__cont">
             <p>

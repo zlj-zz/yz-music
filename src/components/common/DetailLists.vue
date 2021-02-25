@@ -27,7 +27,6 @@
           <h4 class="playlist__title">
             <span class="playlist__title_txt">
               <a
-                class="js_album"
                 v-if="kind == 0"
                 :title="l.name"
                 @click="gotoAlbumDetail(l.id)"
@@ -35,7 +34,6 @@
                 {{ l.name }}
               </a>
               <a
-                class="js_album"
                 v-else-if="kind == 1"
                 :title="l.name"
                 @click="gotoPlaylistDetail(l.id)"
@@ -48,10 +46,8 @@
           <mod-list-menu :id="l.id" :kind="kind + 1" />
 
           <div class="playlist__author">
-            <a class="js_singer" v-if="kind == 0" :title="l.artistsText">{{
-              l.artistsText
-            }}</a>
-            <a class="js_singer" v-else-if="kind == 1" :title="l.artistsText">{{
+            <a v-if="kind == 0" :title="l.artistsText">{{ l.artistsText }}</a>
+            <a v-else-if="kind == 1" :title="l.artistsText">{{
               l.creatorName
             }}</a>
           </div>

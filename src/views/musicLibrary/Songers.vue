@@ -26,7 +26,7 @@
           :key="item.id"
         >
           <a
-            class="singer_list_txt__link js_singer"
+            class="singer_list_txt__link"
             :title="item.name"
             @click="gotoSongerDetail(item.id)"
             >{{ item.name }}</a

@@ -38,12 +38,9 @@
               </div>
               <h4 class="playlist__title">
                 <span class="playlist__title_txt">
-                  <a
-                    class="js_album"
-                    :title="album.name"
-                    @click="gotoAlbumDetail(album.id)"
-                    >{{ album.name }}</a
-                  >
+                  <a :title="album.name" @click="gotoAlbumDetail(album.id)">{{
+                    album.name
+                  }}</a>
                 </span>
               </h4>
 
@@ -56,11 +53,10 @@
                   :key="artist.id"
                   @click="gotoSongerDetail(artist.id)"
                 >
-                  <a class="js_singer"> {{ artist.name }}</a
-                  >/
+                  <a> {{ artist.name }}</a>
+                  /
                 </span>
                 <a
-                  class="js_singer"
                   @click="
                     gotoSongerDetail(album.artists[album.artists.length - 1].id)
                   "

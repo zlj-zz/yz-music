@@ -1,8 +1,8 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <!-- 标签筛选 -->
     <div class="mod_playlist_tag" id="taglist">
-      <div class="js_normal" style="display: ">
+      <div style="display: ">
         <div v-for="(key, idx) in categories" :key="key">
           <div
             class="playlist_tag__list"
@@ -17,7 +17,7 @@
                 :key="item.name"
               >
                 <a
-                  class="playlist_tag__item js_tag"
+                  class="playlist_tag__item"
                   :class="
                     selectedType == item.name
                       ? 'playlist_tag__item--expand'
@@ -33,7 +33,7 @@
                 v-if="ifMore(idx, playlistTpyes[idx].list)"
               >
                 <a
-                  class="playlist_tag__item js_more_tag"
+                  class="playlist_tag__item"
                   :class="
                     playlistTpyes[idx].showMore
                       ? 'playlist_tag__item--expand'
@@ -65,7 +65,7 @@
                 :key="item.name"
               >
                 <a
-                  class="playlist_tag__item js_tag"
+                  class="playlist_tag__item"
                   :class="
                     selectedType == item.name
                       ? 'playlist_tag__item--expand'
@@ -88,9 +88,7 @@
           <span v-if="selectedType == '全部'">全部歌单</span>
           <span class="part_tags" v-else>
             {{ selectedType }}
-            <a
-              class="part_tags__delete js_delete_tags sprite"
-              @click="deleteSeleted"
+            <a class="part_tags__delete sprite" @click="deleteSeleted"
               ><i class="icon_txt">删除</i></a
             >
           </span>
@@ -99,14 +97,14 @@
         <div class="part_switch" id="sortbox" aria-label="排列方式">
           <a
             href="javascript:;"
-            class="part_switch__item js_sort part_switch__item--left"
+            class="part_switch__item part_switch__item--left"
             title="最热"
             :class="selectedOrder == 'hot' ? 'part_switch__item--select' : ''"
             @click="selectOrder('hot')"
             >最热</a
           ><a
             href="javascript:;"
-            class="part_switch__item part_switch__item--right js_sort"
+            class="part_switch__item part_switch__item--right"
             title="最新"
             :class="selectedOrder == 'new' ? 'part_switch__item--select' : ''"
             @click="selectOrder('new')"
@@ -123,10 +121,7 @@
                 class="playlist__cover mod_cover"
                 style="visibility: visible"
               >
-                <a
-                  class="js_playlist"
-                  :title="list.name"
-                  @click="playTheList(list.id)"
+                <a :title="list.name" @click="playTheList(list.id)"
                   ><img
                     class="playlist__pic"
                     style="display: block; visibility: visible"
@@ -134,28 +129,21 @@
                     v-lazy="list.img"
                     :alt="list.name"
                   />
-                  <i class="mod_cover__icon_play js_play"></i>
+                  <i class="mod_cover__icon_play"></i>
                 </a>
               </div>
               <h4 class="playlist__title">
                 <span class="playlist__title_txt">
-                  <a
-                    class="js_playlist"
-                    :title="list.name"
-                    @click="gotoPlaylistDetail(list.id)"
-                    >{{ list.name }}</a
-                  >
+                  <a :title="list.name" @click="gotoPlaylistDetail(list.id)">{{
+                    list.name
+                  }}</a>
                 </span>
               </h4>
               <div class="playlist__author">
-                <a class="js_user" :title="list.creatorName">{{
-                  list.creatorName
-                }}</a>
+                <a :title="list.creatorName">{{ list.creatorName }}</a>
               </div>
               <div class="playlist__other">播放量： {{ list.playCount }}</div>
-              <a class="btn_operate_menu js_playlist_more"
-                ><span class="icon_txt">更多</span></a
-              >
+              <a class="btn_operate_menu"><span class="icon_txt">更多</span></a>
             </div>
           </li>
         </ul>
@@ -224,6 +212,7 @@ export default {
         }
         this.playlistTpyes = d;
         this.updatePlaylist();
+        this.loading = false;
       });
     },
     updatePlaylist() {
