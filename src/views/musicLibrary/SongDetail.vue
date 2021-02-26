@@ -111,7 +111,7 @@
       </div>
     </div>
   </div>
-  <black-tip :ifShow="ifShowTip" :tip="tip" />
+  <black-tip :ifShow="ifShowTip" :iconType="tipType" :tip="tip" />
 </template>
 
 <script>
@@ -124,6 +124,7 @@ import {
   getSimiSong,
   getMvDetail,
   getCommentsNew,
+  likeSong,
 } from "api";
 import {
   createSong,
@@ -139,6 +140,7 @@ export default {
       isShowAllLyric: false,
       ifShowTip: false,
       tip: "",
+      tipType: 1,
       song: {},
       lyric: [],
       simiSongs: null,
@@ -158,6 +160,9 @@ export default {
       // 获取歌曲信息
       getSongDetail(this.songId).then((res) => {
         let d = res.data.songs[0];
+        let subscribed = this.$store.state.user.likelist.findIndex(
+          (id) => id === d.id
+        );
         //console.log(res);
         this.song = createSong({
           id: d.id,
@@ -171,6 +176,7 @@ export default {
             d.publishTime == 0
               ? "未知"
               : formatDate(d.publishTime, "yyyy-MM-dd"),
+          subscribed: subscribed == -1 ? false : true,
         });
         // 如果有mv， 获取mv信息
         if (d.mv != 0) {
@@ -215,10 +221,11 @@ export default {
       if (this.lyric) {
         let lyricText = this.lyric.join(" ");
         copyText(lyricText);
-        this.showTip("复制成功");
+        this.showTip("复制成功", 0);
       }
     },
-    showTip(tip) {
+    showTip(tip, type) {
+      this.tipType = type;
       this.tip = tip;
       this.ifShowTip = true;
       if (this.tipTimer) clearTimeout(this.tipTimer);
@@ -229,6 +236,28 @@ export default {
     gotoSongDetail,
     cardClick(v) {
       if (v == "all") playTheSong(this.song);
+      else if (v == "collection") {
+        if (this.$store.state.user.isLogged) {
+          if (!this.song.subscribed) {
+            likeSong({
+              id: this.song.id,
+            }).then((res) => {
+              this.song.subscribed = true;
+              this.$store.commit("user/addToLikelist", this.song.id);
+              this.showTip("收藏成功，已添加到我喜欢的音乐", 0);
+            });
+          } else {
+            likeSong({
+              id: this.song.id,
+              like: false,
+            }).then((res) => {
+              this.song.subscribed = false;
+              this.$store.commit("user/delFromLikelist", this.song.id);
+              this.showTip("取消收藏成功", 0);
+            });
+          }
+        } else this.showTip("请先登陆", 1);
+      }
     },
     getComment() {
       let params = {

@@ -140,7 +140,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.audio);
+    //console.log(this.audio);
     this.audio.volume = this.volumePrecent;
   },
   methods: {
@@ -151,7 +151,7 @@ export default {
       this.isLock = !this.isLock;
     },
     ready() {
-      console.log("ready change");
+      //console.log("ready change");
       this.songReady = true;
     },
     end() {
@@ -163,7 +163,6 @@ export default {
       this.$store.commit("music/setPlayingState", !this.playing);
     },
     async play() {
-      console.log("play");
       try {
         await this.audio.play();
       } catch (err) {
@@ -171,7 +170,6 @@ export default {
       }
     },
     pause() {
-      console.log("pause");
       this.audio.pause();
     },
     prev() {
@@ -187,7 +185,7 @@ export default {
       let timeRang = e.target.buffered;
       let buffer = timeRang.end(timeRang.length - 1);
       this.bufferTime = buffer;
-      console.log(buffer);
+      //console.log(buffer);
       this.$store.commit("music/setCurrentTime", time);
     },
     onChangeMode() {
@@ -231,7 +229,7 @@ export default {
     },
     onChangeBar(e) {
       this.isHoldBtn = true;
-      console.log(e);
+      //console.log(e);
       let odiv = e.target; //获取目标元素
       console.log(odiv.offsetLeft);
       //算出鼠标相对元素的位置
@@ -267,7 +265,6 @@ export default {
       }
     },
     gotoSongDetail(id) {
-      console.log(id);
       this.$router.push({
         path: "/musicLibrary/songDetail",
         query: { id: id },

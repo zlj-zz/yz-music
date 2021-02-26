@@ -113,6 +113,7 @@ import {
   getLoginQrScanState,
   getLoginStatus,
   logout,
+  getUserLikeSongs,
 } from "api";
 export default {
   data() {
@@ -139,7 +140,7 @@ export default {
     checkScanState(key) {
       let timer = setInterval(async () => {
         let res = await getLoginQrScanState(key);
-        console.log(res);
+        //console.log(res);
         let code = res.data.code;
         let cookie = res.data.cookie;
         switch (code) {
@@ -165,11 +166,14 @@ export default {
     getLoginStatus() {
       getLoginStatus().then((res) => {
         let profile = res.data.data.profile;
+        //console.log(profile);
         if (profile) {
           this.$store.commit("user/setLoginStatus", true);
           this.$store.commit("user/setUser", profile);
-          console.log(this.$store.state.user.isLogged);
-          console.log(this.$store.state.user.user);
+          getUserLikeSongs(profile.userId).then((res) => {
+            let ids = res.data.ids;
+            this.$store.commit("user/setLikelist", ids);
+          });
         }
       });
     },

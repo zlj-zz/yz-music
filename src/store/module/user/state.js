@@ -1,4 +1,5 @@
 export default {
   user: {},
-  isLogged: false
+  isLogged: false,
+  likelist: []
 };

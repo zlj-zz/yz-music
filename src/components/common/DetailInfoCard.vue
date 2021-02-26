@@ -104,7 +104,11 @@
           <i class="mod_btn_green__icon_play"></i>
           {{ cardType == "song" ? "播放" : "播放全部" }}
         </a>
-        <a class="mod_btn js_fav_taoge" @click="btnClick('collection')">
+        <a
+          class="mod_btn js_fav_taoge"
+          @click="btnClick('collection')"
+          v-if="cardType != 'album'"
+        >
           <i
             class="mod_btn__icon_like"
             :class="obj.subscribed ? 'mod_btn__icon_like--like' : ''"
