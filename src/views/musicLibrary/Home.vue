@@ -1,5 +1,5 @@
 <template>
-  <div class="home-main">
+  <div class="home-main" v-loading="loading">
     <banner />
     <recommended-bar />
     <home-top />
@@ -12,6 +12,11 @@ import RecommendedBar from "components/common/RecommendedBar";
 import HomeTop from "components/common/HomeTop";
 
 export default {
+  data() {
+    return {
+      loading: false,
+    };
+  },
   components: {
     Banner,
     RecommendedBar,

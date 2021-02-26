@@ -16,7 +16,13 @@ import {
   ElCarousel,
   ElCarouselItem,
   ElPagination,
-  ElEmpty
+  ElEmpty,
+  ElPopover,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElStep,
+  ElSteps
 } from "element-plus";
 
 createApp(App)
@@ -32,4 +38,10 @@ createApp(App)
   .use(ElCarouselItem)
   .use(ElPagination)
   .use(ElEmpty)
+  .use(ElPopover)
+  .use(ElDropdown)
+  .use(ElDropdownMenu)
+  .use(ElDropdownItem)
+  .use(ElStep)
+  .use(ElSteps)
   .mount("#app");

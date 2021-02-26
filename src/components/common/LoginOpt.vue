@@ -34,7 +34,7 @@
         <a class="popup_user_data__cover_link">
           <img
             onerror="this.src=\'//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=2592000\';this.onerror=null;"
-            class="popup_user_data__cover js_user_img"
+            class="popup_user_data__cover"
             style="background-color: gray"
             :src="$store.state.user.user.avatarUrl"
           />
@@ -53,7 +53,7 @@
       </div>
       <div class="popup_user_toolbar">
         <div class="popup_user_toolbar__item">
-          <div class="popup_user_toolbar__tit js_msgcenterdiv">
+          <div class="popup_user_toolbar__tit">
             <a>评论通知</a>
           </div>
         </div>
@@ -81,7 +81,7 @@
   >
     <div class="popup__hd">
       <h2 class="popup__tit">
-        <a class="popup__tit_item current" style="">扫码登陆</a>
+        <a class="popup__tit_item current" style="font-size: 25px">扫码登陆</a>
       </h2>
     </div>
     <a class="popup__close" title="关闭" @click="hiddenLoginPopup"
@@ -99,6 +99,11 @@
         frameborder="0"
       />
     </div>
+    <el-steps :active="active" finish-status="success" align-center>
+      <el-step title="扫码" icon="el-icon-full-screen"></el-step>
+      <el-step title="等待确认" icon="el-icon-thumb"></el-step>
+      <el-step title="成功登陆" icon="el-icon-star-off"></el-step>
+    </el-steps>
   </div>
   <div
     class="mod_popup_mask"
@@ -114,13 +119,18 @@ import {
   getLoginStatus,
   logout,
   getUserLikeSongs,
+  getUserPlaylists,
 } from "api";
+import { createPlaylist } from "common/utils";
+import { ElMessage } from "element-plus";
+
 export default {
   data() {
     return {
       isShowLoginPopup: false,
       isShowPopup: false,
       qrurl: "",
+      active: 0,
     };
   },
   mounted() {
@@ -138,7 +148,8 @@ export default {
       });
     },
     checkScanState(key) {
-      let timer = setInterval(async () => {
+      if (this.timer) clearInterval(this.timer);
+      this.timer = setInterval(async () => {
         let res = await getLoginQrScanState(key);
         //console.log(res);
         let code = res.data.code;
@@ -146,16 +157,18 @@ export default {
         switch (code) {
           case 800:
             console.log("二维码过期");
+            ElMessage.warning("二维码过期， 请关闭重新打开");
             clearInterval(timer);
             break;
           case 801:
             break;
           case 802:
             console.log("已扫描");
+            this.active = 1;
             break;
           case 803:
-            clearInterval(timer);
-            this.isShowLoginPopup = false;
+            clearInterval(this.timer);
+            this.active = 2;
             this.getLoginStatus();
             break;
           default:
@@ -174,6 +187,20 @@ export default {
             let ids = res.data.ids;
             this.$store.commit("user/setLikelist", ids);
           });
+          getUserPlaylists(profile.userId).then((res) => {
+            let list = res.data.playlist;
+            let lists = [];
+            list.map((l) => {
+              if (l.creator.userId == profile.userId)
+                lists.push(createPlaylist(l));
+            });
+            this.$store.commit("user/setCreatedList", lists);
+          });
+          // 成功登陆
+          this.active = 3;
+          setTimeout(() => {
+            this.isShowLoginPopup = false;
+          }, 1000);
         }
       });
     },
@@ -189,6 +216,7 @@ export default {
     },
     hiddenLoginPopup() {
       this.isShowLoginPopup = false;
+      if (this.timer) clearInterval(this.timer);
     },
     showUserPopup() {
       this.isShowPopup = true;
@@ -351,9 +379,6 @@ a:hover {
 .popup__tit_item {
   margin: 0 60px;
 }
-.popup__tit_item.current {
-  color: #31c27c;
-}
 
 .popup__close {
   position: absolute;
@@ -375,7 +400,7 @@ a:hover {
 .popup_login.large .popup__bd {
   position: relative;
   overflow: hidden;
-  height: 348px;
+  height: 238px;
 }
 .popup_login.large iframe {
   position: absolute;

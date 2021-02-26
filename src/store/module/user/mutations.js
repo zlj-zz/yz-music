@@ -14,5 +14,8 @@ export default {
   },
   addToLikelist(state, id) {
     state.likelist.push(id);
+  },
+  setCreatedList(state, list) {
+    state.createdList = list;
   }
 };

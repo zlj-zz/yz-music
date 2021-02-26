@@ -25,6 +25,12 @@ export const getCatList = () => requset.get("/playlist/catlist");
 /* 登陆后使用 */
 export const getUserPlaylists = id => requset.get(`/user/playlist?uid=${id}`);
 
+/* 需要登陆
+op: 从歌单增加单曲为 add, 删除为 del
+pid: 歌单 id tracks: 歌曲 id,可多个,用逗号隔开 */
+export const changePlaylist = params =>
+  requset.get("/playlist/tracks", { params: params });
+
 /* 收藏/取消收藏歌单
  * 登陆后使用
  * t : 类型,1:收藏,2:取消收藏 id : 歌单 id */

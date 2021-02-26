@@ -3,7 +3,6 @@
     indicator-position="outside"
     type="card"
     height="350px"
-    v-loading="bannerLoading"
     v-if="banners.length > 0"
   >
     <el-carousel-item
@@ -27,7 +26,6 @@ import { getBanner } from "api";
 export default {
   data() {
     return {
-      bannerLoading: true,
       banners: [],
     };
   },
@@ -39,7 +37,6 @@ export default {
       getBanner()
         .then((res) => {
           this.banners = res.data.banners;
-          this.bannerLoading = false;
         })
         .catch((err) => console.log(err));
     },

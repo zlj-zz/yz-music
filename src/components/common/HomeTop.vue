@@ -1,5 +1,5 @@
 <template>
-  <div class="toplist_main">
+  <div class="toplist_main" v-loading="loading">
     <h1 class="list">排行榜</h1>
     <div class="home_toplist">
       <ul class="toplist__list js_list">
@@ -60,6 +60,7 @@ import {
 export default {
   data() {
     return {
+      loading: true,
       toplists: [],
       toplistTypes,
     };
@@ -76,6 +77,7 @@ export default {
         getSongDetail(trackIds).then((res) => {
           let songs = createSongs(res.data.songs);
           this.toplists.push(songs);
+          this.loading = false;
         });
       });
     },

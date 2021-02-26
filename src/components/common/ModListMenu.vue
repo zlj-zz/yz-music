@@ -1,23 +1,38 @@
 <template>
   <div class="mod_list_menu">
-    <a
-      class="list_menu__item list_menu__play js_play"
-      title="播放"
-      @click="play"
-    >
+    <a class="list_menu__item list_menu__play" title="播放" @click="play">
       <i class="list_menu__icon_play"></i>
       <span class="icon_txt">播放</span>
     </a>
     <a
-      class="list_menu__item list_menu__add js_fav"
+      class="list_menu__item list_menu__add"
       title="添加到歌单"
       aria-haspopup="true"
     >
-      <i class="list_menu__icon_add"></i>
-      <span class="icon_txt">添加到歌单</span>
+      <el-dropdown trigger="click">
+        <span class="el-dropdown-link">
+          <i class="list_menu__icon_add"></i>
+          <span class="icon_txt">添加到歌单</span>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu v-if="createdList.length > 0">
+            <el-dropdown-item
+              icon="el-icon-circle-plus-outline"
+              v-for="item in createdList"
+              :key="item.id"
+              @click="addToList(song.id, item.id)"
+            >
+              {{ item.name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+          <el-dropdown-menu v-else>
+            <el-dropdown-item> 请先登陆 </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </a>
     <a
-      class="list_menu__item list_menu__down js_down"
+      class="list_menu__item list_menu__down"
       title="下载"
       aria-haspopup="true"
       v-if="kind == 0"
@@ -27,7 +42,7 @@
       <span class="icon_txt">下载</span>
     </a>
     <a
-      class="list_menu__item list_menu__share js_share"
+      class="list_menu__item list_menu__share"
       title="分享"
       aria-haspopup="true"
       @click="share"
@@ -42,7 +57,13 @@
 <script>
 import BlackTip from "components/common/BlackTip";
 import { playTheSong, playSonglist, createSongs, copyText } from "common/utils";
-import { getPlaylistDetial, getSongDetail, getAlbum, getSongUrl } from "api";
+import {
+  getPlaylistDetial,
+  getSongDetail,
+  getAlbum,
+  getSongUrl,
+  changePlaylist,
+} from "api";
 
 export default {
   data() {
@@ -59,6 +80,11 @@ export default {
     id: { default: 0 },
     // 0: song, 1: album , 2: playlist
     kind: { default: 0 },
+  },
+  computed: {
+    createdList() {
+      return this.$store.state.user.createdList;
+    },
   },
   methods: {
     play() {
@@ -95,6 +121,16 @@ export default {
         let songs = createSongs(ds.songs);
         console.log(this.songs);
         playSonglist(songs);
+      });
+    },
+    addToList(id, listId) {
+      changePlaylist({ op: "add", pid: listId, tracks: id }).then((res) => {
+        this.tip = "已成功添加至歌单";
+        this.ifShow = true;
+        if (this.timer) clearTimeout(this.timer);
+        setTimeout(() => {
+          this.ifShow = false;
+        }, 1000);
       });
     },
     share() {
@@ -164,5 +200,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.el-dropdown-menu__item:focus,
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  background-color: #fff;
+  color: #31c27c;
+}
 </style>

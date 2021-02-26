@@ -70,31 +70,33 @@
       <div class="toplist__hd_rk">
         <h1 class="toplist__tit1">{{ seletedTypeName }}</h1>
         <span class="toplist_switch">
-          <a class="toplist_switch__btn" style="display: none"
-            ><i class="toplist_switch__arrow_prev sprite"></i
-            ><i class="icon_txt">上一期</i></a
-          >
-          <!-- <span class="toplist_switch__data js_chosed_week">2021-02-13</span> -->
-          <a class="toplist_switch__btn" style="display: none"
-            ><i class="toplist_switch__arrow_next sprite"></i
-            ><i class="icon_txt">下一期</i></a
-          >
+          <span class="toplist_switch__data">{{ updateTime }}</span>
         </span>
-        <a class="toplist__rule js_desc">榜单规则</a>
+        <el-popover
+          placement="top-start"
+          :title="seletedTypeName"
+          :width="450"
+          trigger="hover"
+          :content="desc"
+        >
+          <template #reference>
+            <a class="toplist__rule">榜单规则</a>
+          </template>
+        </el-popover>
       </div>
       <div class="mod_songlist_toolbar">
         <a class="mod_btn_green js_all_play" @click="playSonglist(listDatas)"
           ><i class="mod_btn_green__icon_play"></i>播放全部</a
         >
-        <a class="mod_btn js_all_fav"
+        <!-- <a class="mod_btn js_all_fav"
           ><i class="mod_btn__icon_add"></i>添加到</a
-        >
-        <a class="mod_btn js_all_down"
+        > -->
+        <!-- <a class="mod_btn js_all_down"
           ><i class="mod_btn__icon_down"></i>下载</a
-        >
-        <a class="mod_btn js_batch"
+        > -->
+        <!-- <a class="mod_btn js_batch"
           ><i class="mod_btn__icon_batch"></i>批量操作</a
-        >
+        > -->
         <a class="mod_btn js_into_comment" href="#comment_box"
           ><i class="mod_btn__icon_comment"></i>评论{{
             "(" + processCount(commentCount) + ")"
@@ -153,6 +155,7 @@
                   rel="noopener"
                   title="MV"
                   :style="{ display: song.mvId == 0 ? 'none' : '' }"
+                  @click="gotoMvDetail(song.mvId)"
                   ><span class="icon_txt">MV</span></a
                 >
 
@@ -220,7 +223,9 @@ import {
   createSong,
   playSonglist,
   gotoSongDetail,
+  gotoMvDetail,
   processCount,
+  formatDate,
 } from "common/utils";
 
 export default {
@@ -233,6 +238,8 @@ export default {
       globalRankingtype,
       seletedTypeName: "飙升榜",
       seletedType: "19723756",
+      desc: "",
+      updateTime: "",
       listDatas: [],
       pageSize: 20,
       commentPage: 1,
@@ -255,6 +262,13 @@ export default {
     updatedTopList() {
       getPlaylistDetial(this.seletedType).then((res) => {
         //console.log(res);
+        // 获取榜单信息
+        this.desc = res.data.playlist.description;
+        this.updateTime = formatDate(
+          res.data.playlist.updateTime,
+          "yyyy-MM-dd"
+        );
+        // 获取榜单歌曲列表
         let trackIds = res.data.playlist.trackIds;
         let ids = trackIds.map(({ id }) => id);
         getSongDetail(ids).then((res) => {
@@ -306,9 +320,10 @@ export default {
     currentChange(v) {
       this.commentPage = v;
     },
+    processCount,
     playSonglist,
     gotoSongDetail,
-    processCount,
+    gotoMvDetail,
   },
   watch: {
     seletedType(newType) {

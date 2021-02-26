@@ -2,6 +2,7 @@
   <div
     class="mod_slide_box"
     style="position: relative; background-image: linear-gradient(#f5f5f5, #fff)"
+    v-loading="listLoading"
   >
     <div class="section_inner" style="z-index: 2">
       <h1 class="recommended_list">歌单推荐</h1>
@@ -16,7 +17,7 @@
         </a>
       </div>
 
-      <div class="mod_playlist mod_slide" v-loading="listLoading">
+      <div class="mod_playlist mod_slide">
         <ul
           class="playlist__list slide__list"
           :style="{ left: showNo ? '-100%' : '0' }"
