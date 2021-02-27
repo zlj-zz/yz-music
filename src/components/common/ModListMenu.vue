@@ -8,6 +8,7 @@
       class="list_menu__item list_menu__add"
       title="添加到歌单"
       aria-haspopup="true"
+      v-if="kind == 0"
     >
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">

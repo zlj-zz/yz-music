@@ -23,7 +23,7 @@
         登录
       </a>
     </span>
-    <!-- 用户信息 -->
+    <!-- popup 用户信息 -->
     <div
       class="popup_user"
       :class="isShowPopup ? 'drop' : ''"
@@ -44,10 +44,10 @@
           <div class="popup_user_data__name">
             <a class="">{{ $store.state.user.user.nickname }}</a>
           </div>
-          <div class="popup_user_data__lv" style="overflow: hidden">
-            <a class="js_vip_jump" rel="noopener" target="_blank"
-              >签名：{{ $store.state.user.user.signature }}
-            </a>
+          <div class="popup_user_data__lv">
+            <span rel="noopener">
+              签名：{{ $store.state.user.user.signature }}
+            </span>
           </div>
         </div>
       </div>
@@ -322,8 +322,14 @@ export default {
   text-overflow: ellipsis;
 }
 .popup_user_data__lv {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .popup_user_toolbar {
   padding: 13px 20px 6px;

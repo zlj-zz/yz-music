@@ -51,7 +51,7 @@
                   </span>
                 </h4>
                 <div class="playlist__other">{{ album.publishTime }}</div>
-                <a class="btn_operate_menu js_albumlist_more">
+                <a class="btn_operate_menu">
                   <span class="icon_txt">更多</span>
                 </a>
               </div>
@@ -79,7 +79,7 @@
                   <i class="mod_cover__icon_play"></i>
                 </a>
                 <h3 class="mv_list__title">
-                  <a class="js_mv" :title="mv.name">{{ mv.name }}</a>
+                  <a :title="mv.name">{{ mv.name }}</a>
                 </h3>
 
                 <div class="mv_list__info">
@@ -94,44 +94,12 @@
         </div>
       </div>
 
-      <div class="mod_part" id="similar" style="" v-if="simiSongers.length > 0">
-        <div class="part__hd">
-          <h2 class="part__tit">相似歌手</h2>
-        </div>
-        <div class="mod_singer_list">
-          <ul class="singer_list__list">
-            <li
-              class="singer_list__item"
-              v-for="songer in simiSongers"
-              :key="songer.id"
-            >
-              <div class="singer_list__item_box">
-                <a
-                  class="singer_list__cover js_singer"
-                  hidefocus="true"
-                  :title="songer.name"
-                  @click="gotoSongerDetail(songer.id)"
-                >
-                  <img
-                    class="singer_list__pic"
-                    src="//y.gtimg.cn/mediastyle/global/img/singer_300.png?max_age=31536000"
-                    v-lazy="songer.img"
-                    :alt="songer.name"
-                  />
-                </a>
-                <h3 class="singer_list__title">
-                  <a
-                    class="js_singer"
-                    :title="songer.name"
-                    @click="gotoSongerDetail(songer.id)"
-                    >{{ songer.name }}</a
-                  >
-                </h3>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <info-list
+        :title="'相似歌手'"
+        :items="simiSongers"
+        @btnClick="songerClick"
+        v-if="simiSongers.length > 0"
+      />
     </div>
 
     <div
@@ -157,6 +125,7 @@
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import DetailSonglist from "components/common/DetailSonglist";
+import InfoList from "components/common/InfoList";
 import {
   getUserDetail,
   getSongerDetail,
@@ -255,12 +224,16 @@ export default {
         playSonglist(songs);
       });
     },
+    songerClick(songer) {
+      gotoSongerDetail(songer.id);
+    },
     gotoAlbumDetail,
     gotoSongerDetail,
   },
   components: {
     DetailInfoCard,
     DetailSonglist,
+    InfoList,
   },
 };
 </script>
@@ -316,32 +289,6 @@ ul {
 .mod_part .mv_list__item,
 .mod_part .playlist__item {
   padding-bottom: 0;
-}
-
-.mod_singer_list {
-  overflow: hidden;
-  text-align: center;
-}
-.singer_list__list {
-  margin-right: -20px;
-  overflow: hidden;
-  zoom: 1;
-  margin-bottom: -24px;
-}
-
-.singer_list__item {
-  float: left;
-  width: 20%;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-.singer_list__cover,
-.singer_list__pic {
-  float: none;
-  display: block;
-  width: 140px;
-  height: 140px;
-  border-radius: 126px;
 }
 
 .mod_mv {
