@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
-const BASIC_URL = "http://zacharyzlj.cn:3000/";
+const BASIC_URL = "http://musicapi.zacharyzlj.cn/";
 //const BASIC_URL = "http://192.168.31.152:3000/";
 
 function createBaseInstance() {
