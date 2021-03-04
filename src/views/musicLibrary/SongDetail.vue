@@ -133,14 +133,15 @@ import {
   copyText,
   gotoSongDetail,
 } from "common/utils";
+import tipHandle from "common/showTip";
 
 export default {
+  setup() {
+    return { ...tipHandle() };
+  },
   data() {
     return {
       isShowAllLyric: false,
-      ifShowTip: false,
-      tip: "",
-      tipType: 1,
       song: {},
       lyric: [],
       simiSongs: null,
@@ -221,17 +222,8 @@ export default {
       if (this.lyric) {
         let lyricText = this.lyric.join(" ");
         copyText(lyricText);
-        this.showTip("复制成功", 0);
+        this.showTip("复制成功", 1000, 0);
       }
-    },
-    showTip(tip, type) {
-      this.tipType = type;
-      this.tip = tip;
-      this.ifShowTip = true;
-      if (this.tipTimer) clearTimeout(this.tipTimer);
-      setTimeout(() => {
-        this.ifShowTip = false;
-      }, 1000);
     },
     gotoSongDetail,
     cardClick(v) {
@@ -244,7 +236,7 @@ export default {
             }).then((res) => {
               this.song.subscribed = true;
               this.$store.commit("user/addToLikelist", this.song.id);
-              this.showTip("收藏成功，已添加到我喜欢的音乐", 0);
+              this.showTip("收藏成功，已添加到我喜欢的音乐", 1000, 0);
             });
           } else {
             likeSong({
@@ -253,10 +245,10 @@ export default {
             }).then((res) => {
               this.song.subscribed = false;
               this.$store.commit("user/delFromLikelist", this.song.id);
-              this.showTip("取消收藏成功", 0);
+              this.showTip("取消收藏成功", 1000, 1);
             });
           }
-        } else this.showTip("请先登陆", 1);
+        } else this.showTip("请先登陆", 1000, 1);
       }
     },
     getComment() {

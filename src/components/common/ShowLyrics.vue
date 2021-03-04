@@ -45,13 +45,9 @@
 <script>
 import BlackTip from "components/common/BlackTip";
 import { copyText } from "common/utils";
+import tipHandle from "common/showTip";
 
 export default {
-  data() {
-    return {
-      ifShowTip: false,
-    };
-  },
   props: {
     lyrics: {
       type: Array,
@@ -68,16 +64,11 @@ export default {
     copyLyric(lyrics) {
       let lyricText = lyrics.join(" ");
       copyText(lyricText);
-      this.showTip("复制成功");
+      this.showTip("复制成功", 1000);
     },
-    showTip(tip) {
-      this.tip = tip;
-      this.ifShowTip = true;
-      if (this.tipTimer) clearTimeout(this.tipTimer);
-      setTimeout(() => {
-        this.ifShowTip = false;
-      }, 1000);
-    },
+  },
+  setup() {
+    return { ...tipHandle() };
   },
   components: {
     BlackTip,

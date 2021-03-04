@@ -60,6 +60,7 @@ import DetailInfoCard from "components/common/DetailInfoCard";
 import DetailSonglist from "components/common/DetailSonglist";
 import CommontBox from "components/common/CommontBox";
 import BlackTip from "components/common/BlackTip";
+import tipHandle from "common/showTip";
 import {
   getPlayList,
   getPlaylistDetial,
@@ -79,13 +80,13 @@ export default {
       commentPage: 1,
       commentCount: 0,
       comments: [],
-      ifShowTip: false,
-      tip: "",
-      tipType: 1,
     };
   },
   created() {
     this.init();
+  },
+  setup() {
+    return { ...tipHandle() };
   },
   methods: {
     init() {
@@ -131,25 +132,16 @@ export default {
           if (!this.playlist.subscribed) {
             toggleLikePlaylist({ t: 1, id: this.playlist.id }).then((res) => {
               this.playlist.subscribed = true;
-              this.showTip("收藏成功，已添加到收藏歌单", 0);
+              this.showTip("收藏成功，已添加到收藏歌单", 1300, 0);
             });
           } else {
             toggleLikePlaylist({ t: 2, id: this.playlist.id }).then((res) => {
               this.playlist.subscribed = false;
-              this.showTip("取消收藏成功", 0);
+              this.showTip("取消收藏成功", 1300, 0);
             });
           }
-        } else this.showTip("请先登陆", 1);
+        } else this.showTip("请先登陆", 1300, 1);
       }
-    },
-    showTip(tip, type) {
-      this.tipType = type;
-      this.tip = tip;
-      this.ifShowTip = true;
-      if (this.tipTimer) clearTimeout(this.tipTimer);
-      setTimeout(() => {
-        this.ifShowTip = false;
-      }, 1300);
     },
     getComment() {
       let params = {

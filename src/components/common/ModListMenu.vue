@@ -57,6 +57,7 @@
 
 <script>
 import BlackTip from "components/common/BlackTip";
+import tipHandle from "common/showTip";
 import { playTheSong, playSonglist, createSongs, copyText } from "common/utils";
 import {
   getPlaylistDetial,
@@ -67,11 +68,8 @@ import {
 } from "api";
 
 export default {
-  data() {
-    return {
-      ifShow: false,
-      tip: "",
-    };
+  setup() {
+    return { ...tipHandle() };
   },
   props: {
     song: {
@@ -126,25 +124,15 @@ export default {
     },
     addToList(id, listId) {
       changePlaylist({ op: "add", pid: listId, tracks: id }).then((res) => {
-        this.tip = "已成功添加至歌单";
-        this.ifShow = true;
-        if (this.timer) clearTimeout(this.timer);
-        setTimeout(() => {
-          this.ifShow = false;
-        }, 1000);
+        this.showTip("已成功添加至歌单", 1300, 0);
       });
     },
     share() {
       switch (this.kind) {
         case 0:
-          this.tip = "已复制歌曲链接";
           let txt = this.song.url;
           copyText(txt);
-          this.ifShow = true;
-          if (this.timer) clearTimeout(this.timer);
-          setTimeout(() => {
-            this.ifShow = false;
-          }, 1000);
+          this.showTip("已复制歌曲链接", 1300, 0);
           break;
         case 1:
           break;

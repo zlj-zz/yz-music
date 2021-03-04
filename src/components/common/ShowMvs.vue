@@ -50,12 +50,7 @@ export default {
 </script>
 
 <style scoped>
-hr,
 li,
-ol,
-p,
-td,
-th,
 ul {
   margin: 0;
   padding: 0;
