@@ -10,6 +10,41 @@ Deploying with docker + nginx, [Project address](https://github.com/zlj-zz/yz-mu
 
 ![home](./demo/demo.gif)
 
+# Feature
+
+- home page
+  - Carousel map
+  - Recommended song list rotation
+- Search page
+  - Copy lyrics
+  - It can be played
+  - You can jump around
+- Classified song list
+- comment
+  - Comment display (pagination effect)
+- Login
+  - Login step bar
+  - QR code expiration prompt
+- My music
+  - Follow the page
+  - Fans page
+  - Personal information display
+- Leaderboard page
+  - Turn and jump
+  - Title Display
+  - List rule display
+  - Can go to the MV page
+  - Show update time
+- MV list page
+  - Infinite rolling
+  - MV details page
+- Songer details page
+- Song details page
+- Album details page
+- Playlist details page
+- Collection function
+- Image lazy loading
+
 ## Project setup
 
 ```

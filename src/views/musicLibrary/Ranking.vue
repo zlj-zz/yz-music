@@ -1,60 +1,12 @@
 <template>
   <div id="mian">
     <div class="toplist_nav">
-      <dl class="toplist_nav__list">
-        <dt class="toplist_nav__tit">巅峰榜</dt>
+      <dl class="toplist_nav__list" v-for="(items, key) in data" :key="key">
+        <dt class="toplist_nav__tit">{{ key }}</dt>
         <dd class="toplist_nav__item">
           <a
             class="toplist_nav__link"
-            v-for="item in topRankingtype"
-            :key="item.dataId"
-            :class="
-              item.dataId == seletedType ? 'toplist_nav__link--current' : ''
-            "
-            @click="onSelectType(item)"
-            >{{ item.name }}</a
-          >
-        </dd>
-      </dl>
-
-      <dl class="toplist_nav__list">
-        <dt class="toplist_nav__tit">地区榜</dt>
-        <dd class="toplist_nav__item">
-          <a
-            class="toplist_nav__link"
-            v-for="item in aereRankingtype"
-            :key="item.dataId"
-            :class="
-              item.dataId == seletedType ? 'toplist_nav__link--current' : ''
-            "
-            @click="onSelectType(item)"
-            >{{ item.name }}</a
-          >
-        </dd>
-      </dl>
-
-      <dl class="toplist_nav__list">
-        <dt class="toplist_nav__tit">特色榜</dt>
-        <dd class="toplist_nav__item">
-          <a
-            class="toplist_nav__link"
-            v-for="item in specialRankingtype"
-            :key="item.dataId"
-            :class="
-              item.dataId == seletedType ? 'toplist_nav__link--current' : ''
-            "
-            @click="onSelectType(item)"
-            >{{ item.name }}</a
-          >
-        </dd>
-      </dl>
-
-      <dl class="toplist_nav__list">
-        <dt class="toplist_nav__tit">全球榜</dt>
-        <dd class="toplist_nav__item">
-          <a
-            class="toplist_nav__link"
-            v-for="item in globalRankingtype"
+            v-for="item in items"
             :key="item.dataId"
             :class="
               item.dataId == seletedType ? 'toplist_nav__link--current' : ''
@@ -232,10 +184,12 @@ export default {
   data() {
     return {
       loading: true,
-      topRankingtype,
-      aereRankingtype,
-      specialRankingtype,
-      globalRankingtype,
+      data: {
+        巅峰榜: topRankingtype,
+        地区榜: aereRankingtype,
+        特色榜: specialRankingtype,
+        全球榜: globalRankingtype,
+      },
       seletedTypeName: "飙升榜",
       seletedType: "19723756",
       desc: "",
