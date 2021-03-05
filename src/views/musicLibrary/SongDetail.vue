@@ -1,10 +1,6 @@
 <template>
   <div class="main">
-    <detail-info-card
-      :obj="song"
-      :commentCount="commentCount"
-      @btnClick="cardClick"
-    />
+    <detail-info-card :obj="song" @btnClick="cardClick" />
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -36,13 +32,7 @@
         <!--歌词 end-->
 
         <!-- comment -->
-        <commont-box
-          :comments="comments"
-          :limit="pageSize"
-          :currentPage="commentPage"
-          :total="commentCount"
-          @current-change="currentChange"
-        />
+        <commont-box :params="params" />
       </div>
       <!--相似歌曲-->
       <div class="detail_layout__other">
@@ -117,13 +107,13 @@
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
 import BlackTip from "components/common/BlackTip";
+import tipHandle from "common/showTip";
 import CommontBox from "components/common/CommontBox";
 import {
   getSongDetail,
   getSongLiyric,
   getSimiSong,
   getMvDetail,
-  getCommentsNew,
   likeSong,
 } from "api";
 import {
@@ -133,7 +123,6 @@ import {
   copyText,
   gotoSongDetail,
 } from "common/utils";
-import tipHandle from "common/showTip";
 
 export default {
   setup() {
@@ -146,11 +135,16 @@ export default {
       lyric: [],
       simiSongs: null,
       mv: null,
-      pageSize: 20,
-      commentPage: 1,
-      commentCount: 0,
-      comments: [],
     };
+  },
+  computed: {
+    params() {
+      return {
+        id: this.song.id,
+        type: 0,
+        sortType: 2,
+      };
+    },
   },
   created() {
     this.songId = this.$route.query.id;
@@ -192,7 +186,6 @@ export default {
             };
           });
         }
-        this.getComment();
       });
       // 获取歌词
       getSongLiyric(this.songId).then((res) => {
@@ -251,28 +244,6 @@ export default {
         } else this.showTip("请先登陆", 1000, 1);
       }
     },
-    getComment() {
-      let params = {
-        type: 0,
-        pageSize: this.pageSize,
-        pageNo: this.commentPage,
-        id: this.song.id,
-        sortType: 2,
-      };
-      getCommentsNew(params).then((res) => {
-        this.commentCount =
-          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
-        this.comments = res.data.data.comments;
-      });
-    },
-    currentChange(v) {
-      this.commentPage = v;
-    },
-  },
-  watch: {
-    commentPage() {
-      this.getComment();
-    },
   },
   components: {
     DetailInfoCard,
@@ -284,7 +255,6 @@ export default {
 
 <style scoped>
 li,
-ol,
 p,
 ul {
   margin: 0;

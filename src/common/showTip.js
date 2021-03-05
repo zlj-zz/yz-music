@@ -5,6 +5,7 @@ export default function() {
   const tip = ref("");
   const tipType = ref(0);
   const tipTimer = ref();
+
   function showTip(t, time, type) {
     tip.value = t;
     tipType.value = type;

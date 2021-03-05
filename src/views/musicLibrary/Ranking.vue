@@ -50,10 +50,8 @@
           ><i class="mod_btn__icon_batch"></i>批量操作</a
         > -->
         <a class="mod_btn js_into_comment" href="#comment_box"
-          ><i class="mod_btn__icon_comment"></i>评论{{
-            "(" + processCount(commentCount) + ")"
-          }}</a
-        >
+          ><i class="mod_btn__icon_comment"></i>评论
+        </a>
       </div>
 
       <div class="mod_songlist" v-loading="loading">
@@ -147,13 +145,7 @@
       </div>
 
       <!--commont-->
-      <commont-box
-        :comments="comments"
-        :limit="pageSize"
-        :currentPage="commentPage"
-        :total="commentCount"
-        @current-change="currentChange"
-      />
+      <commont-box :params="params" />
     </div>
   </div>
 </template>
@@ -168,7 +160,6 @@ import {
   globalRankingtype,
   getPlaylistDetial,
   getSongDetail,
-  getCommentsNew,
 } from "api";
 import {
   isDef,
@@ -195,15 +186,19 @@ export default {
       desc: "",
       updateTime: "",
       listDatas: [],
-      pageSize: 20,
-      commentPage: 1,
-      commentCount: 0,
-      comments: [],
     };
+  },
+  computed: {
+    params() {
+      return {
+        id: this.seletedType,
+        type: 2,
+        sortType: 2,
+      };
+    },
   },
   mounted() {
     this.updatedTopList();
-    this.getComment();
   },
   methods: {
     onSelectType(type) {
@@ -257,37 +252,10 @@ export default {
       else if (data == -9999) return "icon_rank_new";
       else return "icon_rank_down";
     },
-    getComment() {
-      let params = {
-        type: 2,
-        pageSize: this.pageSize,
-        pageNo: this.commentPage,
-        id: this.seletedType,
-        sortType: 2,
-      };
-      getCommentsNew(params).then((res) => {
-        this.commentCount =
-          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
-        this.comments = res.data.data.comments;
-      });
-    },
-    currentChange(v) {
-      this.commentPage = v;
-    },
     processCount,
     playSonglist,
     gotoSongDetail,
     gotoMvDetail,
-  },
-  watch: {
-    seletedType(newType) {
-      this.updatedTopList();
-      this.commentPage = 1;
-      this.getComment();
-    },
-    commentPage() {
-      this.getComment();
-    },
   },
   components: {
     ModListMenu,

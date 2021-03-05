@@ -52,7 +52,7 @@
       <span class="icon_txt">分享</span>
     </a>
   </div>
-  <black-tip :ifShow="true" :tip="tip" v-if="ifShow" />
+  <black-tip :ifShow="true" :tip="tip" v-if="ifShowTip" />
 </template>
 
 <script>

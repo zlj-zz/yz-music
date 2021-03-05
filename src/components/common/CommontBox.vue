@@ -123,22 +123,47 @@
 
 <script>
 import { formatDate } from "common/utils";
+import pagination from "common/pagination";
+import { getCommentsNew } from "api";
 
 export default {
+  setup() {
+    return { ...pagination() };
+  },
   props: {
-    comments: {
-      type: Array,
-      default: [],
+    params: {
+      type: Object,
+      default: {},
     },
-    limit: { default: 10 },
-    currentPage: { default: 0 },
-    total: { default: 0 },
+  },
+  created() {
+    this.update();
+  },
+  data() {
+    return {
+      type: "comments",
+      comments: [],
+    };
   },
   methods: {
-    currentChange(v) {
-      this.$emit("current-change", v);
+    update() {
+      let s = this.updateList(getCommentsNew, this.type, this.params).then(
+        (res) => {
+          console.log(res);
+          this.comments = res;
+        }
+      );
     },
     formatDate,
+  },
+  watch: {
+    currentPage() {
+      this.update();
+    },
+    params() {
+      this.currentPage = 1;
+      this.update();
+    },
   },
 };
 </script>

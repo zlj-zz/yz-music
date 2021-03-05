@@ -1,23 +1,12 @@
 <template>
   <div class="main">
-    <detail-info-card
-      :obj="playlist"
-      :cardType="'pl'"
-      :commentCount="commentCount"
-      @btnClick="cardClick"
-    />
+    <detail-info-card :obj="playlist" :cardType="'pl'" @btnClick="cardClick" />
 
     <div class="detail_layout">
       <div class="detail_layout__main">
         <detail-songlist :songs="songs" :listType="'playlist'" />
         <!-- comment -->
-        <commont-box
-          :comments="comments"
-          :limit="pageSize"
-          :currentPage="commentPage"
-          :total="commentCount"
-          @current-change="currentChange"
-        />
+        <commont-box :params="params" />
       </div>
 
       <div class="detail_layout__other">
@@ -65,7 +54,6 @@ import {
   getPlayList,
   getPlaylistDetial,
   getSongDetail,
-  getCommentsNew,
   toggleLikePlaylist,
 } from "api";
 import { processCount, createSong, playSonglist } from "common/utils";
@@ -76,11 +64,16 @@ export default {
       id: this.$route.query.id,
       playlist: {},
       songs: [],
-      pageSize: 20,
-      commentPage: 1,
-      commentCount: 0,
-      comments: [],
     };
+  },
+  computed: {
+    params() {
+      return {
+        id: this.playlist.id,
+        type: 2,
+        sortType: 2,
+      };
+    },
   },
   created() {
     this.init();
@@ -122,7 +115,6 @@ export default {
           });
           this.songs = songs;
         });
-        this.getComment();
       });
     },
     cardClick(v) {
@@ -142,28 +134,6 @@ export default {
           }
         } else this.showTip("请先登陆", 1300, 1);
       }
-    },
-    getComment() {
-      let params = {
-        type: 2,
-        pageSize: this.pageSize,
-        pageNo: this.commentPage,
-        id: this.playlist.id,
-        sortType: 2,
-      };
-      getCommentsNew(params).then((res) => {
-        this.commentCount =
-          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
-        this.comments = res.data.data.comments;
-      });
-    },
-    currentChange(v) {
-      this.commentPage = v;
-    },
-  },
-  watch: {
-    commentPage() {
-      this.getComment();
     },
   },
   components: {
