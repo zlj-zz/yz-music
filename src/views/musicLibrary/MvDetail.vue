@@ -29,13 +29,7 @@
     <div class="detail_layout">
       <div class="detail_layout__main">
         <!-- comment -->
-        <commont-box
-          :comments="comments"
-          :limit="pageSize"
-          :currentPage="commentPage"
-          :total="commentCount"
-          @current-change="currentChange"
-        />
+        <commont-box :params="params" />
       </div>
 
       <div class="detail_layout__other">
@@ -62,7 +56,7 @@
 
 <script>
 import CommontBox from "components/common/CommontBox";
-import { getMvDetail, getMvPlayUrl, getCommentsNew } from "api";
+import { getMvDetail, getMvPlayUrl } from "api";
 import { createMv } from "common/utils";
 
 export default {
@@ -71,11 +65,16 @@ export default {
       id: null,
       url: "",
       mv: {},
-      pageSize: 20,
-      commentPage: 1,
-      commentCount: 0,
-      comments: [],
     };
+  },
+  computed: {
+    params() {
+      return {
+        id: this.id,
+        type: 1,
+        sortType: 2,
+      };
+    },
   },
   mounted() {
     this.id = this.$route.query.id;
@@ -84,35 +83,12 @@ export default {
       //console.log(this.mv);
     });
     this.updateMv();
-    this.getComment();
   },
   methods: {
     updateMv() {
       getMvPlayUrl(this.id).then((res) => {
         this.url = res.data.data.url;
       });
-    },
-    getComment() {
-      let params = {
-        type: 1,
-        pageSize: this.pageSize,
-        pageNo: this.commentPage,
-        id: this.id,
-        sortType: 2,
-      };
-      getCommentsNew(params).then((res) => {
-        this.commentCount =
-          res.data.data.totalCount > 5000 ? 5000 : res.data.data.totalCount;
-        this.comments = res.data.data.comments;
-      });
-    },
-    currentChange(v) {
-      this.commentPage = v;
-    },
-  },
-  watch: {
-    commentPage() {
-      this.getComment();
     },
   },
   components: {

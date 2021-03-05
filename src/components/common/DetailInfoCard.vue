@@ -78,21 +78,21 @@
 
       <ul class="mod_data_statistic" v-if="cardType == 'songer'">
         <li class="data_statistic__item">
-          <a class="js_goto_tab">
+          <a>
             <span class="data_statistic__tit">单曲</span>
             <strong class="data_statistic__number">{{ obj.musicSize }}</strong>
           </a>
         </li>
 
         <li class="data_statistic__item">
-          <a class="js_goto_tab">
+          <a>
             <span class="data_statistic__tit">专辑</span>
             <strong class="data_statistic__number">{{ obj.albumSize }}</strong>
           </a>
         </li>
 
         <li class="data_statistic__item data_statistic__item--last">
-          <a class="js_goto_tab">
+          <a>
             <span class="data_statistic__tit">MV</span>
             <strong class="data_statistic__number">{{ obj.mvSize }}</strong>
           </a>
@@ -105,7 +105,7 @@
           {{ cardType == "song" ? "播放" : "播放全部" }}
         </a>
         <a
-          class="mod_btn js_fav_taoge"
+          class="mod_btn"
           @click="btnClick('collection')"
           v-if="cardType != 'album'"
         >
@@ -118,11 +118,7 @@
         <a class="mod_btn" href="#comment_box" @click="btnClick('comment')">
           <i class="mod_btn__icon_comment"></i>评论({{ commentCount }})
         </a>
-        <a
-          class="mod_btn js_more"
-          @click="btnClick('more')"
-          style="display: none"
-        >
+        <a class="mod_btn" @click="btnClick('more')" style="display: none">
           <i class="mod_btn__icon_menu"></i>更多
         </a>
       </div>

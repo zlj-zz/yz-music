@@ -46,7 +46,7 @@
               >
                 <h4 class="singer_list__title">
                   <div class="singer_list__cover" style="visibility: visible">
-                    <a class="js_user">
+                    <a>
                       <img
                         class="singer_list__pic"
                         style="display: block; visibility: visible"
@@ -149,9 +149,6 @@ export default {
       });
     },
   },
-  watch: {
-    selectedType(v) {},
-  },
   components: {
     ShowSongs,
     ShowMvs,
@@ -163,11 +160,7 @@ export default {
 </script>
 
 <style scoped>
-dl,
-dt,
 li,
-ol,
-pre,
 td,
 th,
 ul {

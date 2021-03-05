@@ -2,7 +2,7 @@
   <div class="toplist_main" v-loading="loading">
     <h1 class="list">排行榜</h1>
     <div class="home_toplist">
-      <ul class="toplist__list js_list">
+      <ul class="toplist__list">
         <li
           class="toplist__item mod_cover"
           v-for="(toplist, idx) in toplists"
@@ -24,7 +24,6 @@
                 <div class="toplist__number">{{ songIdx }}</div>
                 <div class="toplist__songname">
                   <a
-                    class="js_song"
                     :data-id="toplist[songIdx - 1].id"
                     @click="gotoSongDetail(toplist[songIdx - 1].id)"
                   >

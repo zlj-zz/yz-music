@@ -36,7 +36,7 @@
                     v-lazy="item.coverImgUrl"
                     :alt="item.name"
                   /><i class="mod_cover__mask"></i
-                  ><i class="mod_cover__icon_play js_play"></i>
+                  ><i class="mod_cover__icon_play"></i>
                 </a>
               </div>
               <h4 class="playlist__title">

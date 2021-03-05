@@ -6,7 +6,7 @@
         <div v-for="(key, idx) in categories" :key="key">
           <div
             class="playlist_tag__list"
-            :class="idx == 0 ? 'playlist_tag__list--lang' : ''"
+            :class="{ playlist_tag__list__lang: idx == 0 }"
           >
             <h3 class="playlist_tag__tit c_tx_thin">{{ key }}</h3>
             <i class="playlist_tag__line"></i>
@@ -18,11 +18,9 @@
               >
                 <a
                   class="playlist_tag__item"
-                  :class="
-                    selectedType == item.name
-                      ? 'playlist_tag__item--expand'
-                      : ''
-                  "
+                  :class="{
+                    playlist_tag__item__expand: selectedType == item.name,
+                  }"
                   @click="selectType(item.name, -999)"
                   >{{ item.name }}</a
                 >
@@ -34,13 +32,10 @@
               >
                 <a
                   class="playlist_tag__item"
-                  :class="
-                    playlistTpyes[idx].showMore
-                      ? 'playlist_tag__item--expand'
-                      : showMoreIdx == idx
-                      ? 'playlist_tag__item--expand'
-                      : ''
-                  "
+                  :class="{
+                    playlist_tag__item__expand:
+                      playlistTpyes[idx].showMore || showMoreIdx == idx,
+                  }"
                   @click="showMoreTypes(idx)"
                   :id="showMoreIdx"
                   >{{ showMoreIdx == idx ? selectedType : "更多"
@@ -66,11 +61,9 @@
               >
                 <a
                   class="playlist_tag__item"
-                  :class="
-                    selectedType == item.name
-                      ? 'playlist_tag__item--expand'
-                      : ''
-                  "
+                  :class="{
+                    playlist_tag__item__expand: selectedType == item.name,
+                  }"
                   @click="selectType(item.name, idx)"
                   >{{ item.name }}</a
                 >
@@ -96,17 +89,15 @@
         <!-- 排列方式 -->
         <div class="part_switch" id="sortbox" aria-label="排列方式">
           <a
-            href="javascript:;"
             class="part_switch__item part_switch__item--left"
             title="最热"
-            :class="selectedOrder == 'hot' ? 'part_switch__item--select' : ''"
+            :class="{ part_switch__item__select: selectedOrder == 'hot' }"
             @click="selectOrder('hot')"
             >最热</a
           ><a
-            href="javascript:;"
             class="part_switch__item part_switch__item--right"
             title="最新"
-            :class="selectedOrder == 'new' ? 'part_switch__item--select' : ''"
+            :class="{ part_switch__item__select: selectedOrder == 'new' }"
             @click="selectOrder('new')"
             >最新</a
           >
@@ -156,7 +147,7 @@
         layout="prev, pager, next"
         :page-size="limit"
         :total="allLength"
-        :current-page="currentPage"
+        :current-page="page"
         @current-change="currentChange"
       >
       </el-pagination>
@@ -165,6 +156,7 @@
 </template>
 
 <script>
+import { ref, watch, onMounted } from "vue";
 import { getCatList, getPlayList, getPlaylistDetial, getSongDetail } from "api";
 import {
   createPlaylists,
@@ -174,32 +166,16 @@ import {
 } from "common/utils";
 
 export default {
-  data() {
-    return {
-      loading: true,
-      subLoading: true,
-      limit: 20,
-      currentPage: 1,
-      allLength: 0,
-      allPage: 1,
-      showMoreIdx: 0,
-      categories: {},
-      playlistTpyes: [],
-      selectedType: "全部",
-      selectedOrder: "hot",
-      playlists: [],
-    };
-  },
-  created() {
-    this.init();
-  },
-  methods: {
-    init() {
+  setup() {
+    const loading = ref(true);
+    const categories = ref({});
+    const playlistTpyes = ref([]);
+    function init() {
       getCatList().then((res) => {
-        this.categories = res.data.categories;
+        categories.value = res.data.categories;
         let subs = res.data.sub;
         let d = {};
-        for (let v of Object.keys(this.categories)) {
+        for (let v of Object.keys(categories.value)) {
           d[v] = { showMore: false, list: [] };
         }
         for (let sub of subs) {
@@ -210,25 +186,85 @@ export default {
             count: sub.resourceCount,
           });
         }
-        this.playlistTpyes = d;
-        this.updatePlaylist();
-        this.loading = false;
+        playlistTpyes.value = d;
+        updatePlaylist();
+        loading.value = false;
       });
-    },
-    updatePlaylist() {
+    }
+    function ifMore(idx, list) {
+      if (idx == 0) return list.length > 6 ? true : false;
+      else return list.length > 9 ? true : false;
+    }
+    function getShowTypes(idx, list) {
+      if (idx == 0) return list.length > 6 ? list.slice(0, 5) : list;
+      else return list.length > 9 ? list.slice(0, 8) : list;
+    }
+    function getHiddenTypes(idx, list) {
+      if (idx == 0) return list.length > 6 ? list.slice(6) : list;
+      else return list.length > 9 ? list.slice(9) : list;
+    }
+
+    const showMoreIdx = ref(0);
+    function showMoreTypes(idx) {
+      if (playlistTpyes.value[idx].showMore) {
+        showMoreIdx.value = -999;
+      } else {
+        showMoreIdx.value = idx;
+      }
+      playlistTpyes.value[idx].showMore = !playlistTpyes.value[idx].showMore;
+    }
+    function showMoreMouseLeave() {
+      playlistTpyes.value[showMoreIdx].showMore = false;
+    }
+    function selectType(type, idx) {
+      if (selectedType.value != type) selectedType.value = type;
+      if (idx) {
+        showMoreIdx.value = idx;
+        if (idx != -999) playlistTpyes.value[showMoreIdx].showMore = false;
+      }
+    }
+    function deleteSeleted() {
+      selectedType.value = "全部";
+      showMoreIdx.value = -999;
+    }
+
+    const page = ref(1);
+    function selectOrder(order) {
+      selectedOrder.value = order;
+      page.value = 1;
+      updatePlaylist();
+    }
+
+    const limit = ref(20);
+    const selectedType = ref("全部");
+    const selectedOrder = ref("hot");
+    const allLength = ref(0);
+    const playlists = ref([]);
+    function updatePlaylist() {
       getPlayList(
-        this.limit,
-        this.currentPage,
-        this.selectedType,
-        this.selectedOrder
+        limit.value,
+        page.value,
+        selectedType.value,
+        selectedOrder.value
       ).then((res) => {
         let lists = createPlaylists(res.data.playlists);
-        this.playlists = lists;
-        this.allLength = res.data.total;
+        playlists.value = lists;
+        allLength.value = res.data.total;
         //console.log(res.data);
       });
-    },
-    playTheList(id) {
+    }
+    function currentChange(v) {
+      page.value = v;
+    }
+    watch(selectedType, () => {
+      page.value = 1;
+      updatePlaylist();
+    });
+    watch(page, () => {
+      updatePlaylist();
+    });
+
+    function playTheList(id) {
       getPlaylistDetial(id).then((res) => {
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
@@ -237,59 +273,35 @@ export default {
           playSonglist(songs);
         });
       });
-    },
-    ifMore(idx, list) {
-      if (idx == 0) return list.length > 6 ? true : false;
-      else return list.length > 9 ? true : false;
-    },
-    getShowTypes(idx, list) {
-      if (idx == 0) return list.length > 6 ? list.slice(0, 5) : list;
-      else return list.length > 9 ? list.slice(0, 8) : list;
-    },
-    getHiddenTypes(idx, list) {
-      if (idx == 0) return list.length > 6 ? list.slice(6) : list;
-      else return list.length > 9 ? list.slice(9) : list;
-    },
-    showMoreTypes(idx) {
-      if (this.playlistTpyes[idx].showMore) {
-        this.showMoreIdx = -999;
-      } else {
-        this.showMoreIdx = idx;
-      }
-      this.playlistTpyes[idx].showMore = !this.playlistTpyes[idx].showMore;
-    },
-    showMoreMouseLeave() {
-      this.playlistTpyes[this.showMoreIdx].showMore = false;
-    },
-    selectType(type, idx) {
-      if (this.selectedType != type) this.selectedType = type;
-      if (idx) {
-        this.showMoreIdx = idx;
-        if (idx != -999) this.playlistTpyes[this.showMoreIdx].showMore = false;
-      }
-    },
-    deleteSeleted() {
-      this.selectedType = "全部";
-      this.showMoreIdx = -999;
-    },
-    selectOrder(order) {
-      this.selectedOrder = order;
-      this.currentPage = 1;
-      this.updatePlaylist();
-    },
-    currentChange(v) {
-      this.currentPage = v;
-    },
-    gotoPlaylistDetail,
-  },
-  watch: {
-    selectedType(type) {
-      this.currentPage = 1;
-      this.updatePlaylist();
-    },
-    currentPage(newPage) {
-      this.updatePlaylist();
-    },
+    }
+
+    init();
+
+    return {
+      loading,
+      limit,
+      page,
+      allLength,
+      showMoreIdx,
+      categories,
+      playlistTpyes,
+      selectedType,
+      selectedOrder,
+      playlists,
+      init,
+      updatePlaylist,
+      playTheList,
+      ifMore,
+      getShowTypes,
+      getHiddenTypes,
+      showMoreTypes,
+      showMoreMouseLeave,
+      selectType,
+      deleteSeleted,
+      selectOrder,
+      currentChange,
+      gotoPlaylistDetail,
+    };
   },
 };
 </script>
@@ -317,7 +329,7 @@ li {
   line-height: 26px;
   margin-right: 22px;
 }
-.playlist_tag__list--lang {
+.playlist_tag__list__lang {
   width: 160px;
 }
 .playlist_tag__tit {
@@ -349,8 +361,8 @@ li {
   text-overflow: ellipsis;
   max-width: 68px;
 }
-.playlist_tag__item--expand,
-.playlist_tag__item--expand:hover,
+.playlist_tag__item__expand,
+.playlist_tag__item__expand:hover,
 .playlist_tag__item--select,
 .playlist_tag__item--select:hover {
   background-color: #31c27c;
@@ -377,8 +389,8 @@ li {
 .playlist_tag__item:hover .playlist_tag__arrow {
   background-position: -140px -260px;
 }
-.playlist_tag__item--expand .playlist_tag__arrow,
-.playlist_tag__item--expand:hover .playlist_tag__arrow {
+.playlist_tag__item__expand .playlist_tag__arrow,
+.playlist_tag__item__expand:hover .playlist_tag__arrow {
   background-position: -100px -260px;
 }
 </style>

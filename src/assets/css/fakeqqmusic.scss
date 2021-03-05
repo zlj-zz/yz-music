@@ -438,6 +438,13 @@ $black: #000;
   border-color: $green;
   z-index: 2;
 }
+.part_switch__item__select,
+.part_switch__item__select:hover {
+  background-color: $green;
+  color: $white;
+  border-color: $green;
+  z-index: 2;
+}
 .part_switch__item {
   position: relative;
   display: inline-block;
@@ -686,8 +693,8 @@ $black: #000;
   padding: 8px 17px;
   text-align: left;
 }
-.toplist_nav__link--current,
-.toplist_nav__link--current:hover {
+.toplist_nav__link__current,
+.toplist_nav__link__current:hover {
   background-color: $green;
   color: $white;
 }

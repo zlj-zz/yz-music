@@ -91,7 +91,7 @@
               </h3>
 
               <p class="mv_list__singer" title="mv.artistName">
-                <a :title="mv.artistName" class="js_singer">
+                <a :title="mv.artistName">
                   {{ mv.artistName }}
                 </a>
               </p>

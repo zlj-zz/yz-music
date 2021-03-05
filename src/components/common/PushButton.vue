@@ -3,7 +3,6 @@
     <div class="slide_action slide_action--left">
       <a
         class="slide_action__btn slide_action__btn--left"
-        data-p="prev"
         @click="btnClick('left')"
       >
         <i class="icon_txt">上一页</i
@@ -13,7 +12,6 @@
     <div class="slide_action slide_action--right">
       <a
         class="slide_action__btn slide_action__btn--right"
-        data-p="next"
         @click="btnClick('right')"
       >
         <i class="icon_txt">下一页</i

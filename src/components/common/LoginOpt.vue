@@ -10,7 +10,7 @@
         ><img
           onerror="this.src='//y.gtimg.cn/mediastyle/global/img/person_300.png?max_age=2592000';this.onerror=null;"
           style="background-color: gray"
-          class="top_login__cover js_user_img"
+          class="top_login__cover"
           :src="$store.state.user.user.avatarUrl"
         />
       </a>
@@ -26,7 +26,7 @@
     <!-- popup 用户信息 -->
     <div
       class="popup_user"
-      :class="isShowPopup ? 'drop' : ''"
+      :class="{ drop: isShowPopup }"
       @mouseover="showUserPopup"
       @mouseleave="hiddenUserPopup"
     >
@@ -59,7 +59,7 @@
         </div>
         <div class="popup_user_toolbar__item">
           <div class="popup_user_toolbar__tit">
-            <a class="js_logout" @click="logout">退出登录</a>
+            <a @click="logout">退出登录</a>
           </div>
         </div>
       </div>

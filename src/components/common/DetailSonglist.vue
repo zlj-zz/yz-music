@@ -14,7 +14,7 @@
       <li v-for="(song, idx) in songs" :key="song.id">
         <div
           class="songlist__item"
-          :claa="(idx + 1) % 2 == 0 ? 'songlist__item--even' : ''"
+          :class="(idx + 1) % 2 == 0 ? 'songlist__item--even' : ''"
         >
           <div class="songlist__edit songlist__edit--check sprite">
             <input type="checkbox" class="songlist__checkbox" />
@@ -88,10 +88,7 @@ export default {
 
 <style scoped>
 li,
-ol,
 p,
-td,
-th,
 ul {
   margin: 0;
   margin-right: 0px;

@@ -16,7 +16,6 @@
         <ul class="playlist__list" id="album_list">
           <li
             class="playlist__item"
-            data-albummid="002ksL5a0hO4A1"
             v-for="album in currentAlbums"
             :key="album.id"
           >
@@ -84,69 +83,82 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
 import TypeSelectSubBar from "components/common/TypeSelectSubBar";
 import { albumAreas, getTopAlbum } from "api";
 import { createAlbums, gotoAlbumDetail, gotoSongerDetail } from "common/utils";
 
 export default {
-  data() {
-    return {
-      loading: true,
-      limit: 20,
-      page: 0,
-      selectArea: albumAreas.ALL.dataId,
-      areas: albumAreas,
-      allAlbums: null,
-      allAlbumsLength: 0,
-      currentAlbums: [],
-    };
-  },
-  mounted() {
-    this.updateAlbum();
-  },
-  methods: {
-    updateAlbum() {
-      this.page = 0;
+  setup() {
+    const areas = ref(albumAreas);
+
+    const loading = ref(true);
+    const page = ref(0);
+    const selectArea = ref(albumAreas.ALL.dataId);
+    const allAlbums = ref(null);
+    const allAlbumsLength = ref(0);
+    function updateAlbum() {
+      //page.value = 0;
       getTopAlbum({
-        area: this.selectArea,
+        area: selectArea.value,
       }).then((res) => {
+        console.log(res);
         let ds = res.data.monthData;
         let albums = createAlbums(ds);
-        //console.log(albums);
-        this.allAlbums = albums;
-        this.allAlbumsLength = albums.length;
-        this.page = 1;
-        this.loading = false;
+        console.log(albums);
+        allAlbums.value = albums;
+        allAlbumsLength.value = albums.length;
+        page.value = 1;
+        loading.value = false;
+        updateCurrentAlbums();
       });
-    },
-    areaSelect(id) {
-      if (id != this.selectArea) this.selectArea = id;
-    },
-    currentChange(v) {
-      this.page = v;
-    },
-    gotoAlbumDetail,
-    gotoSongerDetail,
-  },
-  watch: {
-    page(newPage) {
-      if (this.allAlbums) {
-        if (newPage * this.limit < this.allAlbumsLength) {
-          this.currentAlbums = this.allAlbums.slice(
-            (newPage - 1) * this.limit,
-            newPage * this.limit
+    }
+    function areaSelect(id) {
+      if (id != selectArea.value) selectArea.value = id;
+    }
+    function currentChange(v) {
+      page.value = v;
+      updateCurrentAlbums();
+    }
+    watch(selectArea, () => {
+      updateAlbum();
+    });
+
+    const limit = ref(20);
+    const currentAlbums = ref([]);
+    function updateCurrentAlbums() {
+      if (allAlbums.value.length > 0) {
+        if (page.value * limit.value < allAlbumsLength.value) {
+          currentAlbums.value = allAlbums.value.slice(
+            (page.value - 1) * limit.value,
+            page.value * limit.value
           );
         } else {
-          this.currentAlbums = this.allAlbums.slice(
-            (newPage - 1) * this.limit,
-            this.allAlbumsLength
+          currentAlbums.value = allAlbums.value.slice(
+            (page.value - 1) * limit.value,
+            allAlbumsLength.value
           );
         }
       }
-    },
-    selectArea(n) {
-      this.updateAlbum();
-    },
+    }
+
+    updateAlbum();
+
+    return {
+      areas,
+      loading,
+      page,
+      selectArea,
+      allAlbums,
+      allAlbumsLength,
+      updateAlbum,
+      areaSelect,
+      currentChange,
+      limit,
+      currentAlbums,
+      gotoAlbumDetail,
+      gotoSongerDetail,
+    };
   },
   components: {
     TypeSelectSubBar,

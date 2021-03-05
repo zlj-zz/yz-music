@@ -27,7 +27,7 @@
             <li class="playlist__item" v-for="album in albums" :key="album.id">
               <div class="playlist__item_box">
                 <div class="playlist__cover mod_cover">
-                  <a class="js_album">
+                  <a>
                     <img
                       class="playlist__pic"
                       src="//y.gtimg.cn/mediastyle/global/img/album_300.png?max_age=31536000"
@@ -42,12 +42,9 @@
                 </div>
                 <h4 class="playlist__title">
                   <span class="playlist__title_txt">
-                    <a
-                      class="js_album"
-                      :title="album.name"
-                      @click="gotoAlbumDetail(album.id)"
-                      >{{ album.name }}</a
-                    >
+                    <a :title="album.name" @click="gotoAlbumDetail(album.id)">{{
+                      album.name
+                    }}</a>
                   </span>
                 </h4>
                 <div class="playlist__other">{{ album.publishTime }}</div>
@@ -239,10 +236,6 @@ export default {
 </script>
 
 <style scoped>
-dd,
-dl,
-dt,
-hr,
 td,
 th,
 ul {

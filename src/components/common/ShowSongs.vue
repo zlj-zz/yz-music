@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="js_search_tab_cont search_tab_cont"
-    id="song_box"
-    style="display: block"
-  >
+  <div class="search_tab_cont" id="song_box" style="display: block">
     <div class="mod_songlist_toolbar">
       <a class="mod_btn"><i class="mod_btn__icon_play"></i>播放全部</a>
       <a class="mod_btn"><i class="mod_btn__icon_add"></i>添加到</a>

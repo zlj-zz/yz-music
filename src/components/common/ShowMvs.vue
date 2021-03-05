@@ -1,15 +1,11 @@
 <template>
-  <div
-    class="js_search_tab_cont search_tab_cont"
-    id="mv_box"
-    style="display: block"
-  >
+  <div class="search_tab_cont" id="mv_box" style="display: block">
     <div class="mod_mv_list">
       <ul class="mv_list__list">
         <li class="mv_list__item" v-for="mv in mvs" :key="mv.id">
           <div class="mv_list__item_box" style="visibility: visible">
             <a
-              class="mv_list__cover mod_cover js_mv"
+              class="mv_list__cover mod_cover"
               hidefocus="true"
               @click="gotoMvDetail(mv.id)"
             >

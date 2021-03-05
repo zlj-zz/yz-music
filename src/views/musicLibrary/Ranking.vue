@@ -1,5 +1,6 @@
 <template>
   <div id="mian">
+    <!-- silde nav -->
     <div class="toplist_nav">
       <dl class="toplist_nav__list" v-for="(items, key) in data" :key="key">
         <dt class="toplist_nav__tit">{{ key }}</dt>
@@ -8,9 +9,7 @@
             class="toplist_nav__link"
             v-for="item in items"
             :key="item.dataId"
-            :class="
-              item.dataId == seletedType ? 'toplist_nav__link--current' : ''
-            "
+            :class="{ toplist_nav__link__current: item.dataId == seletedType }"
             @click="onSelectType(item)"
             >{{ item.name }}</a
           >

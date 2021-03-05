@@ -8,7 +8,7 @@
         <li class="singer_list__item" v-for="songer in items" :key="songer.id">
           <div class="singer_list__item_box">
             <a
-              class="singer_list__cover js_singer"
+              class="singer_list__cover"
               hidefocus="true"
               :title="songer.name"
               @click="btnClick(songer)"
@@ -21,12 +21,9 @@
               />
             </a>
             <h3 class="singer_list__title">
-              <a
-                class="js_singer"
-                :title="songer.name"
-                @click="btnClick(songer)"
-                >{{ songer.name }}</a
-              >
+              <a :title="songer.name" @click="btnClick(songer)">{{
+                songer.name
+              }}</a>
             </h3>
           </div>
         </li>

@@ -20,17 +20,13 @@
           <div class="part_switch">
             <a
               class="part_switch__item part_switch__item--left"
-              :class="
-                order == orders.NEW.dataId ? 'part_switch__item--select' : ''
-              "
+              :class="{ part_switch__item__select: order == orders.NEW.dataId }"
               @click="switchOrder(orders.NEW.dataId)"
               >{{ orders.NEW.name }}</a
             >
             <a
               class="part_switch__item part_switch__item--right"
-              :class="
-                order == orders.HOT.dataId ? 'part_switch__item--select' : ''
-              "
+              :class="{ part_switch__item__select: order == orders.HOT.dataId }"
               @click="switchOrder(orders.HOT.dataId)"
               >{{ orders.HOT.name }}</a
             >
@@ -65,7 +61,7 @@
                     item.name
                   }}</a>
                 </h3>
-                <div class="mv_list__singer" title="5AM">
+                <div class="mv_list__singer">
                   <a :title="item.artistName">{{ item.artistName }}</a>
                 </div>
                 <div class="mv_list__info">

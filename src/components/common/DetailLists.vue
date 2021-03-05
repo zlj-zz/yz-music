@@ -1,5 +1,5 @@
 <template>
-  <div class="js_search_tab_cont search_tab_cont" style="display: block">
+  <div class="search_tab_cont" style="display: block">
     <div class="mod_playlist_text">
       <ul class="playlist__header">
         <li class="playlist__header_name">{{ titles[kind][0] }}</li>
@@ -15,7 +15,7 @@
           :key="l.id"
         >
           <div class="playlist__cover" style="visibility: visible">
-            <a class="js_album"
+            <a
               ><img
                 class="playlist__pic"
                 style="display: block; visibility: visible"

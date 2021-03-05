@@ -1,9 +1,8 @@
 <template>
-  <div class="js_box" id="like_box" style="display: block">
+  <div id="like_box" style="display: block">
     <div class="mod_tab" role="nav">
       <a
         class="mod_tab__item"
-        href="javascript:;"
         data-tab="like_song"
         data-stat="y_new.profile.like.tab.song"
         v-for="option in options"

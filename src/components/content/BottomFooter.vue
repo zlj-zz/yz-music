@@ -6,26 +6,17 @@
           <h3 class="footer_tit">链接</h3>
           <ul class="footer_platform_list">
             <li class="footer_platform_list__item">
-              <a
-                href="https://github.com/zlj-zz/yz-music"
-                target="_blank"
-                class="js_other_link"
+              <a href="https://github.com/zlj-zz/yz-music" target="_blank"
                 >项目GitHub地址</a
               >
             </li>
             <li class="footer_platform_list__item">
-              <a
-                href="http://blog.zacharyzlj.cn/"
-                target="_blank"
-                class="js_other_link"
-                >博客地址</a
-              >
+              <a href="http://blog.zacharyzlj.cn/" target="_blank">博客地址</a>
             </li>
             <li class="footer_platform_list__item">
               <a
                 href="https://blog.csdn.net/qq_38410494?spm=1011.2124.3001.5343"
                 target="_blank"
-                class="js_other_link"
                 >CSDN</a
               >
             </li>

@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="js_search_tab_cont search_tab_cont"
-    id="lyric_box"
-    style="display: block"
-  >
+  <div class="search_tab_cont" id="lyric_box" style="display: block">
     <div class="mod_lyric_list">
       <ul class="lyric_list__list">
         <li class="lyric_list__item" v-for="lyric in lyrics" :key="lyric.id">
@@ -23,12 +19,12 @@
             <div v-html="processLyric(lyric.lyrics)"></div>
           </div>
           <div class="lyric_list__toolbar">
-            <button class="mod_btn js_clip" @click="moreLyric(lyric)">
+            <button class="mod_btn" @click="moreLyric(lyric)">
               <i class="mod_btn__icon_more"></i>
               {{ lyric.class ? "收起" : "展开" }}
             </button>
             <button
-              class="mod_btn js_lyric_copy"
+              class="mod_btn"
               :copy-content="lyric.lyrics"
               @click="copyLyric(lyric.lyrics)"
             >
