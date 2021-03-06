@@ -1,4 +1,4 @@
-import { requset } from "./base";
+import { request } from "./base";
 
 export const albumAreas = {
   ALL: { name: "全部", dataId: "ALL" },
@@ -9,13 +9,13 @@ export const albumAreas = {
 };
 
 // 获得专辑内容
-export const getAlbum = id => requset.get(`/album?id=${id}`);
+export const getAlbum = id => request.get(`/album?id=${id}`);
 
 // 获得专辑动态信息,如是否收藏,收藏数,评论数,分享数
-export const getAlbumDetail = id => requset.get(`/album/detail?id=${id}`);
+export const getAlbumDetail = id => request.get(`/album/detail?id=${id}`);
 
 export const getTopAlbum = params =>
-  requset.get("/top/album", { params: params });
+  request.get("/top/album", { params: params });
 
 /* 登陆后使用 */
-export const getCollectedAlbum = () => requset.get("album/sublist");
+export const getCollectedAlbum = () => request.get("album/sublist");

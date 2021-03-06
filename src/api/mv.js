@@ -1,5 +1,5 @@
 /* 有关MV */
-import { requset } from "./base";
+import { request } from "./base";
 
 export const mvOrder = {
   HOT: { name: "最热", dataId: "最热" },
@@ -32,12 +32,12 @@ export const getAllMV = (limit, page, order, area, type) => {
     area: area,
     type: type
   };
-  return requset.get("/mv/all", { params: params });
+  return request.get("/mv/all", { params: params });
 };
 
-export const getMvDetail = id => requset.get(`/mv/detail?mvid=${id}`);
+export const getMvDetail = id => request.get(`/mv/detail?mvid=${id}`);
 
-export const getMvPlayUrl = id => requset.get(`/mv/url?id=${id}`);
+export const getMvPlayUrl = id => request.get(`/mv/url?id=${id}`);
 
 /* 登陆后使用 */
-export const getCollectedMvs = () => requset.get("/mv/sublist");
+export const getCollectedMvs = () => request.get("/mv/sublist");

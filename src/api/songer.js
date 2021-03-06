@@ -1,5 +1,5 @@
 /* 有关歌手 */
-import { requset } from "./base";
+import { request } from "./base";
 
 export const songerInitials = {
   DEFAULT: { name: "热门", dataId: "-1" },
@@ -58,20 +58,20 @@ export const getSongers = (initial, type, area, page) => {
     limit: limit,
     offset: offset
   };
-  return requset.get("/artist/list", { params: params });
+  return request.get("/artist/list", { params: params });
 };
 
-export const getSongerTop50 = id => requset.get(`/artist/top/song?id=${id}`);
+export const getSongerTop50 = id => request.get(`/artist/top/song?id=${id}`);
 
-export const getSongerAllSong = id => requset.get(`/artist/songs?id=${id}`);
+export const getSongerAllSong = id => request.get(`/artist/songs?id=${id}`);
 
-export const getSongerDesc = id => requset.get(`/artist/desc?id=${id}`);
+export const getSongerDesc = id => request.get(`/artist/desc?id=${id}`);
 
-export const getSongerDetail = id => requset.get(`/artist/detail?id=${id}`);
+export const getSongerDetail = id => request.get(`/artist/detail?id=${id}`);
 
-export const getSimiSongers = id => requset.get(`/simi/artist?id=${id}`);
+export const getSimiSongers = id => request.get(`/simi/artist?id=${id}`);
 
 export const getSongerAlbums = params =>
-  requset.get(`/artist/album`, { params: params });
+  request.get(`/artist/album`, { params: params });
 
-export const getSongerMvs = id => requset.get(`/artist/mv?id=${id}`);
+export const getSongerMvs = id => request.get(`/artist/mv?id=${id}`);

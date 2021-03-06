@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
-const BASIC_URL = "http://musicapi.zacharyzlj.cn/";
-//const BASIC_URL = "http://192.168.31.152:3000/";
+//const BASIC_URL = "http://musicapi.zacharyzlj.cn/";
+const BASIC_URL = "http://localhost:3000/";
 
 function createBaseInstance() {
   const instance = axios.create({
@@ -41,7 +41,7 @@ function createBaseInstance() {
       config.__retryCount++;
 
       let backoff = new Promise(function(resolve) {
-        console.log("retry time: " + config.__retryCount);
+        //console.log("retry time: " + config.__retryCount);
         resolve();
       }, config.retryDelay || 1);
 
@@ -54,4 +54,4 @@ function createBaseInstance() {
   return instance;
 }
 
-export const requset = createBaseInstance();
+export const request = createBaseInstance();

@@ -1,14 +1,14 @@
-import { requset } from "./base";
+import { request } from "./base";
 
-export const getSongUrl = id => requset.get(`/song/url?id=${id}`);
+export const getSongUrl = id => request.get(`/song/url?id=${id}`);
 
-export const getSongDetail = ids => requset.get(`/song/detail?ids=${ids}`);
+export const getSongDetail = ids => request.get(`/song/detail?ids=${ids}`);
 
-export const getSongLiyric = id => requset.get(`/lyric?id=${id}`);
+export const getSongLiyric = id => request.get(`/lyric?id=${id}`);
 
-export const getSimiSong = id => requset.get(`/simi/song?id=${id}`);
+export const getSimiSong = id => request.get(`/simi/song?id=${id}`);
 
 /*
  * 喜爱音乐
  * 登陆后可用 */
-export const likeSong = params => requset.get("/like", { params: params });
+export const likeSong = params => request.get("/like", { params: params });

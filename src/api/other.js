@@ -1,3 +1,3 @@
-import { requset } from "./base";
+import { request } from "./base";
 
-export const getBanner = () => requset.get("/banner?type=0");
+export const getBanner = () => request.get("/banner?type=0");

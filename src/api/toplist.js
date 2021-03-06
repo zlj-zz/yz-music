@@ -1,5 +1,5 @@
 /* 有关歌曲排行榜 */
-import { requset } from "./base";
+import { request } from "./base";
 
 export const toplistTypes = {
   0: { name: "新歌榜", id: 3779629 },
@@ -10,7 +10,7 @@ export const toplistTypes = {
 };
 
 export const getTopList = toplistType =>
-  requset.get(`/top/list?id=${toplistType}`);
+  request.get(`/top/list?id=${toplistType}`);
 
 export const topRankingtype = [
   { name: "飙升榜", dataId: "19723756" },

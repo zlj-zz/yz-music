@@ -1,7 +1,7 @@
-import { requset } from "./base";
+import { request } from "./base";
 
 export const getPlaylistComments = params =>
-  requset.get(`/comment/playlist`, { params: params });
+  request.get(`/comment/playlist`, { params: params });
 
 /*
 新版评论接口
@@ -23,4 +23,4 @@ export const getPlaylistComments = params =>
     cursor: 当sortType为3时且页数不是第一页时需传入,值为上一条数据的time 
 */
 export const getCommentsNew = params =>
-  requset.get(`/comment/new`, { params: params });
+  request.get(`/comment/new`, { params: params });
