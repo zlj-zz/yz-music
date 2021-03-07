@@ -63,7 +63,7 @@ import {
   getSongDetail,
   toggleLikePlaylist,
 } from "api";
-import { processCount, createSong, playSonglist } from "common/utils";
+import { createPlaylist, createSongs, playSonglist } from "common/utils";
 
 export default {
   data() {
@@ -92,35 +92,12 @@ export default {
     init() {
       getPlaylistDetial(this.id).then((res) => {
         let d = res.data.playlist;
-        this.playlist = {
-          id: d.id,
-          name: d.name,
-          img: d.coverImgUrl,
-          desc: d.description,
-          creator: d.creator.nickname,
-          creatorId: d.creator.userId,
-          tags: d.creator.expertTags,
-          playCount: processCount(d.playCount),
-          subscribedCount: processCount(d.subscribedCount),
-          shareCount: processCount(d.shareCount),
-          subscribed: d.subscribed,
-        };
+        this.playlist = createPlaylist(d);
         //console.log(this.playlist);
 
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
-          let songs = res.data.songs.map(({ id, name, al, ar, mv, dt }) => {
-            return createSong({
-              id,
-              name,
-              artists: ar,
-              duration: dt,
-              mvId: mv,
-              albumName: al.name,
-              albumId: al.id,
-              img: al.picUrl,
-            });
-          });
+          let songs = createSongs(res.data.songs);
           this.songs = songs;
         });
       });

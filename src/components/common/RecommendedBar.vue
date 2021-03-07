@@ -77,13 +77,9 @@
 
 <script>
 import PushButton from "components/common/PushButton";
-import { getPlayList, getPlaylistDetial, getSongDetail } from "api";
-import {
-  processCount,
-  createSong,
-  playSonglist,
-  gotoPlaylistDetail,
-} from "common/utils";
+import { getPlayList } from "api";
+import { processCount, gotoPlaylistDetail } from "common/utils";
+import { playTheList } from "@/apiUtils";
 
 export default {
   data() {
@@ -128,26 +124,7 @@ export default {
     btnClick() {
       this.showNo = !this.showNo;
     },
-    playTheList(listId) {
-      getPlaylistDetial(listId).then((res) => {
-        let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
-        let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
-          let songs = res.data.songs.map(({ id, name, al, ar, mv, dt }) => {
-            return createSong({
-              id,
-              name,
-              artists: ar,
-              duration: dt,
-              mvId: mv,
-              albumName: al.name,
-              img: al.picUrl,
-            });
-          });
-          //console.log(songs);
-          playSonglist(songs);
-        });
-      });
-    },
+    playTheList,
     processCount,
     gotoPlaylistDetail,
   },

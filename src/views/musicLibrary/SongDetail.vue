@@ -48,7 +48,7 @@
       </div>
       <!--相似歌曲-->
       <div class="detail_layout__other">
-        <div class="other_part" style="" id="song_playlist">
+        <div class="other_part" id="song_playlist" v-if="simiSongs">
           <h3 class="other_part__tit">相似歌曲</h3>
           <div class="mod_playlist">
             <ul class="playlist__list" v-if="simiSongs">
@@ -131,7 +131,7 @@ import {
   likeSong,
 } from "api";
 import {
-  createSong,
+  createOneSong,
   formatDate,
   playTheSong,
   copyText,
@@ -169,23 +169,10 @@ export default {
       // 获取歌曲信息
       getSongDetail(this.songId).then((res) => {
         let d = res.data.songs[0];
-        let subscribed = this.$store.state.user.likelist.findIndex(
+        d.subscribed = this.$store.state.user.likelist.findIndex(
           (id) => id === d.id
         );
-        this.song = createSong({
-          id: d.id,
-          name: d.name,
-          artists: d.ar,
-          duration: d.dt,
-          albumName: d.al.name,
-          mvId: d.mv,
-          img: d.al.picUrl,
-          publishTime:
-            d.publishTime == 0
-              ? "未知"
-              : formatDate(d.publishTime, "yyyy-MM-dd"),
-          subscribed: subscribed == -1 ? false : true,
-        });
+        this.song = createOneSong(d);
         //console.log(this.song);
         // 如果有mv， 获取mv信息
         if (d.mv != 0) {

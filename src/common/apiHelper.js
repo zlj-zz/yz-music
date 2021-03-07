@@ -41,7 +41,7 @@ export function createSong(song) {
 }
 
 export function createOneSong(song) {
-  const { id, name, al, dt, ar, mv, publishTime, lyrics } = song;
+  const { id, name, al, dt, ar, mv, publishTime, lyrics, subscribed } = song;
   return {
     id,
     name,
@@ -52,11 +52,13 @@ export function createOneSong(song) {
     duration: dt,
     durationSecond: dt / 1000,
     durationText: formatTime(dt / 1000),
-    publishTime: formatDate(publishTime, "yyyy-MM-dd"),
+    publishTime:
+      publishTime == 0 ? "未知" : formatDate(publishTime, "yyyy-MM-dd"),
     albumId: al.id,
     albumName: al.name,
     mvId: mv,
-    lyrics
+    lyrics,
+    subscribed: subscribed == -1 ? false : true
   };
 }
 export function createSongs(songs) {
@@ -144,7 +146,10 @@ export function createPlaylist(list) {
     description,
     playCount,
     bookCount,
-    trackCount
+    trackCount,
+    subscribedCount,
+    shareCount,
+    subscribed
   } = list;
 
   return {
@@ -155,9 +160,13 @@ export function createPlaylist(list) {
     creatorId: creator.userId,
     creatorName: creator.nickname,
     desc: description,
+    tags: creator.expertTags,
     playCount: processCount(playCount),
     bookCount: processCount(bookCount),
-    trackCount: processCount(trackCount)
+    trackCount: processCount(trackCount),
+    subscribedCount: processCount(subscribedCount),
+    shareCount: processCount(shareCount),
+    subscribed: subscribed
   };
 }
 export function createPlaylists(lists) {

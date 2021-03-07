@@ -53,7 +53,7 @@
                     />
                     <i
                       class="mod_cover__icon_play"
-                      @click="playAlbum(album.id)"
+                      @click="playTheAlbum(album.id)"
                     ></i>
                   </a>
                 </div>
@@ -149,19 +149,18 @@ import {
   getSimiSongers,
   getSongerAlbums,
   getSongerMvs,
-  getAlbum,
 } from "api";
 import {
   createSonger,
   createSimiSonger,
   createUser,
-  createSong,
   createAlbums,
   createMvs,
   playSonglist,
   gotoSongerDetail,
   gotoAlbumDetail,
 } from "common/utils";
+import { playTheAlbum } from "@/apiUtils";
 
 export default {
   data() {
@@ -223,27 +222,10 @@ export default {
     toggleShowMoreInfo() {
       this.moreInfo = !this.moreInfo;
     },
-    playAlbum(id) {
-      getAlbum(id).then((res) => {
-        let songs = res.data.songs.map(
-          ({ id, name, ar, dt, al, mv, publishTime }) => {
-            return createSong({
-              id,
-              name,
-              artists: ar,
-              duration: dt,
-              albumName: al.name,
-              mvId: mv,
-              img: al.picUrl,
-            });
-          }
-        );
-        playSonglist(songs);
-      });
-    },
     songerClick(songer) {
       gotoSongerDetail(songer.id);
     },
+    playTheAlbum,
     gotoAlbumDetail,
     gotoSongerDetail,
   },

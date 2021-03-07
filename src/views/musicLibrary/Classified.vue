@@ -157,13 +157,9 @@
 
 <script>
 import { ref, watch, onMounted } from "vue";
-import { getCatList, getPlayList, getPlaylistDetial, getSongDetail } from "api";
-import {
-  createPlaylists,
-  createSongs,
-  playSonglist,
-  gotoPlaylistDetail,
-} from "common/utils";
+import { getCatList, getPlayList } from "api";
+import { createPlaylists, gotoPlaylistDetail } from "common/utils";
+import { playTheList } from "@/apiUtils";
 
 export default {
   setup() {
@@ -263,17 +259,6 @@ export default {
     watch(page, () => {
       updatePlaylist();
     });
-
-    function playTheList(id) {
-      getPlaylistDetial(id).then((res) => {
-        let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
-        let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
-          let songs = createSongs(res.data.songs);
-          //console.log(songs);
-          playSonglist(songs);
-        });
-      });
-    }
 
     init();
 

@@ -14,9 +14,7 @@
             <i class="mod_cover__icon_play" @click="playSonglist(toplist)"></i>
             <i class="toplist__line"></i>
             <h3 class="toplist__hd">
-              <a href="javascript:;" class="toplist__tit"
-                >{{ toplistTypes[idx].name }}
-              </a>
+              <a class="toplist__tit">{{ toplistTypes[idx].name }} </a>
             </h3>
 
             <ul class="toplist__songlist">

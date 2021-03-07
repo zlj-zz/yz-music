@@ -130,7 +130,7 @@
               </div>
 
               <div class="songlist__artist" :title="song.name">
-                <a title="song.artistsText" class="singer_name">{{
+                <a :title="song.artistsText" class="singer_name">{{
                   song.artistsText
                 }}</a>
               </div>
