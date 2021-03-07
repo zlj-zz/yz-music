@@ -1,6 +1,18 @@
 <template>
   <div class="main">
-    <detail-info-card :obj="song" @btnClick="cardClick" />
+    <detail-info-card :avatar_url="song.img" :name="song.name">
+      <template v-slot:info>
+        <detail-show-list
+          :infos="{
+            艺术家: song.artistsText,
+            专辑: song.albumName,
+            时长: song.durationText,
+            发布时间: song.publishTime,
+          }"
+        />
+        <func-bar :whetherCollection="song.subscribed" @btnClick="cardClick" />
+      </template>
+    </detail-info-card>
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -106,6 +118,8 @@
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import DetailShowList from "components/common/DetailShowList";
+import FuncBar from "components/common/FuncBar";
 import BlackTip from "components/common/BlackTip";
 import tipHandle from "common/showTip";
 import CommontBox from "components/common/CommontBox";
@@ -158,7 +172,6 @@ export default {
         let subscribed = this.$store.state.user.likelist.findIndex(
           (id) => id === d.id
         );
-        //console.log(res);
         this.song = createSong({
           id: d.id,
           name: d.name,
@@ -173,6 +186,7 @@ export default {
               : formatDate(d.publishTime, "yyyy-MM-dd"),
           subscribed: subscribed == -1 ? false : true,
         });
+        //console.log(this.song);
         // 如果有mv， 获取mv信息
         if (d.mv != 0) {
           getMvDetail(d.mv).then((res) => {
@@ -247,6 +261,8 @@ export default {
   },
   components: {
     DetailInfoCard,
+    DetailShowList,
+    FuncBar,
     BlackTip,
     CommontBox,
   },

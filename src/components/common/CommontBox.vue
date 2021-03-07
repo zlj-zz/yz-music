@@ -141,7 +141,7 @@ export default {
       if (this.params.id > 1) {
         let s = this.updateList(getCommentsNew, this.type, this.params).then(
           (res) => {
-            console.log(res);
+            //console.log(res);
             this.comments = res;
           }
         );

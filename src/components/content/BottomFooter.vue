@@ -25,6 +25,7 @@
       </div>
       <div class="footer_copyright">
         <p>Copyright © 2020 - {{ date }}</p>
+        <p><a href="http://beian.miit.gov.cn">鄂ICP备2021003153号</a></p>
         <p>本项目仅学习用途</p>
       </div>
     </div>

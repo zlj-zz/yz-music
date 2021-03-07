@@ -1,6 +1,18 @@
 <template>
   <div class="main">
-    <detail-info-card :obj="album" :cardType="'album'" @btnClick="cardClick" />
+    <detail-info-card :avatar_url="album.img" :name="album.name" :mask="true">
+      <template v-slot:info>
+        <detail-show-list
+          :infos="{
+            类型: album.type,
+            版本: album.version,
+            公司: album.company,
+            发行时间: album.publishTime,
+          }"
+        />
+        <func-bar exclude="['collection']" @btnClick="cardClick" />
+      </template>
+    </detail-info-card>
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -41,6 +53,8 @@
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import DetailShowList from "components/common/DetailShowList";
+import FuncBar from "components/common/FuncBar";
 import DetailSonglist from "components/common/DetailSonglist";
 import CommontBox from "components/common/CommontBox";
 import { getAlbum } from "api";
@@ -70,7 +84,6 @@ export default {
   methods: {
     init() {
       getAlbum(this.id).then((res) => {
-        //console.log(res);
         let ds = res.data;
         let album = {
           id: ds.album.id,
@@ -112,6 +125,8 @@ export default {
   },
   components: {
     DetailInfoCard,
+    DetailShowList,
+    FuncBar,
     DetailSonglist,
     CommontBox,
   },

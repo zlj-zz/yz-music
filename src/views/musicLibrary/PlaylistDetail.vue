@@ -1,6 +1,21 @@
 <template>
   <div class="main">
-    <detail-info-card :obj="playlist" :cardType="'pl'" @btnClick="cardClick" />
+    <detail-info-card :avatar_url="playlist.img" :name="playlist.name">
+      <template v-slot:info>
+        <detail-show-list
+          :infos="{
+            标签: playlist.tags,
+            播放量: playlist.playCount,
+            分享量: playlist.shareCount,
+            收藏量: playlist.subscribedCount,
+          }"
+        />
+        <func-bar
+          :whetherCollection="playlist.subscribed"
+          @btnClick="cardClick"
+        />
+      </template>
+    </detail-info-card>
 
     <div class="detail_layout">
       <div class="detail_layout__main">
@@ -17,16 +32,6 @@
               {{ playlist.desc }}
             </p>
           </div>
-          <!-- <a
-            href="javascript:;"
-            class="about__more"
-            data-stat="y_new.gedan.moreinfo"
-            data-left="0"
-            data-top="-187"
-            data-target="popup_data_detail"
-            style="display: "
-            >[更多]</a
-          > -->
           <a class="btn_edit js_edit" style="display: none">
             <i class="icon_txt">编辑</i>
           </a>
@@ -46,6 +51,8 @@
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import DetailShowList from "components/common/DetailShowList";
+import FuncBar from "components/common/FuncBar";
 import DetailSonglist from "components/common/DetailSonglist";
 import CommontBox from "components/common/CommontBox";
 import BlackTip from "components/common/BlackTip";
@@ -98,6 +105,7 @@ export default {
           shareCount: processCount(d.shareCount),
           subscribed: d.subscribed,
         };
+        //console.log(this.playlist);
 
         let trackIds = res.data.playlist.trackIds.map(({ id }) => id);
         let songDetails = getSongDetail(trackIds.slice(0, 500)).then((res) => {
@@ -138,6 +146,8 @@ export default {
   },
   components: {
     DetailInfoCard,
+    DetailShowList,
+    FuncBar,
     DetailSonglist,
     CommontBox,
     BlackTip,

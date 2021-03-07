@@ -1,11 +1,28 @@
 <template>
   <div class="main">
     <detail-info-card
-      :obj="songer"
-      :cardType="'songer'"
-      @btnClick="playHotSongs"
-      @moreClick="toggleShowMoreInfo"
-    />
+      :avatar_url="songer.img"
+      :name="songer.name"
+      :circular="true"
+    >
+      <template v-slot:name>
+        <detail-songer-info
+          :name="songer.name"
+          :desc="songer.desc"
+          :songSize="songer.musicSize"
+          :albumSize="songer.albumSize"
+          :mvSize="songer.mvSize"
+          @moreClick="toggleShowMoreInfo"
+        ></detail-songer-info>
+      </template>
+      <template v-slot:info>
+        <func-bar
+          exclude="['collection', 'more', 'comment']"
+          playBtnName="播放歌手热门歌曲"
+          @btnClick="playHotSongs"
+        />
+      </template>
+    </detail-info-card>
 
     <div id="index_tab">
       <div class="mod_part">
@@ -121,6 +138,8 @@
 
 <script>
 import DetailInfoCard from "components/common/DetailInfoCard";
+import DetailSongerInfo from "components/common/DetailSongerInfo";
+import FuncBar from "components/common/FuncBar";
 import DetailSonglist from "components/common/DetailSonglist";
 import InfoList from "components/common/InfoList";
 import {
@@ -166,6 +185,7 @@ export default {
       // Get songer detail
       const res1 = await getSongerDetail(this.id);
       this.songer = createSonger(res1.data.data);
+      //console.log(this.songer);
 
       // Get songer top 50
       const res2 = await getSongerTop50(this.id);
@@ -229,6 +249,8 @@ export default {
   },
   components: {
     DetailInfoCard,
+    DetailSongerInfo,
+    FuncBar,
     DetailSonglist,
     InfoList,
   },
